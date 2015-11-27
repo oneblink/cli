@@ -3,6 +3,7 @@
 // Node.js built-ins
 
 const childProcess = require('child_process');
+const path = require('path');
 
 // foreign modules
 
@@ -11,7 +12,7 @@ const parseArgs = require('minimist');
 // this module
 
 const args = process.argv.slice(2);
-const cmd = process.argv[1];
+const cmd = path.basename(process.argv[1]);
 
 const parsedArgs = parseArgs(args);
 
