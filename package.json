@@ -26,6 +26,7 @@
     "npm": ">=3.0.0"
   },
   "dependencies": {
-    "graceful-fs": "4.1.2"
+    "graceful-fs": "4.1.2",
+    "minimist": "1.2.0"
   }
 }
