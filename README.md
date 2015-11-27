@@ -6,6 +6,12 @@ primary entry point for our CLI tools
 [![Build Status](https://travis-ci.org/blinkmobile/cli.png)](https://travis-ci.org/blinkmobile/cli)
 
 
+## Requirements
+
+- [Node.js](https://nodejs.org/) 5.0 or newer
+- NPM 3.0 or newer
+
+
 ## Installation
 
 ```sh
