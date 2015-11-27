@@ -1,0 +1,31 @@
+{
+  "name": "@blinkmobile/cli",
+  "version": "1.0.0",
+  "description": "primary entry point for our CLI tools",
+  "bin": {
+    "blinkmobile": "bin/index.js",
+    "blinkmobile-list-commands": "bin/list-commands.js",
+    "bm": "bin/index.js"
+  },
+  "scripts": {
+    "test": "node -c index.js && node -c bin/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blinkmobile/cli.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/blinkmobile/cli/issues"
+  },
+  "homepage": "https://github.com/blinkmobile/cli#readme",
+  "engines": {
+    "node": ">=4.0.0",
+    "npm": ">=3.0.0"
+  },
+  "dependencies": {
+    "graceful-fs": "4.1.2"
+  }
+}
