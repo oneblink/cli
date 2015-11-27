@@ -8,7 +8,7 @@
     "bm": "bin/index.js"
   },
   "scripts": {
-    "test": "node -c index.js && node -c bin/index.js"
+    "test": "eslint --fix ."
   },
   "repository": {
     "type": "git",
