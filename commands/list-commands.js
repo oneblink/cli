@@ -8,7 +8,7 @@ const list = require('../lib/commands').list;
 
 list()
   .then((commands) => {
-    console.log('blinkmobile list-commands\n\navailable commands:');
+    console.log('blinkm list-commands\n\navailable commands:');
     commands.forEach((command) => {
       console.log(`  ${command}`);
     });

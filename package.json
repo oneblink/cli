@@ -3,8 +3,8 @@
   "version": "1.0.1",
   "description": "primary entry point for our CLI tools",
   "bin": {
-    "blinkmobile": "bin/index.js",
-    "blinkmobile-list-commands": "bin/list-commands.js",
+    "blinkm": "bin/index.js",
+    "blinkm-list-commands": "bin/list-commands.js",
     "bm": "bin/index.js"
   },
   "scripts": {

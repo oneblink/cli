@@ -22,7 +22,7 @@ npm install -g @blinkmobile/cli
 ## Usage
 
 ```sh
-blinkmobile list-commands
+blinkm list-commands
 
 # shorter "bm" for convenience
 bm list-commands

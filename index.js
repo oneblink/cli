@@ -33,7 +33,7 @@ if (command === 'list-commands') {
   return;
 }
 
-childProcess.spawn(`blinkmobile-${command}`, process.argv.slice(3), {
+childProcess.spawn(`blinkm-${command}`, process.argv.slice(3), {
   cwd: process.cwd(),
   detached: false,
   env: process.env,
