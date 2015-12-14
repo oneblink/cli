@@ -35,4 +35,5 @@ bm list-commands
 
 Other commands are available separately:
 
+- [`acf`](https://github.com/blinkmobile/appcache-fetcher.js) (AppCache Fetcher)
 - [`surge`](https://github.com/blinkmobile/surge-cli)
