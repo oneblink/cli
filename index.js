@@ -8,8 +8,15 @@ const path = require('path');
 // foreign modules
 
 const parseArgs = require('minimist');
+const updateNotifier = require('update-notifier');
+
+// local modules
+
+const pkg = require('./package.json');
 
 // this module
+
+updateNotifier({pkg}).notify();
 
 const args = process.argv.slice(2);
 const cmd = path.basename(process.argv[1]);

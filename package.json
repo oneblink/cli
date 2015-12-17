@@ -27,7 +27,8 @@
   },
   "dependencies": {
     "graceful-fs": "4.1.2",
-    "minimist": "1.2.0"
+    "minimist": "1.2.0",
+    "update-notifier": "0.6.0"
   },
   "devDependencies": {
     "eslint": "1.10.1"
