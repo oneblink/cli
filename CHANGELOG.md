@@ -9,8 +9,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Added
 
-- [update-notifier](https://www.npmjs.com/package/update-notifier) integration
+- [update-notifier](https://www.npmjs.com/package/update-notifier) integration (#1)
 
+
+## Fixed
+
+- `bm list-commands` works even when PATH contains bad entries in PATH (#2)
 
 
 ## [1.0.2] - 2015-12-01
