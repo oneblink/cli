@@ -7,6 +7,7 @@ const path = require('path');
 
 // foreign modules
 
+const argvOne = require('argv-one');
 const parseArgs = require('minimist');
 const updateNotifier = require('update-notifier');
 
@@ -18,10 +19,9 @@ const pkg = require('./package.json');
 
 updateNotifier({pkg}).notify();
 
-const args = process.argv.slice(2);
-const cmd = path.basename(process.argv[1]);
+const cmd = path.basename(argvOne({ argv: process.argv, pkg }));
 
-const parsedArgs = parseArgs(args);
+const parsedArgs = parseArgs(process.argv.slice(2));
 
 function showHelp () {
   console.log(`usage:\n  ${cmd} <command> ...\n`);

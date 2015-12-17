@@ -16,6 +16,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 - `bm list-commands` works even when PATH contains bad entries in PATH (#2)
 
+- attempt to improve self-references in help output on Windows (#3)
+
 
 ## [1.0.2] - 2015-12-01
 
