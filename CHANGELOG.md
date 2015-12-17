@@ -4,15 +4,25 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [Unreleased]
+
+
+### Fixed
+
+- `bm list-commands` ignore file extensions when listing unique commands (#4)
+
+    - this prevents both (e.g.) "acf" and "acf.cmd" from showing up Windows
+
+
 ## [1.1.0] - 2015-12-17
 
 
-## Added
+### Added
 
 - [update-notifier](https://www.npmjs.com/package/update-notifier) integration (#1)
 
 
-## Fixed
+### Fixed
 
 - `bm list-commands` works even when PATH contains bad entries in PATH (#2)
 
