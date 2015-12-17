@@ -2,7 +2,6 @@
 
 // Node.js built-ins
 
-const childProcess = require('child_process');
 const path = require('path');
 
 // foreign modules
@@ -13,6 +12,7 @@ const updateNotifier = require('update-notifier');
 
 // local modules
 
+const exec = require('./lib/commands').exec;
 const pkg = require('./package.json');
 
 // this module
@@ -40,13 +40,8 @@ if (command === 'list-commands') {
   return;
 }
 
-childProcess.spawn(`blinkm-${command}`, process.argv.slice(3), {
-  cwd: process.cwd(),
-  detached: false,
-  env: process.env,
-  stdio: 'inherit'
-})
-  .on('error', (err) => {
+exec(command)
+  .catch((err) => {
     if (err && err.code === 'ENOENT') {
       console.error(`Error: "${command}" is not an available ${cmd} command\n`);
       showHelp();
