@@ -9,6 +9,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+- `bm <plugin>` (e.g. `bm acf`) works on Windows (#5)
+
 - `bm list-commands` ignore file extensions when listing unique commands (#4)
 
     - this prevents both (e.g.) "acf" and "acf.cmd" from showing up Windows

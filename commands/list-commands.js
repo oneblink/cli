@@ -1,5 +1,9 @@
 'use strict';
 
+// Node.js built-ins
+
+const path = require('path');
+
 // local modules
 
 const list = require('../lib/commands').list;
@@ -9,9 +13,12 @@ const list = require('../lib/commands').list;
 list()
   .then((commands) => {
     console.log('blinkm list-commands\n\navailable commands:');
-    commands.forEach((command) => {
-      console.log(`  ${command}`);
-    });
+    commands
+      .map((c) => path.basename(c, path.extname(c)))
+      .map((c) => c.replace(/^blinkm-/, ''))
+      .forEach((command) => {
+        console.log(`  ${command}`);
+      });
   })
   .catch((err) => {
     console.error(err);
