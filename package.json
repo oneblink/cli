@@ -34,7 +34,7 @@
     "update-notifier": "0.6.0"
   },
   "devDependencies": {
-    "ava": "^0.8.0",
+    "ava": "^0.11.0",
     "eslint": "^1.10.1"
   },
   "files": [
