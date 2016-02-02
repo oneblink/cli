@@ -1,7 +1,17 @@
-# Changelog
+# Change Log
 
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
+
+
+## [1.1.2] - 2016-02-03
+
+
+### Fixed
+
+- now works in Node.js 4.x LTS (#7, @jokeyrhyme)
+
+    - HelpDesk: 5592-WEGJ-0376
 
 
 ## [1.1.1] - 2015-12-21
