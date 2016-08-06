@@ -35,7 +35,7 @@
     "update-notifier": "0.6.0"
   },
   "devDependencies": {
-    "ava": "^0.11.0",
+    "ava": "^0.16.0",
     "eslint": "^1.10.1",
     "greenkeeper-postpublish": "^1.0.0"
   },
