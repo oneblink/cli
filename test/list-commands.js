@@ -21,7 +21,7 @@ test('does not throw when PATH includes inaccessible entries', (t) => {
   process.env.PATH = path.join(__dirname, 'does', 'not', 'exist');
   return list()
     .then((commands) => {
-      t.ok(Array.isArray(commands));
+      t.truthy(Array.isArray(commands));
     })
     .catch((err) => {
       t.ifError(err);
@@ -29,7 +29,7 @@ test('does not throw when PATH includes inaccessible entries', (t) => {
 });
 
 test('filterBlinkm(): skips duplicate entries', (t) => {
-  t.same(
+  t.deepEqual(
     filterBlinkm([ 'blinkm-abc', 'blinkm-def', 'blinkm-abc', 'ghi' ]),
     [ 'blinkm-abc', 'blinkm-def' ]
   );
