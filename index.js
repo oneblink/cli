@@ -30,14 +30,14 @@ function showHelp () {
 
 if (!parsedArgs._.length) {
   showHelp();
-  return;
+  process.exit(0);
 }
 
 const command = parsedArgs._[0];
 
 if (command === 'list-commands') {
   require('./commands/list-commands');
-  return;
+  process.exit(0);
 }
 
 exec(command)
