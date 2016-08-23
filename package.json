@@ -27,7 +27,7 @@
     "npm": ">=3.0.0"
   },
   "dependencies": {
-    "argv-one": "1.0.0",
+    "argv-one": "1.0.1",
     "execa": "0.4.0",
     "graceful-fs": "4.1.5",
     "is-executable": "1.0.1",
