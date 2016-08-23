@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## 1.1.3 - 2016-08-23
+
+
+### Changed
+
+- CLI-2: updated to [argv-one 1.0.1](https://github.com/jokeyrhyme/argv-one.js/releases/tag/1.0.1) for fixes (#18, @mymattcarroll)
+
+
 ## [1.1.2] - 2016-02-03
 
 
