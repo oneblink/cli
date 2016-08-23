@@ -1,4 +1,4 @@
-# cli
+# cli [![AppVeyor Status](https://ci.appveyor.com/api/projects/status/github/blinkmobile/cli?branch=master&svg=true)](https://ci.appveyor.com/project/blinkmobile/cli) [![Travis CI Status](https://travis-ci.org/blinkmobile/cli.svg?branch=master)](https://travis-ci.org/blinkmobile/cli)
 
 primary entry point for our CLI tools
 

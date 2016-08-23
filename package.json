@@ -1,30 +1,14 @@
 {
   "name": "@blinkmobile/cli",
-  "version": "1.1.3",
   "description": "primary entry point for our CLI tools",
+  "version": "1.1.3",
   "bin": {
     "blinkm": "bin/index.js",
     "blinkm-list-commands": "bin/list-commands.js",
     "bm": "bin/index.js"
   },
-  "scripts": {
-    "test": "eslint --fix . && ava",
-    "postpublish": "greenkeeper-postpublish"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/blinkmobile/cli.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/blinkmobile/cli/issues"
-  },
-  "homepage": "https://github.com/blinkmobile/cli#readme",
-  "engines": {
-    "node": ">=4.0.0",
-    "npm": ">=3.0.0"
   },
   "dependencies": {
     "argv-one": "1.0.1",
@@ -36,13 +20,45 @@
   },
   "devDependencies": {
     "ava": "^0.16.0",
-    "eslint": "^3.2.2",
+    "eslint": "^3.3.1",
+    "eslint-config-semistandard": "7.0.0-beta.0",
+    "eslint-config-standard": "^6.0.0-beta.3",
+    "eslint-plugin-promise": "^2.0.1",
+    "eslint-plugin-standard": "^2.0.0",
+    "fixpack": "^2.3.1",
+    "flow-bin": "^0.31.1",
     "greenkeeper-postpublish": "^1.0.0"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "engines": {
+    "node": ">=4.0.0",
+    "npm": ">=3.0.0"
   },
   "files": [
     "bin",
     "commands",
     "lib",
     "index.js"
-  ]
+  ],
+  "homepage": "https://github.com/blinkmobile/cli#readme",
+  "keywords": [],
+  "license": "BSD-3-Clause",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blinkmobile/cli.git"
+  },
+  "scripts": {
+    "ava": "ava",
+    "eslint": "eslint --fix --cache .",
+    "fixpack": "fixpack",
+    "flow_check": "flow check || exit 0",
+    "postpublish": "greenkeeper-postpublish",
+    "posttest": "npm run eslint && npm run flow_check && npm run fixpack",
+    "test": "npm run ava"
+  }
 }

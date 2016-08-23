@@ -12,12 +12,12 @@ const test = require('ava');
 // local modules
 
 test('blinkm', () => {
-  return execa.spawn('node', [ path.join(__dirname, '..', 'bin') ])
+  return execa.spawn('node', [ path.join(__dirname, '..', 'bin') ]);
 });
 
 test('blinkm list-commands', () => {
   return execa.spawn('node', [
     path.join(__dirname, '..', 'bin'),
     'list-commands'
-  ])
+  ]);
 });

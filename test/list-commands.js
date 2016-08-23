@@ -50,7 +50,6 @@ test('find(): OS X / Linux style', (t) => {
 });
 
 if (isWindows) {
-
   const binPathWindows = 'C:\\Users\\user\\AppData\\Roaming\\npm';
 
   test('find(): Windows style', (t) => {
@@ -64,5 +63,4 @@ if (isWindows) {
       `${binPathWindows}\\blinkm-def.cmd`
     );
   });
-
 }
