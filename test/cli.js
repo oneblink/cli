@@ -7,9 +7,12 @@ const path = require('path');
 // foreign modules
 
 const execa = require('execa');
+const npmBinTester = require('npm-bin-ava-tester');
 const test = require('ava');
 
 // local modules
+
+npmBinTester(test);
 
 test('blinkm', () => {
   return execa.spawn('node', [ path.join(__dirname, '..', 'bin') ]);
