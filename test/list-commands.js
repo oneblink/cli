@@ -35,19 +35,21 @@ test('filterBlinkm(): skips duplicate entries', (t) => {
   );
 });
 
-const binPathNixes = '/usr/local/bin';
+if (!isWindows) {
+  const binPathNixes = '/usr/local/bin';
 
-test('find(): OS X / Linux style', (t) => {
-  t.is(
-    find('blinkm-def', [
-      `${binPathNixes}/blinkm-abc`,
-      `${binPathNixes}/blinkm-def.abc`,
-      `${binPathNixes}/blinkm-def`,
-      `${binPathNixes}/blinkm-ghi`
-    ]),
-    `${binPathNixes}/blinkm-def`
-  );
-});
+  test('find(): OS X / Linux style', (t) => {
+    t.is(
+      find('blinkm-def', [
+        `${binPathNixes}/blinkm-abc`,
+        `${binPathNixes}/blinkm-def.abc`,
+        `${binPathNixes}/blinkm-def`,
+        `${binPathNixes}/blinkm-ghi`
+      ]),
+      `${binPathNixes}/blinkm-def`
+    );
+  });
+}
 
 if (isWindows) {
   const binPathWindows = 'C:\\Users\\user\\AppData\\Roaming\\npm';
