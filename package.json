@@ -13,7 +13,7 @@
   "dependencies": {
     "argv-one": "1.0.1",
     "execa": "0.4.0",
-    "graceful-fs": "4.1.8",
+    "graceful-fs": "4.1.9",
     "is-executable": "1.0.1",
     "minimist": "1.2.0",
     "update-notifier": "^1.0.2"
