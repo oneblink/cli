@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+
+### Fixed
+
+- CLI-8: Fixed commands not exiting with correct code when errors are thrown
+
 
 ## 1.1.3 - 2016-08-23
 
