@@ -45,6 +45,6 @@ exec(command)
     if (err && err.code === 'ENOENT') {
       console.error(`Error: "${command}" is not an available ${cmd} command\n`);
       showHelp();
-      process.exit(1);
     }
+    process.exit(1);
   });
