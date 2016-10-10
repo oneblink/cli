@@ -7,7 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-- CLI-8: Fixed commands not exiting with correct code when errors are thrown
+- CLI-8: Fixed commands exiting with incorrect code when errors are thrown
 
 
 ## 1.1.3 - 2016-08-23
