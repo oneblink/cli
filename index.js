@@ -37,14 +37,13 @@ const command = parsedArgs._[0];
 
 if (command === 'list-commands') {
   require('./commands/list-commands');
-  process.exit(0);
+} else {
+  exec(command)
+    .catch((err) => {
+      if (err && err.code === 'ENOENT') {
+        console.error(`Error: "${command}" is not an available ${cmd} command\n`);
+        showHelp();
+      }
+      process.exit(1);
+    });
 }
-
-exec(command)
-  .catch((err) => {
-    if (err && err.code === 'ENOENT') {
-      console.error(`Error: "${command}" is not an available ${cmd} command\n`);
-      showHelp();
-    }
-    process.exit(1);
-  });
