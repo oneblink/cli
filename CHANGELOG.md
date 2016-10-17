@@ -7,7 +7,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-- CLI-8: Fixed commands exiting with incorrect code when errors are thrown
+- CLI-8: Commands exiting with incorrect code when errors are thrown
+
+- CLI-9: `bm list-commands` exiting before logging available commands 
 
 
 ## 1.1.3 - 2016-08-23
