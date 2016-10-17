@@ -44,6 +44,6 @@ if (command === 'list-commands') {
         console.error(`Error: "${command}" is not an available ${cmd} command\n`);
         showHelp();
       }
-      process.exit(1);
+      process.exitCode = 1;
     });
 }
