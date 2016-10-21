@@ -16,7 +16,8 @@
     "graceful-fs": "4.1.9",
     "is-executable": "1.0.1",
     "minimist": "1.2.0",
-    "update-notifier": "^1.0.2"
+    "package-engines-notifier": "1.0.0",
+    "update-notifier": "1.0.2"
   },
   "devDependencies": {
     "ava": "^0.16.0",
