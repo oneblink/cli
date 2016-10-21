@@ -8,7 +8,6 @@ const path = require('path');
 
 const argvOne = require('argv-one');
 const parseArgs = require('minimist');
-const updateNotifier = require('update-notifier');
 
 // local modules
 
@@ -16,8 +15,6 @@ const exec = require('./lib/commands').exec;
 const pkg = require('./package.json');
 
 // this module
-
-updateNotifier({pkg}).notify();
 
 const cmd = path.basename(argvOne({ argv: process.argv, pkg }));
 
