@@ -3,13 +3,32 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+
+## Unreleased
+
+
+### Added
+
+-   immediately stop execution if user's Node.js version doesn't match our package.json "engines"
+
+-   tell users (via [package-engines-notifier](https://github.com/jokeyrhyme/package-engines-notifier.js)) if their Node.js doesn't match our package.json "engines"
+
+  -   no message yet, as 4.x is our minimum, but there _will_ be a message if we increase this
+
+-   tell users (via [update-nodejs-notifier](https://github.com/jokeyrhyme/update-nodejs-notifier.js)) if the major version of their Node.js is older than the current stable
+
+  -   e.g. if users are on 4.x or 5.x, and 6.x  or 7.x available, then they will be notified
+
+  -   execution continues, this is just a warning
+
+
 ## 1.1.4 - 2016-10-17
 
 ### Fixed
 
 - CLI-8: Commands exiting with incorrect code when errors are thrown
 
-- CLI-9: `bm list-commands` exiting before logging available commands 
+- CLI-9: `bm list-commands` exiting before logging available commands
 
 
 ## 1.1.3 - 2016-08-23
