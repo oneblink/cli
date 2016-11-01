@@ -14,7 +14,7 @@ const pkg = require('../package.json');
 
 updateNotifier({ pkg: pkg }).notify();
 
-updateNodejsNotifier();
+updateNodejsNotifier({ daysOld: 90 });
 
 if (!enginesNotify({ pkg: pkg })) {
   // no engine trouble, proceed :)
