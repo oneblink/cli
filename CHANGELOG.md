@@ -7,6 +7,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
 
+## 1.2.0 - 2016-11-01
+
+
 ### Added
 
 -   immediately stop execution if user's Node.js version doesn't match our package.json "engines"
