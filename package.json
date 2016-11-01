@@ -2,6 +2,7 @@
   "name": "@blinkmobile/cli",
   "description": "primary entry point for our CLI tools",
   "version": "1.1.4",
+  "author": "Ron Waldon <jokeyrhyme@gmail.com> (https://github.com/jokeyrhyme)",
   "bin": {
     "blinkm": "bin/index.js",
     "blinkm-list-commands": "bin/list-commands.js",
@@ -16,15 +17,18 @@
     "graceful-fs": "4.1.9",
     "is-executable": "1.0.1",
     "minimist": "1.2.0",
-    "update-notifier": "^1.0.2"
+    "package-engines-notifier": "1.1.0",
+    "update-nodejs-notifier": "1.1.0",
+    "update-notifier": "1.0.2"
   },
   "devDependencies": {
     "ava": "^0.16.0",
-    "eslint": "^3.3.1",
+    "eslint": "^3.9.1",
     "eslint-config-semistandard": "^7.0.0",
-    "eslint-config-standard": "^6.0.0",
-    "eslint-plugin-promise": "^3.0.0",
-    "eslint-plugin-standard": "^2.0.0",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-plugin-node": "^3.0.0",
+    "eslint-plugin-promise": "^3.3.0",
+    "eslint-plugin-standard": "^2.0.1",
     "fixpack": "^2.3.1",
     "flow-bin": "^0.34.0",
     "greenkeeper-postpublish": "^1.0.0",
@@ -46,6 +50,7 @@
   "homepage": "https://github.com/blinkmobile/cli#readme",
   "keywords": [],
   "license": "BSD-3-Clause",
+  "main": "index.js",
   "publishConfig": {
     "access": "public"
   },
@@ -57,7 +62,7 @@
     "ava": "ava",
     "eslint": "eslint --fix --cache .",
     "fixpack": "fixpack",
-    "flow_check": "flow check || exit 0",
+    "flow_check": "flow check",
     "postpublish": "greenkeeper-postpublish",
     "posttest": "npm run eslint && npm run flow_check && npm run fixpack",
     "test": "npm run ava"

@@ -8,7 +8,6 @@ const path = require('path');
 
 const argvOne = require('argv-one');
 const parseArgs = require('minimist');
-const updateNotifier = require('update-notifier');
 
 // local modules
 
@@ -16,8 +15,6 @@ const exec = require('./lib/commands').exec;
 const pkg = require('./package.json');
 
 // this module
-
-updateNotifier({pkg}).notify();
 
 const cmd = path.basename(argvOne({ argv: process.argv, pkg }));
 
@@ -30,20 +27,20 @@ function showHelp () {
 
 if (!parsedArgs._.length) {
   showHelp();
-  process.exit(0);
-}
-
-const command = parsedArgs._[0];
-
-if (command === 'list-commands') {
-  require('./commands/list-commands');
+  process.exitCode = 0;
 } else {
-  exec(command)
-    .catch((err) => {
-      if (err && err.code === 'ENOENT') {
-        console.error(`Error: "${command}" is not an available ${cmd} command\n`);
-        showHelp();
-      }
-      process.exitCode = 1;
-    });
+  const command = parsedArgs._[0];
+
+  if (command === 'list-commands') {
+    require('./commands/list-commands');
+  } else {
+    exec(command)
+      .catch((err) => {
+        if (err && err.code === 'ENOENT') {
+          console.error(`Error: "${command}" is not an available ${cmd} command\n`);
+          showHelp();
+        }
+        process.exitCode = 1;
+      });
+  }
 }
