@@ -1,6 +1,7 @@
 {
   "extends": [
     "eslint:recommended",
+    "plugin:node/recommended",
     "semistandard"
   ],
   "env": {
@@ -9,5 +10,8 @@
   },
   "rules": {
     "no-console": 0
-  }
+  },
+  "plugins": [
+    "node"
+  ]
 }
