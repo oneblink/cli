@@ -32,7 +32,7 @@
     "fixpack": "^2.3.1",
     "flow-bin": "^0.34.0",
     "greenkeeper-postpublish": "^1.0.0",
-    "npm-bin-ava-tester": "^1.0.0"
+    "npm-bin-ava-tester": "^1.1.0"
   },
   "directories": {
     "test": "test"
