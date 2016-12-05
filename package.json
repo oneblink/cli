@@ -19,7 +19,7 @@
     "minimist": "1.2.0",
     "package-engines-notifier": "1.1.0",
     "update-nodejs-notifier": "1.1.0",
-    "update-notifier": "1.0.2"
+    "update-notifier": "1.0.3"
   },
   "devDependencies": {
     "ava": "^0.17.0",
