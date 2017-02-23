@@ -7,6 +7,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
 
+### Fixed
+
+-   CLI-11: remove extra "command unavailable" error when a command fails
+
+
 ## 1.2.0 - 2016-11-01
 
 

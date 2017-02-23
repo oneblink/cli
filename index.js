@@ -36,7 +36,7 @@ if (!parsedArgs._.length) {
   } else {
     exec(command)
       .catch((err) => {
-        if (err && err.code === 'ENOENT') {
+        if (err && err.message === 'ENOENT') {
           console.error(`Error: "${command}" is not an available ${cmd} command\n`);
           showHelp();
         }
