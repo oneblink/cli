@@ -1,3 +1,4 @@
+/* @flow */
 'use strict';
 
 // Node.js built-ins
@@ -32,7 +33,7 @@ const MODULES_BIN_PATH = path.join(__dirname, '..', 'node_modules', '.bin');
 // we're going to pretend that the "ava" executable is a `bm` command
 const oldEnvPath = process.env.PATH;
 test.before(() => {
-  process.env.PATH = `${MODULES_BIN_PATH}:${process.env.PATH}`;
+  process.env.PATH = `${MODULES_BIN_PATH}:${process.env.PATH || ''}`;
   copyExeSync(
     path.join(MODULES_BIN_PATH, 'ava'),
     path.join(MODULES_BIN_PATH, 'blinkm-ava')
