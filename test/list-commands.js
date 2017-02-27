@@ -1,3 +1,4 @@
+/* @flow */
 'use strict';
 
 // Node.js built-ins
@@ -11,7 +12,7 @@ const test = require('ava');
 
 // local modules
 
-const { filterBlinkm, list, find } = require('../lib/commands');
+const { filterBlinkm, list, find } = require('../lib/commands.js');
 
 // this module
 
