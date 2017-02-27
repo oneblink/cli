@@ -1,7 +1,7 @@
 {
   "name": "@blinkmobile/cli",
   "description": "primary entry point for our CLI tools",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": "Ron Waldon <jokeyrhyme@gmail.com> (https://github.com/jokeyrhyme)",
   "bin": {
     "blinkm": "bin/index.js",

@@ -7,9 +7,23 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
 
+## 1.2.1 - 2017-02-27
+
+
 ### Fixed
 
 -   CLI-11: remove extra "command unavailable" error when a command fails
+
+
+### Changed
+
+-   update [execa](https://www.npmjs.com/package/execa) to 0.6.0 (from 0.5.0)
+
+-   update [graceful-fs](https://www.npmjs.com/package/graceful-fs) to 4.1.11 (from 4.1.9)
+
+-   update [update-nodejs-notifier](https://www.npmjs.com/package/update-nodejs-notifier) to [1.1.1](https://github.com/jokeyrhyme/update-nodejs-notifier.js/blob/master/CHANGELOG.md) (from [1.1.0](https://github.com/jokeyrhyme/update-nodejs-notifier.js/blob/master/CHANGELOG.md))
+
+-   update [update-notifier](https://www.npmjs.com/package/update-notifier) to 2.1.0 (from [1.0.2](https://github.com/yeoman/update-notifier/releases/tag/v1.0.2))
 
 
 ## 1.2.0 - 2016-11-01
