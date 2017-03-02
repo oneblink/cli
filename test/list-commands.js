@@ -1,43 +1,43 @@
 /* @flow */
-'use strict';
+'use strict'
 
 // Node.js built-ins
 
-const os = require('os');
-const path = require('path');
+const os = require('os')
+const path = require('path')
 
 // foreign modules
 
-const test = require('ava');
+const test = require('ava')
 
 // local modules
 
-const { filterBlinkm, list, find } = require('../lib/commands.js');
+const { filterBlinkm, list, find } = require('../lib/commands.js')
 
 // this module
 
-const isWindows = os.type().indexOf('Windows') === 0;
+const isWindows = os.type().indexOf('Windows') === 0
 
 test('does not throw when PATH includes inaccessible entries', (t) => {
-  process.env.PATH = path.join(__dirname, 'does', 'not', 'exist');
+  process.env.PATH = path.join(__dirname, 'does', 'not', 'exist')
   return list()
     .then((commands) => {
-      t.truthy(Array.isArray(commands));
+      t.truthy(Array.isArray(commands))
     })
     .catch((err) => {
-      t.ifError(err);
-    });
-});
+      t.ifError(err)
+    })
+})
 
 test('filterBlinkm(): skips duplicate entries', (t) => {
   t.deepEqual(
     filterBlinkm([ 'blinkm-abc', 'blinkm-def', 'blinkm-abc', 'ghi' ]),
     [ 'blinkm-abc', 'blinkm-def' ]
-  );
-});
+  )
+})
 
 if (!isWindows) {
-  const binPathNixes = '/usr/local/bin';
+  const binPathNixes = '/usr/local/bin'
 
   test('find(): OS X / Linux style', (t) => {
     t.is(
@@ -48,12 +48,12 @@ if (!isWindows) {
         `${binPathNixes}/blinkm-ghi`
       ]),
       `${binPathNixes}/blinkm-def`
-    );
-  });
+    )
+  })
 }
 
 if (isWindows) {
-  const binPathWindows = 'C:\\Users\\user\\AppData\\Roaming\\npm';
+  const binPathWindows = 'C:\\Users\\user\\AppData\\Roaming\\npm'
 
   test('find(): Windows style', (t) => {
     t.is(
@@ -64,6 +64,6 @@ if (isWindows) {
         `${binPathWindows}\\ghi.cmd`
       ]),
       `${binPathWindows}\\blinkm-def.cmd`
-    );
-  });
+    )
+  })
 }

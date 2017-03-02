@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-require('../commands/list-commands');
+require('../commands/list-commands')

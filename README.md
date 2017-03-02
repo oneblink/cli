@@ -1,10 +1,6 @@
-# cli [![AppVeyor Status](https://ci.appveyor.com/api/projects/status/github/blinkmobile/cli?branch=master&svg=true)](https://ci.appveyor.com/project/blinkmobile/cli) [![Travis CI Status](https://travis-ci.org/blinkmobile/cli.svg?branch=master)](https://travis-ci.org/blinkmobile/cli)
+# cli [![npm module](https://img.shields.io/npm/v/@blinkmobile/cli.svg)](https://www.npmjs.com/package/@blinkmobile/cli) [![AppVeyor Status](https://ci.appveyor.com/api/projects/status/github/blinkmobile/cli?branch=master&svg=true)](https://ci.appveyor.com/project/blinkmobile/cli) [![Travis CI Status](https://travis-ci.org/blinkmobile/cli.svg?branch=master)](https://travis-ci.org/blinkmobile/cli) [![Greenkeeper badge](https://badges.greenkeeper.io/blinkmobile/cli.svg)](https://greenkeeper.io/)
 
 primary entry point for our CLI tools
-
-[![npm module](https://img.shields.io/npm/v/@blinkmobile/cli.svg)](https://www.npmjs.com/package/@blinkmobile/cli)
-[![Build Status](https://travis-ci.org/blinkmobile/cli.png)](https://travis-ci.org/blinkmobile/cli)
-
 
 ## Requirements
 

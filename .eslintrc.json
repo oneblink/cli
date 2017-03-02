@@ -2,7 +2,7 @@
   "extends": [
     "eslint:recommended",
     "plugin:node/recommended",
-    "semistandard"
+    "standard"
   ],
   "env": {
     "node": true,
