@@ -24,7 +24,8 @@
   "devDependencies": {
     "ava": "^0.18.0",
     "eslint": "^3.13.1",
-    "eslint-config-standard": "^8.0.0",
+    "eslint-config-standard": "^10.0.0",
+    "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-node": "^4.0.0",
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-standard": "^2.0.1",
@@ -62,7 +63,7 @@
     "fixpack": "fixpack",
     "flow_check": "flow check",
     "posttest": "npm run eslint && npm run flow_check",
-    "test": "npm run ava",
-    "pretest": "npm run fixpack"
+    "pretest": "npm run fixpack",
+    "test": "npm run ava"
   }
 }
