@@ -30,7 +30,6 @@
     "eslint-plugin-standard": "^2.0.1",
     "fixpack": "^2.3.1",
     "flow-bin": "^0.43.0",
-    "greenkeeper-postpublish": "^1.0.0",
     "npm-bin-ava-tester": "^1.1.0"
   },
   "directories": {
@@ -62,8 +61,8 @@
     "eslint": "eslint --fix --cache .",
     "fixpack": "fixpack",
     "flow_check": "flow check",
-    "postpublish": "greenkeeper-postpublish",
-    "posttest": "npm run eslint && npm run flow_check && npm run fixpack",
-    "test": "npm run ava"
+    "posttest": "npm run eslint && npm run flow_check",
+    "test": "npm run ava",
+    "pretest": "npm run fixpack"
   }
 }
