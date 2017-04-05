@@ -24,13 +24,13 @@
   "devDependencies": {
     "ava": "^0.18.0",
     "eslint": "^3.13.1",
-    "eslint-config-standard": "^7.0.0",
+    "eslint-config-standard": "^10.0.0",
+    "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-node": "^4.0.0",
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-standard": "^2.0.1",
     "fixpack": "^2.3.1",
     "flow-bin": "^0.43.0",
-    "greenkeeper-postpublish": "^1.0.0",
     "npm-bin-ava-tester": "^1.1.0"
   },
   "directories": {
@@ -62,8 +62,8 @@
     "eslint": "eslint --fix --cache .",
     "fixpack": "fixpack",
     "flow_check": "flow check",
-    "postpublish": "greenkeeper-postpublish",
-    "posttest": "npm run eslint && npm run flow_check && npm run fixpack",
+    "posttest": "npm run eslint && npm run flow_check",
+    "pretest": "npm run fixpack",
     "test": "npm run ava"
   }
 }
