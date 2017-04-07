@@ -62,12 +62,14 @@ test('list() includes blinkm-ava', (t) => {
     })
 })
 
-test('blinkm', () => {
+test('blinkm', (t) => {
   return execa('node', [ BIN_PATH ])
+    .then(() => t.pass())
 })
 
-test('blinkm list-commands', () => {
+test('blinkm list-commands', (t) => {
   return execa('node', [ BIN_PATH, 'list-commands' ])
+    .then(() => t.pass())
 })
 
 test('blinkm does-not-exist (exit code 1)', (t) => {
