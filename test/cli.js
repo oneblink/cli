@@ -28,6 +28,10 @@ const isWindows = os.type().indexOf('Windows') === 0
 npmBinTester(test)
 
 const BIN_PATH = path.join(__dirname, '..', 'bin')
+const EXECA_OPTIONS = {
+  preferLocal: true,
+  localDir: path.join(__dirname, '..')
+}
 const MODULES_BIN_PATH = path.join(__dirname, '..', 'node_modules', '.bin')
 
 // we're going to pretend that the "ava" executable is a `bm` command
@@ -83,7 +87,7 @@ test('blinkm does-not-exist (exit code 1)', (t) => {
 })
 
 test('blinkm ava --version (exit code 0)', (t) => {
-  const child = execa('node', [ BIN_PATH, 'ava', '--version' ])
+  const child = execa('ava', ['--version'], EXECA_OPTIONS)
   return child
     .then(() => {
       t.is(child.exitCode, 0)
@@ -91,7 +95,7 @@ test('blinkm ava --version (exit code 0)', (t) => {
 })
 
 test('blinkm ava ./test/does-not-exist.js (exit code 1)', (t) => {
-  const child = execa('node', [ BIN_PATH, 'ava', './test/does-not-exist.js' ])
+  const child = execa('ava', ['./test/does-not-exist.js'], EXECA_OPTIONS)
   return child
     .then(() => t.fail('unexpected resolve'))
     .catch((err) => {
