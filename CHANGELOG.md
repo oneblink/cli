@@ -6,6 +6,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## 1.3.0 - 2017-10-19
+
+### Changed
+
+-   update [execa](https://www.npmjs.com/package/execa) to 0.8.0 (from 0.6.0)
+
+-   no longer depend upon [update-nodejs-notifier](https://www.npmjs.com/package/update-nodejs-notifier)
+
+-   update [update-notifier](https://www.npmjs.com/package/update-notifier) to 2.3.0 (from 2.1.0)
 
 ## 1.2.1 - 2017-02-27
 
