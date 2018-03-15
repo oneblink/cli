@@ -17,7 +17,7 @@
   ],
   "dependencies": {
     "argv-one": "1.0.1",
-    "execa": "0.9.0",
+    "execa": "0.10.0",
     "graceful-fs": "4.1.11",
     "is-executable": "1.0.1",
     "minimist": "1.2.0",
