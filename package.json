@@ -22,7 +22,7 @@
     "is-executable": "1.0.1",
     "minimist": "1.2.0",
     "package-engines-notifier": "1.1.0",
-    "update-notifier": "2.3.0"
+    "update-notifier": "2.4.0"
   },
   "devDependencies": {
     "ava": "^0.25.0",
