@@ -1,6 +1,5 @@
 {
   "rules": {
-    "node/no-unpublished-require": 0,
-    "node/no-unsupported-features": 0
+    "node/no-unpublished-require": 0
   }
 }
