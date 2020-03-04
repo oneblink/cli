@@ -5,9 +5,7 @@ environment:
     - nodejs_version: '12'
 install:
   - ps: 'Install-Product node $env:nodejs_version x64'
-  - npm install --global npm-windows-upgrade
-  - npm-windows-upgrade --no-spinner --npm-version 6.x.x
-  - npm install
+  - npm ci
 test_script:
   - node --version
   - npm --version
