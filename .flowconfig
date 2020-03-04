@@ -1,11 +1,15 @@
 [ignore]
-<PROJECT_ROOT>/.nyc_output/.*
 <PROJECT_ROOT>/build/.*
 <PROJECT_ROOT>/coverage/.*
 <PROJECT_ROOT>/dist/.*
-<PROJECT_ROOT>/node_modules/babel.*
-<PROJECT_ROOT>/node_modules/y18n/test/.*
-<PROJECT_ROOT>/node_modules/\.cache/.*
+<PROJECT_ROOT>/node_modules/.*
+
+[include]
+
+[libs]
+flow-typed/
 
 [options]
+module.file_ext=.js
+module.file_ext=.json
 suppress_comment= \\(.\\|\n\\)*\\$FlowFixMe

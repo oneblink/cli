@@ -1,8 +1,7 @@
 language: node_js
 node_js:
-  - '4'
-  - '6'
-  - '7'
+  - '10'
+  - '12'
 sudo: false
 env:
   global:
@@ -14,6 +13,5 @@ addons:
     packages:
       - g++-4.8
 install:
-  - npm install --global npm
-  - npm install --global yarn
-  - npm install
+  - npm install --global npm@6.x.x
+  - npm ci
