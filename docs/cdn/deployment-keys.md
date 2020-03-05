@@ -18,5 +18,5 @@ To use a deployment key pair, sett the following environment variables before ru
 ```
 export BLINKM_ACCESS_KEY=123456abcdef
 export BLINKM_ACCESS_KEY=abcdefghijklmnopqrst0123456789abcdefghij
-bm client deploy
+oneblink cdn deploy
 ```
