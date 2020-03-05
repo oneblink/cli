@@ -7,7 +7,8 @@
     "files": [
       "test/**/*",
       "!test/api/fixtures/**/*",
-      "!test/api/helpers/**/*"
+      "!test/api/helpers/**/*",
+      "!test/identity/helpers/**/*"
     ]
   },
   "bin": {
@@ -24,11 +25,11 @@
   "dependencies": {
     "@blinkmobile/aws-s3": "2.2.0",
     "@blinkmobile/blinkmrc": "2.0.0",
-    "@blinkmobile/bm-identity": "5.1.0-beta.1",
     "@jokeyrhyme/pify-fs": "1.0.1",
     "archiver": "3.1.1",
     "argv-one": "1.0.1",
     "aws-sdk": "2.600.0",
+    "base64url": "3.0.1",
     "boom": "7.3.0",
     "chalk": "3.0.0",
     "cli-table2": "0.2.0",
@@ -44,6 +45,7 @@
     "meow": "6.0.1",
     "minimist": "1.2.0",
     "object-merge": "2.5.1",
+    "open": "7.0.2",
     "ora": "4.0.3",
     "package-engines-notifier": "1.1.0",
     "pify": "4.0.1",
