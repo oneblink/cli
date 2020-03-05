@@ -94,10 +94,6 @@ Initial settings:
 
 Deploying client side code:
 
-  The deploy command requires a login to OneBlink before use.
-  For help on the login and logout commands please see:
-  https://github.com/blinkmobile/identity-cli#usage
-
     deploy                => uploads files in the current working directory to the scoped bucket
       <path>              => uploads files in <path> (relative to the --cwd flag) to the scoped bucket
       --env <environment> => optionally sets the environment to deploy to, defaults to 'dev'
