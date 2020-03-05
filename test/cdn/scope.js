@@ -4,9 +4,9 @@
 const path = require('path')
 
 const test = require('ava')
-const read = require('../../lib/commands/client/lib/read')
-const show = require('../../lib/commands/client/lib/show')
-const write = require('../../lib/commands/client/lib/write')
+const read = require('../../lib/commands/cdn/lib/read')
+const show = require('../../lib/commands/cdn/lib/show')
+const write = require('../../lib/commands/cdn/lib/write')
 const tenant = require('../../lib/config').TENANTS.ONEBLINK
 
 const EXISTING_PROJECT_PATH = path.join(
@@ -33,7 +33,9 @@ test('it should return the currently set scope', t => {
 })
 
 test('it should log the currently set scope', t => {
-  return t.notThrows(show(EXISTING_PROJECT_PATH, tenant))
+  return t.notThrows(() => {
+    show(EXISTING_PROJECT_PATH, tenant)
+  })
 })
 
 test('it should handle an unitinitalised config file', t => {
@@ -44,7 +46,7 @@ test('it should handle an unitinitalised config file', t => {
 
 test('it should reject if no scope is set', t => {
   const p = write('.', '')
-  return t.throws(p, 'Options.scope was not defined.')
+  return t.throwsAsync(() => p, 'Scope was not defined.')
 })
 
 test('it should merge new scope with the current config', t => {

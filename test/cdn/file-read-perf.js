@@ -13,7 +13,7 @@ const config = require('../../lib/config')
 // require now to avoid mockery warnings
 require('@blinkmobile/aws-s3')
 require('ora')
-require('../../lib/commands/client/lib/utils/confirm.js')
+require('../../lib/commands/cdn/lib/utils/confirm.js')
 
 const fileData = 'test contents\n\n'
 const pWriteFile = pify(fs.writeFile)
@@ -105,7 +105,7 @@ test.after(() => mockery.disable())
 
 function makeTest(timerLabel, numFiles) {
   return t => {
-    const deploy = require('../../lib/commands/client/lib/deploy')
+    const deploy = require('../../lib/commands/cdn/lib/deploy')
     const upload = dir => {
       console.time(timerLabel)
       return deploy(

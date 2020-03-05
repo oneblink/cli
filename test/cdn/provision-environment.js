@@ -48,8 +48,8 @@ test.serial('it should resolve', t => {
 
   mockery.registerMock(requestModule, requestMock)
 
-  const provision = require('../../lib/commands/client/lib/provision-environment.js')
-  return t.notThrows(provision(CFG, 'dev', ACCESS_TOKEN))
+  const provision = require('../../lib/commands/cdn/lib/provision-environment.js')
+  return t.notThrowsAsync(() => provision(CFG, 'dev', ACCESS_TOKEN))
 })
 
 test.serial('it should reject and stop the spinner if request fails', t => {
@@ -61,8 +61,8 @@ test.serial('it should reject and stop the spinner if request fails', t => {
 
   mockery.registerMock(requestModule, requestMock)
 
-  const provision = require('../../lib/commands/client/lib/provision-environment.js')
-  return t.throws(provision(CFG, 'dev', ACCESS_TOKEN), 'test error')
+  const provision = require('../../lib/commands/cdn/lib/provision-environment.js')
+  return t.throwsAsync(() => provision(CFG, 'dev', ACCESS_TOKEN), 'test error')
 })
 
 test.serial(
@@ -84,7 +84,7 @@ test.serial(
 
     mockery.registerMock(requestModule, requestMock)
 
-    const provision = require('../../lib/commands/client/lib/provision-environment.js')
-    return t.throws(provision(CFG, 'dev', ACCESS_TOKEN), 'Forbidden')
+    const provision = require('../../lib/commands/cdn/lib/provision-environment.js')
+    return t.throwsAsync(() => provision(CFG, 'dev', ACCESS_TOKEN), 'Forbidden')
   },
 )

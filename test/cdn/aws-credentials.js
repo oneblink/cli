@@ -51,7 +51,7 @@ test.serial('it should resolve aws credentials', t => {
 
   mockery.registerMock(requestModule, requestMock)
 
-  const getAwsCredentials = require('../../lib/commands/client/lib/aws-credentials.js')
+  const getAwsCredentials = require('../../lib/commands/cdn/lib/aws-credentials.js')
   return getAwsCredentials(CFG, 'dev', ACCESS_TOKEN).then(credentials => {
     t.is(credentials.accessKeyId, Credentials.AccessKeyId)
     t.is(credentials.secretAccessKey, Credentials.SecretAccessKey)
@@ -68,8 +68,11 @@ test.serial(
 
     mockery.registerMock(requestModule, requestMock)
 
-    const getAwsCredentials = require('../../lib/commands/client/lib/aws-credentials.js')
-    return t.throws(getAwsCredentials(CFG, 'dev', ACCESS_TOKEN), 'test error')
+    const getAwsCredentials = require('../../lib/commands/cdn/lib/aws-credentials.js')
+    return t.throwsAsync(
+      () => getAwsCredentials(CFG, 'dev', ACCESS_TOKEN),
+      'test error',
+    )
   },
 )
 
@@ -90,7 +93,10 @@ test.serial(
 
     mockery.registerMock(requestModule, requestMock)
 
-    const getAwsCredentials = require('../../lib/commands/client/lib/aws-credentials.js')
-    return t.throws(getAwsCredentials(CFG, 'dev', ACCESS_TOKEN), 'Forbidden')
+    const getAwsCredentials = require('../../lib/commands/cdn/lib/aws-credentials.js')
+    return t.throwsAsync(
+      () => getAwsCredentials(CFG, 'dev', ACCESS_TOKEN),
+      'Forbidden',
+    )
   },
 )

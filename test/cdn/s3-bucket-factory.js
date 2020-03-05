@@ -13,7 +13,7 @@ test.serial('it should have the bucket name pre-configured', t => {
     },
   }
 
-  const s3Factory = require('../../lib/commands/client/lib/s3-bucket-factory.js')
+  const s3Factory = require('../../lib/commands/cdn/lib/s3-bucket-factory.js')
   return s3Factory(params, {
     accessKeyId: '',
     secretAccessKey: '',
