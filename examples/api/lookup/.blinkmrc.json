@@ -1,0 +1,17 @@
+{
+  "server": {
+    "project": "dynamic-form-element-options.api.oneblink.io",
+    "region": "ap-southeast-2",
+    "cors": true,
+    "routes": [
+      {
+        "route": "/company-details",
+        "module": "./src/company-details.js"
+      },
+      {
+        "route": "/company-assets",
+        "module": "./src/company-assets.js"
+      }
+    ]
+  }
+}

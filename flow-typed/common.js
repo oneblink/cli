@@ -3,6 +3,7 @@
 /* ::
 declare type Tenant = {
   id: 'ONEBLINK' | 'CIVICPLUS',
+  command: string,
   label: string,
   origin: string,
   apiHostingBucket: string,

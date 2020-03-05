@@ -1,0 +1,12 @@
+{
+  "routes": [
+    {
+      "module": "./project/test-response.js",
+      "route": "/response"
+    },
+    {
+      "module": "./project/test-boom.js",
+      "route": "/boom"
+    }
+  ]
+}

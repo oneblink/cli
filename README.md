@@ -1,6 +1,6 @@
-# cli [![npm module](https://img.shields.io/npm/v/@blinkmobile/cli.svg)](https://www.npmjs.com/package/@blinkmobile/cli) [![AppVeyor Status](https://ci.appveyor.com/api/projects/status/github/blinkmobile/cli?branch=master&svg=true)](https://ci.appveyor.com/project/blinkmobile/cli) [![Travis CI Status](https://travis-ci.org/blinkmobile/cli.svg?branch=master)](https://travis-ci.org/blinkmobile/cli)
+# OneBlink CLI [![npm module](https://img.shields.io/npm/v/@blinkmobile/cli.svg)](https://www.npmjs.com/package/@blinkmobile/cli) [![AppVeyor Status](https://ci.appveyor.com/api/projects/status/github/blinkmobile/cli?branch=master&svg=true)](https://ci.appveyor.com/project/blinkmobile/cli) [![Travis CI Status](https://travis-ci.org/blinkmobile/cli.svg?branch=master)](https://travis-ci.org/blinkmobile/cli)
 
-primary entry point for our CLI tools
+Primary entry point for our CLI tools
 
 ## Requirements
 
@@ -19,6 +19,8 @@ Run the following command for usage information
 
 ```sh
 oneblink --help
-# or
-civicplus --help
 ```
+
+Or you can read more detailed documentation on each command:
+
+- [OneBlink API CLI](./docs/api/README.md)

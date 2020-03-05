@@ -1,0 +1,32 @@
+{
+  "server": {
+    "project": "example.api.oneblink.io",
+    "cors": true,
+    "routes": [
+      {
+        "route": "/request",
+        "module": "./api/request/index.js"
+      },
+      {
+        "route": "/books",
+        "module": "./api/books.js"
+      },
+      {
+        "route": "/books/{id}",
+        "module": "./api/book.js"
+      },
+      {
+        "route": "/books/{id}/chapters/{chapterNo}",
+        "module": "./api/chapter.js"
+      }
+    ],
+    "variables": {
+      "MY_VARIABLE": "unscoped value",
+      "MY_VARIABLE_SCOPED": {
+        "dev": "dev scoped value",
+        "test": "test scoped value",
+        "prod": "prod scoped value"
+      }
+    }
+  }
+}

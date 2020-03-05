@@ -23,9 +23,19 @@ const { _: inputs } = minimist(process.argv.slice(2))
 if (!enginesNotify({ pkg: pkg })) {
   // no engine trouble, proceed :)
   // $FlowFixMe
-  const tenantId /* : 'ONEBLINK' | 'CIVICPLUS' */ = command.toUpperCase()
-  const tenant /* : Tenant */ = TENANTS[tenantId]
+  const tenant = getCLICommand(command)
   commands(tenant, inputs)
 } else {
   process.exitCode = 1
+}
+
+function getCLICommand(input /* : string */) /* : Tenant */ {
+  switch (input.toUpperCase()) {
+    case TENANTS.CIVICPLUS.id: {
+      return TENANTS.CIVICPLUS
+    }
+    default: {
+      return TENANTS.ONEBLINK
+    }
+  }
 }
