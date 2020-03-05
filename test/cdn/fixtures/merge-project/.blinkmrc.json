@@ -1,0 +1,9 @@
+{
+  "bmp": {
+    "scope": "blah"
+  },
+  "cdn": {
+    "extra": "existing",
+    "scope": "old"
+  }
+}
