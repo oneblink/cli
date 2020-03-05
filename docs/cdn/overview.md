@@ -1,6 +1,6 @@
 # OneBlink CDN CLI
 
-This tool is for deploying client side code for web apps to the Blink Mobile CDN.
+This tool is for deploying client side code for web apps to the OneBlink CDN.
 
 ## Setting Scope
 
