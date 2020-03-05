@@ -1,0 +1,51 @@
+service: example-api-oneblink-io
+provider:
+  name: aws
+  runtime: nodejs6.10
+  region: ap-southeast-2
+  stage: prod
+  deploymentBucket: deployment-bucket
+  role: execution-role
+  environment:
+    MY_VARIABLE: 'unscoped value'
+    MY_VARIABLE_SCOPED: 'prod scoped value'
+  vpc:
+    securityGroupIds:
+      - '123'
+      - '456'
+    subnetIds:
+      - abc
+      - def
+functions:
+  example-api-oneblink-io-prod:
+    events:
+      - http: ANY {path+}
+    handler: handler.handler
+    name: example-api-oneblink-io-prod
+    description: 'Server CLI Lambda function for project: example.api.oneblink.io'
+    timeout: 15
+resources:
+  Resources:
+    ProxyMethod:
+      Type: 'AWS::ApiGateway::Method'
+      Properties:
+        AuthorizationType: NONE
+        ResourceId:
+          'Fn::GetAtt':
+            - ApiGatewayRestApi
+            - RootResourceId
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        HttpMethod: GET
+        MethodResponses:
+          - ResponseParameters:
+              method.response.header.Content-Type: integration.response.header.Content-Type
+            StatusCode: 200
+        Integration:
+          IntegrationHttpMethod: GET
+          Type: HTTP
+          Uri: 'https://blinkmobile.github.io/server-cli/root-route.html'
+          IntegrationResponses:
+            - ResponseParameters:
+                method.response.header.Content-Type: integration.response.header.Content-Type
+              StatusCode: 200

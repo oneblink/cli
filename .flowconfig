@@ -3,6 +3,8 @@
 <PROJECT_ROOT>/coverage/.*
 <PROJECT_ROOT>/dist/.*
 <PROJECT_ROOT>/node_modules/.*
+<PROJECT_ROOT>/examples/.*
+<PROJECT_ROOT>/docs/.*
 
 [include]
 
@@ -13,3 +15,4 @@ flow-typed/
 module.file_ext=.js
 module.file_ext=.json
 suppress_comment= \\(.\\|\n\\)*\\$FlowFixMe
+suppress_comment= \\(.\\|\n\\)*\\$FlowIssue

@@ -1,0 +1,25 @@
+{
+  "server": {
+    "project": "dynamic-form-element-options.api.oneblink.io",
+    "region": "ap-southeast-2",
+    "cors": true,
+    "routes": [
+      {
+        "route": "/australian-states",
+        "module": "./src/states.js"
+      },
+      {
+        "route": "/jamaica-100m-relay",
+        "module": "./src/jamaica-100m-relay.js"
+      },
+      {
+        "route": "/yes-no-maybe",
+        "module": "./src/yes-no-maybe.js"
+      },
+      {
+        "route": "/airports",
+        "module": "./src/airports.js"
+      }
+    ]
+  }
+}
