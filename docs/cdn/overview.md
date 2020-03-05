@@ -94,7 +94,7 @@ Initial settings:
 
 Deploying client side code:
 
-  The deploy command requires a login to BlinkMobile before use.
+  The deploy command requires a login to OneBlink before use.
   For help on the login and logout commands please see:
   https://github.com/blinkmobile/identity-cli#usage
 
