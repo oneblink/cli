@@ -15,13 +15,20 @@
     "Matt Carroll <matt.carroll139@gmail.com> (https://github.com/mymattcarroll)"
   ],
   "dependencies": {
+    "@blinkmobile/aws-s3": "2.2.0",
+    "@blinkmobile/blinkmrc": "2.0.0",
     "@blinkmobile/bm-identity": "5.1.0-beta.1",
     "argv-one": "1.0.1",
+    "aws-sdk": "2.224.1",
     "chalk": "3.0.0",
     "execa": "4.0.0",
+    "inquirer": "5.2.0",
     "meow": "6.0.1",
     "minimist": "1.2.0",
+    "object-merge": "2.5.1",
+    "ora": "2.0.0",
     "package-engines-notifier": "1.1.0",
+    "request": "2.85.0",
     "update-notifier": "4.1.0"
   },
   "devDependencies": {
