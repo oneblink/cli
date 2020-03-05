@@ -28,7 +28,7 @@
     "@jokeyrhyme/pify-fs": "1.0.1",
     "archiver": "3.1.1",
     "argv-one": "1.0.1",
-    "aws-sdk": "2.600.0",
+    "aws-sdk": "2.634.0",
     "base64url": "3.0.1",
     "boom": "7.3.0",
     "chalk": "3.0.0",
