@@ -14,7 +14,7 @@
  */
 
 declare module 'ora' {
-  declare module.exports: any;
+  declare module.exports: any
 }
 
 /**
@@ -23,11 +23,10 @@ declare module 'ora' {
  * needed.
  */
 
-
 // Filename aliases
 declare module 'ora/index' {
-  declare module.exports: $Exports<'ora'>;
+  declare module.exports: $Exports<'ora'>
 }
 declare module 'ora/index.js' {
-  declare module.exports: $Exports<'ora'>;
+  declare module.exports: $Exports<'ora'>
 }

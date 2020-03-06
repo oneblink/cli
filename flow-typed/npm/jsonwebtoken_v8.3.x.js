@@ -1,4 +1,4 @@
-// flow-typed signature: a6917bccc2ed0addf099c12e33358113
+// flow-typed signature: fd12a109acc03c86e517f7bba85525c1
 // flow-typed version: c6154227d1/jsonwebtoken_v8.3.x/flow_>=v0.104.x
 
 declare module "jsonwebtoken" {

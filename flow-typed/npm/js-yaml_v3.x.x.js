@@ -1,4 +1,4 @@
-// flow-typed signature: 40dae59daa15ca48d8e8115ee4489ac4
+// flow-typed signature: 6e207eec0eb04a043ac9b7ee3629e965
 // flow-typed version: c6154227d1/js-yaml_v3.x.x/flow_>=v0.104.x
 
 declare module 'js-yaml' {

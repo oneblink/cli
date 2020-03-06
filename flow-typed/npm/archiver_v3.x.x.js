@@ -1,4 +1,4 @@
-// flow-typed signature: 9e01e4ce0ab560895e9978fb26486fff
+// flow-typed signature: fe14a91feeed2be0ab9ca8c8e71d5e57
 // flow-typed version: c6154227d1/archiver_v3.x.x/flow_>=v0.104.x
 
 declare module "archiver" {

@@ -24,3 +24,4 @@ oneblink --help
 Or you can read more detailed documentation on each command:
 
 - [OneBlink API CLI](./docs/api/README.md)
+- [OneBlink CDN CLI](./docs/cdn/README.md)
