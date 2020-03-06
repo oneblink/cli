@@ -25,6 +25,6 @@ Or you can read more detailed documentation on each command:
 
 - [API CLI](./api/README.md)
 
-- [CDN CLI](./docs/cdn/README.md)
+- [CDN CLI](./cdn/README.md)
 
 - [Logout Command](./logout.md)
