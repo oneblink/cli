@@ -1,7 +1,7 @@
 service: example-api-oneblink-io
 provider:
   name: aws
-  runtime: nodejs4.3
+  runtime: nodejs12.x
   region: ap-southeast-2
   stage: test
   vpc:

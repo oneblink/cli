@@ -7,6 +7,7 @@ const test /* : Function */ = require('ava')
 const pify = require('pify')
 const temp = require('temp').track()
 
+const pkg = require('../../package.json')
 const config = require('../../lib/config')
 const readYamlFile = require('../../lib/api/utils/yaml.js').readYamlFile
 const serverless = require('../../lib/commands/api/serverless.js')
@@ -37,7 +38,7 @@ test('should produce the expected serverless.yml for configuration example proje
       config.TENANTS.ONEBLINK,
       [],
       createCliFlags({
-        bmServerVersion: '2.0.0',
+        bmServerVersion: `${pkg.name}@1.0.0`,
         cwd: CONFIGURATION_DIR,
         deploymentBucket: 'deployment-bucket',
         env: 'prod',
@@ -106,7 +107,7 @@ test('should reject if --bmServerVersion flag is not a semver value', t => {
           [],
           createCliFlags({
             cwd: DIRECTORY_DIR,
-            bmServerVersion: 'abc',
+            bmServerVersion: 'abc@abc',
             out: tempDir,
           }),
           console,

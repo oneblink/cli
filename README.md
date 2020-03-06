@@ -2,26 +2,6 @@
 
 Primary entry point for our CLI tools
 
-## Requirements
+## Documentation
 
-- [Node.js](https://nodejs.org/) 10.0 or newer
-- NPM 6.0 or newer
-
-## Installation
-
-```sh
-npm install -g @oneblink/cli
-```
-
-## Usage
-
-Run the following command for usage information
-
-```sh
-oneblink --help
-```
-
-Or you can read more detailed documentation on each command:
-
-- [OneBlink API CLI](./docs/api/README.md)
-- [OneBlink CDN CLI](./docs/cdn/README.md)
+See the [Documentation](./docs/README.md) directory for more details.
