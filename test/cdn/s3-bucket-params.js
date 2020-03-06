@@ -27,7 +27,6 @@ test.serial('it should return the stored params', t => {
   const config = {
     cdn: {
       scope: 'a',
-      region: 'b',
       objectParams: {
         Expires: 60,
         ACL: 'public-read',
@@ -36,15 +35,11 @@ test.serial('it should return the stored params', t => {
   }
   const expectedConfig = {
     scope: 'a',
-    region: 'ap-southeast-2',
     objectParams: {
       Expires: 60,
       ACL: 'public-read',
     },
-    service: {
-      origin: 'https://auth-api.blinkm.io',
-    },
-    tenant: 'OneBlink',
+    service: {},
   }
 
   const configHelperMock = {

@@ -10,6 +10,7 @@ const temp = require('temp')
 const mockery = require('mockery')
 
 const config = require('../../lib/config')
+const BlinkMobileIdentity = require('@blinkmobile/bm-identity')
 // require now to avoid mockery warnings
 require('@blinkmobile/aws-s3')
 require('ora')
@@ -118,6 +119,7 @@ function makeTest(timerLabel, numFiles) {
           prune: true,
         },
         config.TENANTS.ONEBLINK,
+        new BlinkMobileIdentity(),
       )
     }
 

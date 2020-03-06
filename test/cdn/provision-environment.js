@@ -18,7 +18,7 @@ const CFG = {
   },
 }
 const ACCESS_TOKEN = 'jwt'
-
+const config = require('../../lib/config')
 test.beforeEach(() => {
   mockery.enable({ useCleanCache: true })
   mockery.warnOnUnregistered(false)
@@ -49,7 +49,9 @@ test.serial('it should resolve', t => {
   mockery.registerMock(requestModule, requestMock)
 
   const provision = require('../../lib/commands/cdn/lib/provision-environment.js')
-  return t.notThrowsAsync(() => provision(CFG, 'dev', ACCESS_TOKEN))
+  return t.notThrowsAsync(() =>
+    provision(CFG, 'dev', ACCESS_TOKEN, config.TENANTS.ONEBLINK),
+  )
 })
 
 test.serial('it should reject and stop the spinner if request fails', t => {
@@ -62,7 +64,10 @@ test.serial('it should reject and stop the spinner if request fails', t => {
   mockery.registerMock(requestModule, requestMock)
 
   const provision = require('../../lib/commands/cdn/lib/provision-environment.js')
-  return t.throwsAsync(() => provision(CFG, 'dev', ACCESS_TOKEN), 'test error')
+  return t.throwsAsync(
+    () => provision(CFG, 'dev', ACCESS_TOKEN, config.TENANTS.ONEBLINK),
+    'test error',
+  )
 })
 
 test.serial(
@@ -85,6 +90,9 @@ test.serial(
     mockery.registerMock(requestModule, requestMock)
 
     const provision = require('../../lib/commands/cdn/lib/provision-environment.js')
-    return t.throwsAsync(() => provision(CFG, 'dev', ACCESS_TOKEN), 'Forbidden')
+    return t.throwsAsync(
+      () => provision(CFG, 'dev', ACCESS_TOKEN, config.TENANTS.ONEBLINK),
+      'Forbidden',
+    )
   },
 )
