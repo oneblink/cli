@@ -42,7 +42,7 @@ The port option will allow you to set a custom port. By default, port 3000 is us
 
 ### Authentication
 
-Before you're able to deploy to an API Hosting Environment, you will need to be authenticated. This is done by logging in with the OneBlink Identity CLI. Please see: [Identity CLI Usage](https://github.com/blinkmobile/identity-cli#usage) for more information on how to log in.
+Before you're able to deploy to an API Hosting Environment, you will need to be authenticated. This is done by logging in with the OneBlink Login Command. Please see: [OneBlink Login](../login.md) for more information on how to log in.
 
 ### Basic Deployment
 

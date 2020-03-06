@@ -240,7 +240,7 @@ test('deploy() should log correct updates', t => {
                 secret: 'secret',
                 origin: 'origin',
               },
-              bmServerVersion: pkg.version,
+              bmServerVersion: `${pkg.name}@${pkg.version}`,
               bundleBucket: values.TENANTS.ONEBLINK.apiHostingBucket,
               bundleKey: BUNDLE_KEY,
               env: ENV,
