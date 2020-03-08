@@ -89,7 +89,7 @@
     "dist",
     "lib"
   ],
-  "homepage": "https://github.com/blinkmobile/cli#readme",
+  "homepage": "https://blinkmobile.github.io/cli",
   "keywords": [],
   "license": "BSD-3-Clause",
   "main": "index.js",

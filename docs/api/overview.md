@@ -60,7 +60,7 @@ You can change the default behaviour by using additional options:
 
 This option allows you to specify an environment. If the environment doesn't yet exist, it will be created when you first deploy to it.
 
-    bm client deploy --env test
+    oneblink cdn deploy --env test
 
 The above code will deploy to your _test_ environment, and will be specified as part of the sub-domain for your deployment.
 
@@ -68,7 +68,7 @@ For example: `https://customer-project-test.api.oneblink.io`
 
 When you're ready to deploy to production, use the environment _prod_
 
-    bm client deploy --env prod
+    oneblink cdn deploy --env prod
 
 This will deploy to your production environment and give you a URL that does not contain an environment tag.
 
@@ -78,4 +78,4 @@ For example: `https://customer-project.api.oneblink.io`
 
 This will deploy your project without asking for confirmation. This feature is designed to allow automatic deployments for those interested in an automated release.
 
-    bm client deploy --force
+    oneblink cdn deploy --force

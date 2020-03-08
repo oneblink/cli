@@ -25,4 +25,4 @@ Network configuration is scoped to a specific environment. If an environment is 
 }
 ```
 
-The configuration used will depend on the value of `--env` flag used during `bm server deploy`
+The configuration used will depend on the value of `--env` flag used during `oneblink api deploy`
