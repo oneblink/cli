@@ -4,19 +4,19 @@
 
 Deployment keys can using to do deployments instead of using a specific users credentials.
 
-To obtain a deployment key pair, please contact your BlinkM administrator(s)
+You can obtain a deployment key pair, from the [OneBlink Console](https://console.oneblink.io). For more information, please contact [Support](https://support.oneblink.io).
 
 ### Usage
 
-To use a deployment key pair, sett the following environment variables before running `oneblink api deploy`:
+To use a deployment key pair, set the following environment variables before running `oneblink api deploy`:
 
-- `BLINKM_ACCESS_KEY`
-- `BLINKM_SECRET_KEY`
+- `ONEBLINK_ACCESS_KEY`
+- `ONEBLINK_SECRET_KEY`
 
 ### Example
 
 ```
-export BLINKM_ACCESS_KEY=123456abcdef
-export BLINKM_ACCESS_KEY=abcdefghijklmnopqrst0123456789abcdefghij
+export ONEBLINK_ACCESS_KEY=123456abcdef
+export ONEBLINK_SECRET_KEY=abcdefghijklmnopqrst0123456789abcdefghij
 oneblink api deploy
 ```
