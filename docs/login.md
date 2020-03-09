@@ -13,11 +13,11 @@ The `login` command will allow user to authenticate themselves with OneBlink via
 To start a browser based login process (this will allow you to login using a social account e.g. Google):
 
 ```sh
-bm identity login
+oneblink login
 ```
 
 To start a username and password login process and be prompted for password:
 
 ```sh
-bm identity login --username username@email.com
+oneblink login --username username@email.com
 ```
