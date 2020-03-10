@@ -36,10 +36,10 @@
 
 ## Examples
 
-- [Configuration Based Routes](../examples/configuration)
+- [Configuration Based Routes](../../examples/api/configuration)
 
-- [Directory Based Routes](../examples/directory)
+- [Directory Based Routes](../../examples/api/directory)
 
-- [Dynamic Form Element Options](../examples/dynamic-form-element-options)
+- [Dynamic Form Element Options](../../examples/api/dynamic-form-element-options)
 
-- [Lookup data or elements on remote API](../examples/lookup)
+- [Lookup data or elements on remote API](../../examples/api/lookup)
