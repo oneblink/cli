@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Fixed
+
+- default entry point using civicplus
+
 ## 0.1.1 (2020-03-11)
 
 - Initial Release

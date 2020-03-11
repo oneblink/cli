@@ -12,8 +12,8 @@
     ]
   },
   "bin": {
-    "civicplus": "bin/index.js",
-    "oneblink": "bin/index.js"
+    "oneblink": "bin/index.js",
+    "civicplus": "bin/index.js"
   },
   "bugs": {
     "url": "https://github.com/blinkmobile/cli/issues"
