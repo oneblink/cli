@@ -3,6 +3,6 @@
   "description": "Testing example api endpoints",
   "version": "0.0.1",
   "dependencies": {
-    "boom": "4.2.0"
+    "@hapi/boom": "9.0.0"
   }
 }

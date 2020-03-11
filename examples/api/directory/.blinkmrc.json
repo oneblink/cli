@@ -1,7 +1,6 @@
 {
   "server": {
     "project": "example.api.oneblink.io",
-    "region": "ap-southeast-2",
     "cors": false,
     "timeout": 5
   }
