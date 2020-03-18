@@ -43,7 +43,7 @@
     "jsonwebtoken": "8.5.1",
     "load-json-file": "6.2.0",
     "meow": "6.0.1",
-    "minimist": "1.2.0",
+    "minimist": "1.2.2",
     "object-merge": "2.5.1",
     "open": "7.0.2",
     "ora": "4.0.3",
