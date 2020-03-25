@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## 0.1.3 (2020-03-26)
+
 ### Fixed
 
 - `civicplus` entry point not using CivicPlus tenant
