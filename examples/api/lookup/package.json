@@ -3,6 +3,6 @@
   "description": "Example api endpoints",
   "version": "0.0.1",
   "dependencies": {
-    "@oneblink/sdk": "^0.2.6"
+    "@oneblink/sdk": "^0.4.3"
   }
 }

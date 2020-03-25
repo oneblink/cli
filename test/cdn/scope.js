@@ -28,7 +28,6 @@ const MERGE_OPTIONS_PROJECT_PATH = path.join(
 test('it should return the currently set scope', t => {
   return read(EXISTING_PROJECT_PATH, tenant).then(s => {
     t.is(s.scope, 'customer-project.blinkm.io')
-    t.is(s.service.origin, 'http://localhost')
   })
 })
 

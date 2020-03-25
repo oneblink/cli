@@ -12,8 +12,8 @@
     ]
   },
   "bin": {
-    "oneblink": "bin/index.js",
-    "civicplus": "bin/index.js"
+    "oneblink": "bin/oneblink.js",
+    "civicplus": "bin/civicplus.js"
   },
   "bugs": {
     "url": "https://github.com/blinkmobile/cli/issues"
@@ -25,12 +25,11 @@
   "dependencies": {
     "@blinkmobile/aws-s3": "2.2.0",
     "@blinkmobile/blinkmrc": "2.0.0",
+    "@hapi/boom": "9.0.0",
     "@jokeyrhyme/pify-fs": "1.0.1",
     "archiver": "3.1.1",
-    "argv-one": "1.0.1",
     "aws-sdk": "2.600.0",
     "base64url": "3.0.1",
-    "boom": "7.3.0",
     "chalk": "3.0.0",
     "cli-table2": "0.2.0",
     "execa": "4.0.0",
@@ -38,27 +37,27 @@
     "good": "7.3.0",
     "good-console": "7.1.0",
     "hapi": "^16.6.3",
-    "inquirer": "7.0.3",
+    "inquirer": "7.1.0",
     "js-yaml": "3.13.1",
     "jsonwebtoken": "8.5.1",
     "load-json-file": "6.2.0",
     "meow": "6.0.1",
-    "minimist": "1.2.0",
+    "minimist": "1.2.3",
     "object-merge": "2.5.1",
-    "open": "7.0.2",
+    "open": "7.0.3",
     "ora": "4.0.3",
     "package-engines-notifier": "1.1.0",
     "parse-package-name": "0.1.0",
-    "pify": "4.0.1",
+    "pify": "5.0.0",
     "recursive-copy": "2.0.10",
-    "request": "2.88.0",
-    "semver": "7.1.1",
-    "serverless": "1.65.0",
+    "request": "2.88.2",
+    "semver": "7.1.3",
+    "serverless": "1.66.0",
     "temp": "0.9.1",
     "uniloc": "0.3.0",
     "update-notifier": "4.1.0",
     "valid-url": "1.0.9",
-    "write-json-file": "4.2.1"
+    "write-json-file": "4.3.0"
   },
   "devDependencies": {
     "ava": "^2.4.0",
@@ -70,7 +69,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "fixpack": "^3.0.6",
-    "flow-bin": "^0.119.1",
+    "flow-bin": "^0.120.1",
     "mockery": "^2.0.0",
     "npm-bin-ava-tester": "^1.1.0",
     "prettier": "^1.19.1",
