@@ -32,22 +32,24 @@ test.afterEach(() => {
   mockery.disable()
 })
 
-test.serial('it should resolve aws credentials', t => {
+test.serial('it should resolve aws credentials', (t) => {
   const Credentials = {
     AccessKeyId: 'id',
     SecretAccessKey: 'secret',
     SessionToken: 'token',
   }
-  function requestMock(url, options, cb) {
-    cb(
-      null,
-      {
-        statusCode: 200,
-      },
-      {
-        Credentials,
-      },
-    )
+  const requestMock = {
+    post: function (url, options, cb) {
+      cb(
+        null,
+        {
+          statusCode: 200,
+        },
+        {
+          Credentials,
+        },
+      )
+    },
   }
 
   mockery.registerMock(requestModule, requestMock)
@@ -58,7 +60,7 @@ test.serial('it should resolve aws credentials', t => {
     'dev',
     ACCESS_TOKEN,
     config.TENANTS.ONEBLINK,
-  ).then(credentials => {
+  ).then((credentials) => {
     t.is(credentials.accessKeyId, Credentials.AccessKeyId)
     t.is(credentials.secretAccessKey, Credentials.SecretAccessKey)
     t.is(credentials.sessionToken, Credentials.SessionToken)
@@ -67,9 +69,11 @@ test.serial('it should resolve aws credentials', t => {
 
 test.serial(
   'it should reject and stop the spinner if request for aws credentials fails',
-  t => {
-    function requestMock(url, options, cb) {
-      cb(new Error('test error'))
+  (t) => {
+    const requestMock = {
+      post: function (url, options, cb) {
+        cb(new Error('test error'))
+      },
     }
 
     mockery.registerMock(requestModule, requestMock)
@@ -85,17 +89,19 @@ test.serial(
 
 test.serial(
   'it should reject and stop the spinner if aws credentials could not be retrieved',
-  t => {
-    function requestMock(url, options, cb) {
-      cb(
-        null,
-        {
-          statusCode: 403,
-        },
-        {
-          message: 'Forbidden',
-        },
-      )
+  (t) => {
+    const requestMock = {
+      post: function (url, options, cb) {
+        cb(
+          null,
+          {
+            statusCode: 403,
+          },
+          {
+            message: 'Forbidden',
+          },
+        )
+      },
     }
 
     mockery.registerMock(requestModule, requestMock)

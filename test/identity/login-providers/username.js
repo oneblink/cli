@@ -14,7 +14,7 @@ const JWT = 'valid jwt'
 const USERNAME = 'username'
 const PASSWORD = 'password'
 
-test.beforeEach(t => {
+test.beforeEach((t) => {
   t.context.loginProviderBase = loginProviderBaseMock(null, () =>
     Promise.resolve(JWT),
   )
@@ -22,7 +22,7 @@ test.beforeEach(t => {
   t.context.inquirer = inquirerMock()
 })
 
-test.cb('login() should return valid jwt', t => {
+test.cb('login() should return valid jwt', (t) => {
   const UsernameLoginProvider = proxyquire(TEST_SUBJECT, {
     inquirer: t.context.inquirer,
     'aws-sdk': {
@@ -46,11 +46,11 @@ test.cb('login() should return valid jwt', t => {
 
   usernameLoginProvider
     .login(USERNAME, PASSWORD)
-    .then(jwt => {
+    .then((jwt) => {
       t.is(jwt, JWT)
       t.end()
     })
-    .catch(e => {
+    .catch((e) => {
       t.fail(e)
       t.end()
     })
@@ -58,12 +58,12 @@ test.cb('login() should return valid jwt', t => {
 
 test.cb(
   'login() should ask for username and password if username and password is not passed in',
-  t => {
+  (t) => {
     t.plan(3)
     const UsernameLoginProvider = proxyquire(TEST_SUBJECT, {
-      inquirer: inquirerMock(questions => {
-        t.truthy(questions.find(question => question.name === 'username'))
-        t.truthy(questions.find(question => question.name === 'password'))
+      inquirer: inquirerMock((questions) => {
+        t.truthy(questions.find((question) => question.name === 'username'))
+        t.truthy(questions.find((question) => question.name === 'password'))
         t.is(questions.length, 2)
         return Promise.resolve(
           questions.reduce((memo, question) => {
@@ -96,7 +96,7 @@ test.cb(
       .then(() => {
         t.end()
       })
-      .catch(e => {
+      .catch((e) => {
         t.fail(e)
         t.end()
       })
@@ -105,9 +105,9 @@ test.cb(
 
 test.cb(
   'login() should should reject if username is not returned from the prompt',
-  t => {
+  (t) => {
     const UsernameLoginProvider = proxyquire(TEST_SUBJECT, {
-      inquirer: inquirerMock(questions => {
+      inquirer: inquirerMock(() => {
         return Promise.resolve({})
       }),
       'aws-sdk': {
@@ -135,7 +135,7 @@ test.cb(
         t.fail(new Error('Login was suppose to throw an Error'))
         t.end()
       })
-      .catch(error => {
+      .catch((error) => {
         t.deepEqual(error, new Error('Please specify a username.'))
         t.end()
       })
@@ -144,9 +144,9 @@ test.cb(
 
 test.cb(
   'login() should should reject if password is not returned from the prompt',
-  t => {
+  (t) => {
     const UsernameLoginProvider = proxyquire(TEST_SUBJECT, {
-      inquirer: inquirerMock(questions => {
+      inquirer: inquirerMock(() => {
         return Promise.resolve({
           username: USERNAME,
         })
@@ -176,7 +176,7 @@ test.cb(
         t.fail(new Error('Login was suppose to throw an Error'))
         t.end()
       })
-      .catch(error => {
+      .catch((error) => {
         t.deepEqual(error, new Error('Please specify a password.'))
         t.end()
       })

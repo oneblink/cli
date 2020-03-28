@@ -636,7 +636,7 @@ async function handler(
       }
       if (
         !config.cors.origins.some(
-          origin => origin === '*' || origin === request.headers.origin,
+          (origin) => origin === '*' || origin === request.headers.origin,
         )
       ) {
         // Invalid origin, we will return 200 result and let browser handler error
@@ -726,8 +726,11 @@ async function handler(
   }
 }
 
+const ENTRY_FUNCTION = 'handler'
+
 module.exports = {
-  handler,
+  ENTRY_FUNCTION,
+  [ENTRY_FUNCTION]: handler,
   normaliseLambdaRequest,
 }
 /* eslint-enable no-console */

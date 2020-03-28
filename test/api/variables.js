@@ -17,8 +17,8 @@ const blinkmrc = {
   },
 }
 
-test.beforeEach(t => {
-  t.context.getTestSubject = overrides => {
+test.beforeEach((t) => {
+  t.context.getTestSubject = (overrides) => {
     overrides = overrides || {}
     return proxyquire(
       TEST_SUBJECT,
@@ -38,34 +38,34 @@ test.beforeEach(t => {
   }
 })
 
-test('read() should handle an unitinitalised config file', t => {
+test('read() should handle an unitinitalised config file', (t) => {
   const variables = t.context.getTestSubject({
     './utils/project-meta.js': {
-      read: cwd => Promise.resolve(),
+      read: () => Promise.resolve(),
     },
   })
-  return variables.read().then(envVars => t.deepEqual(envVars, {}))
+  return variables.read().then((envVars) => t.deepEqual(envVars, {}))
 })
 
-test('read() should return the correct values for the scoped variables', t => {
+test('read() should return the correct values for the scoped variables', (t) => {
   const variables = t.context.getTestSubject()
 
   return variables
     .read(CWD, 'dev')
-    .then(envVars =>
+    .then((envVars) =>
       t.deepEqual(envVars, {
         MY_VARIABLE: 'unscoped value',
       }),
     )
     .then(() => variables.read(CWD, 'test'))
-    .then(envVars =>
+    .then((envVars) =>
       t.deepEqual(envVars, {
         MY_VARIABLE_SCOPED: 'test scoped value',
         MY_VARIABLE: 'unscoped value',
       }),
     )
     .then(() => variables.read(CWD, 'prod'))
-    .then(envVars =>
+    .then((envVars) =>
       t.deepEqual(envVars, {
         MY_VARIABLE_SCOPED: 'prod scoped value',
         MY_VARIABLE: 'unscoped value',
@@ -73,10 +73,10 @@ test('read() should return the correct values for the scoped variables', t => {
     )
 })
 
-test('read() should reject if there is a variable with an unsupported type value', t => {
+test('read() should reject if there is a variable with an unsupported type value', (t) => {
   const variables = t.context.getTestSubject({
     './utils/project-meta.js': {
-      read: cwd =>
+      read: () =>
         Promise.resolve({
           server: {
             variables: {
@@ -93,10 +93,10 @@ test('read() should reject if there is a variable with an unsupported type value
   )
 })
 
-test('read() should reject if there is a scoped variable with an unsupported type value', t => {
+test('read() should reject if there is a scoped variable with an unsupported type value', (t) => {
   const variables = t.context.getTestSubject({
     './utils/project-meta.js': {
-      read: cwd =>
+      read: () =>
         Promise.resolve({
           server: {
             variables: {
@@ -115,17 +115,17 @@ test('read() should reject if there is a scoped variable with an unsupported typ
   )
 })
 
-test('display() should not log anything if there are no variables to display', t => {
+test('display() should not log anything if there are no variables to display', (t) => {
   const variables = t.context.getTestSubject({
     './utils/project-meta.js': {
-      read: cwd => Promise.resolve(),
+      read: () => Promise.resolve(),
     },
   })
 
   return t.notThrows(() => variables.display({ log: () => t.fail() }))
 })
 
-test('display() should log once', t => {
+test('display() should log once', (t) => {
   const variables = t.context.getTestSubject()
 
   return variables.display({ log: () => t.pass() })

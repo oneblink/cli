@@ -3,10 +3,10 @@
 
 const fs = require('fs')
 const path = require('path')
+const util = require('util')
 
-const pify = require('pify')
 const test = require('ava')
-const temp = require('temp')
+const temp = require('temp').track()
 const mockery = require('mockery')
 
 const config = require('../../lib/config')
@@ -17,8 +17,8 @@ require('ora')
 require('../../lib/commands/cdn/lib/utils/confirm.js')
 
 const fileData = 'test contents\n\n'
-const pWriteFile = pify(fs.writeFile)
-const pMkdir = pify(temp.mkdir)
+const pWriteFile = util.promisify(fs.writeFile)
+const pMkdir = util.promisify(temp.mkdir)
 
 const chainer = {
   on: () => chainer,
@@ -63,7 +63,7 @@ const s3BucketFactoryMock = () =>
 
 const s3ParamsModule = '../lib/s3-bucket-params.js'
 const s3BucketParamsMock = {
-  read: cwd =>
+  read: () =>
     Promise.resolve({
       region: 'region',
       params: {
@@ -73,7 +73,7 @@ const s3BucketParamsMock = {
       },
     }),
 }
-const makeArray = num => {
+const makeArray = (num) => {
   const arr = []
   for (let i = 0; i < num; ++i) {
     arr.push(i)
@@ -82,7 +82,7 @@ const makeArray = num => {
   return arr
 }
 
-const createFile = dir => id => {
+const createFile = (dir) => (id) => {
   const filePath = path.join(dir, `${id}.js`)
   return pWriteFile(filePath, fileData)
 }
@@ -105,9 +105,9 @@ mockery.registerAllowables([
 test.after(() => mockery.disable())
 
 function makeTest(timerLabel, numFiles) {
-  return t => {
+  return (t) => {
     const deploy = require('../../lib/commands/cdn/lib/deploy')
-    const upload = dir => {
+    const upload = (dir) => {
       console.time(timerLabel)
       return deploy(
         [],
@@ -125,13 +125,13 @@ function makeTest(timerLabel, numFiles) {
 
     let tempPath
     const promise = pMkdir('temp' + numFiles)
-      .then(dirPath => {
+      .then((dirPath) => {
         const count = makeArray(numFiles)
         tempPath = dirPath
         return Promise.all(count.map(createFile(tempPath)))
       })
-      .then(results => upload(tempPath))
-      .then(result => console.timeEnd(timerLabel))
+      .then(() => upload(tempPath))
+      .then(() => console.timeEnd(timerLabel))
 
     return t.notThrows(promise)
   }

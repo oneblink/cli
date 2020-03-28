@@ -13,8 +13,8 @@ const CFG = {
   },
 }
 
-test.beforeEach(t => {
-  t.context.getTestSubject = overrides => {
+test.beforeEach((t) => {
+  t.context.getTestSubject = (overrides) => {
     overrides = overrides || {}
     return proxyquire(
       TEST_SUBJECT,
@@ -35,11 +35,11 @@ test.beforeEach(t => {
   }
 })
 
-test('read() should call projectMeta.read() with correct input', t => {
+test('read() should call projectMeta.read() with correct input', (t) => {
   t.plan(1)
   const scope = t.context.getTestSubject({
     './utils/project-meta.js': {
-      read: cwd => {
+      read: (cwd) => {
         t.is(cwd, CWD)
         return Promise.resolve(CFG)
       },
@@ -49,27 +49,27 @@ test('read() should call projectMeta.read() with correct input', t => {
   return scope.read(CWD)
 })
 
-test('read() should handle an unitinitalised config file', t => {
+test('read() should handle an unitinitalised config file', (t) => {
   t.plan(1)
   const scope = t.context.getTestSubject({
     './utils/project-meta.js': {
-      read: cwd => Promise.resolve(null),
+      read: () => Promise.resolve(null),
     },
   })
-  return scope.read().then(cfg => t.deepEqual(cfg, {}))
+  return scope.read().then((cfg) => t.deepEqual(cfg, {}))
 })
 
-test('read() should return the currently set scope', t => {
+test('read() should return the currently set scope', (t) => {
   const scope = t.context.getTestSubject()
 
-  return scope.read(CWD).then(server => t.deepEqual(server, CFG.server))
+  return scope.read(CWD).then((server) => t.deepEqual(server, CFG.server))
 })
 
-test('read() should reject if projectMeta.read() throws an error', t => {
+test('read() should reject if projectMeta.read() throws an error', (t) => {
   t.plan(2)
   const scope = t.context.getTestSubject({
     './utils/project-meta.js': {
-      read: cwd => {
+      read: () => {
         t.pass()
         return Promise.reject(new Error())
       },
@@ -79,11 +79,11 @@ test('read() should reject if projectMeta.read() throws an error', t => {
   return scope.read(CWD).catch(() => t.pass())
 })
 
-test('display() should call projectMeta.read() with correct input', t => {
+test('display() should call projectMeta.read() with correct input', (t) => {
   t.plan(1)
   const scope = t.context.getTestSubject({
     './utils/project-meta.js': {
-      read: cwd => {
+      read: (cwd) => {
         t.is(cwd, CWD)
         return Promise.resolve(CFG)
       },
@@ -93,10 +93,10 @@ test('display() should call projectMeta.read() with correct input', t => {
   return scope.display(t.context.logger, CWD)
 })
 
-test('display() should reject with nice error message if projectMeta.read() throws an error', t => {
+test('display() should reject with nice error message if projectMeta.read() throws an error', (t) => {
   const scope = t.context.getTestSubject({
     './utils/project-meta.js': {
-      read: cwd => Promise.reject(new Error('test error message')),
+      read: () => Promise.reject(new Error('test error message')),
     },
   })
 
@@ -106,10 +106,10 @@ test('display() should reject with nice error message if projectMeta.read() thro
   )
 })
 
-test('display() should reject with nice error message if scope has not been set', t => {
+test('display() should reject with nice error message if scope has not been set', (t) => {
   const scope = t.context.getTestSubject({
     './utils/project-meta.js': {
-      read: cwd => Promise.resolve(null),
+      read: () => Promise.resolve(null),
     },
   })
 
@@ -119,14 +119,14 @@ test('display() should reject with nice error message if scope has not been set'
   )
 })
 
-test('display() should log the currently set scope', t => {
+test('display() should log the currently set scope', (t) => {
   t.plan(1)
   const scope = t.context.getTestSubject()
 
   return scope.display({ log: () => t.pass() }, CWD)
 })
 
-test('write() should reject if project is not set on the meta object', t => {
+test('write() should reject if project is not set on the meta object', (t) => {
   const scope = t.context.getTestSubject()
 
   return t.throwsAsync(
@@ -135,7 +135,7 @@ test('write() should reject if project is not set on the meta object', t => {
   )
 })
 
-test('write() should merge new scope with the current config', t => {
+test('write() should merge new scope with the current config', (t) => {
   t.plan(2)
   const originalConfig = {
     bmp: {
@@ -159,10 +159,9 @@ test('write() should merge new scope with the current config', t => {
     },
   })
 
-  return scope.write(CWD, newConfig).then(config =>
+  return scope.write(CWD, newConfig).then((config) =>
     t.deepEqual(config, {
       project: 'new project',
-      tenant: 'oneblink',
     }),
   )
 })

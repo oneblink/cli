@@ -12,6 +12,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 - `api serve` command to use `express` instead of `hapi`
+- API deployment process to be synchronous
 
 ## 0.1.2 (2020-03-11)
 

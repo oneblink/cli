@@ -5,8 +5,8 @@ const constants = require('../../../lib/config')
 const privateVars = new WeakMap()
 
 function loginProviderBaseMock(storeJwtFn, requestJwtFn) {
-  storeJwtFn = storeJwtFn || (jwt => Promise.resolve(jwt))
-  requestJwtFn = requestJwtFn || ((u, p, c) => Promise.resolve('jwt'))
+  storeJwtFn = storeJwtFn || ((jwt) => Promise.resolve(jwt))
+  requestJwtFn = requestJwtFn || (() => Promise.resolve('jwt'))
   return class LoginProvider {
     constructor(clientId, clientName) {
       this.CONSTANTS = constants.TENANTS.ONEBLINK
