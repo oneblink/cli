@@ -9,6 +9,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 - `civicplus` entry point not using CivicPlus tenant
 
+### Added
+
+- `api teardown` command to delete a single API hosting environment
+
 ### Changed
 
 - `api serve` command to use `express` instead of `hapi`

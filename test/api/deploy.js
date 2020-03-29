@@ -252,7 +252,7 @@ test('deploy() should log correct updates', (t) => {
             scope: 'scope',
           },
         })
-        cb(null, { statusCode: 201 })
+        cb(null, { statusCode: 200 }, { brandedUrl: 'https://example.com' })
       },
     },
   })
