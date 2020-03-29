@@ -5,12 +5,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
-## 0.1.3 (2020-03-26)
-
-### Fixed
-
-- `civicplus` entry point not using CivicPlus tenant
-
 ### Added
 
 - `api teardown` command to delete a single API hosting environment
@@ -19,6 +13,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 - `api serve` command to use `express` instead of `hapi`
 - API deployment process to be synchronous
+
+## 0.1.3 (2020-03-26)
+
+### Fixed
+
+- `civicplus` entry point not using CivicPlus tenant
 
 ## 0.1.2 (2020-03-11)
 
