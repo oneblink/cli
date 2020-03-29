@@ -23,7 +23,7 @@ test.afterEach(() => {
   mockery.disable()
 })
 
-test.serial('it should return the stored params', t => {
+test.serial('it should return the stored params', (t) => {
   const config = {
     cdn: {
       scope: 'a',
@@ -50,42 +50,43 @@ test.serial('it should return the stored params', t => {
   mockery.registerMock(configHelperModule, configHelperMock)
 
   const read = require('../../lib/commands/cdn/lib/read')
-  const tenant = require('../../lib/config').TENANTS.ONEBLINK
   t.plan(1)
 
-  return read('', tenant).then(s => t.deepEqual(expectedConfig, s))
+  return read('').then((s) => t.deepEqual(expectedConfig, s))
 })
 
-test.serial.skip('it should return the default params and call write()', t => {
-  const expected = {
-    ACL: 'public-read',
-    Bucket: 'a',
-    Expires: 60,
-  }
+test.serial.skip(
+  'it should return the default params and call write()',
+  (t) => {
+    const expected = {
+      ACL: 'public-read',
+      Bucket: 'a',
+      Expires: 60,
+    }
 
-  const configHelperMock = {
-    read: () =>
-      Promise.resolve({
-        cdn: {
-          scope: 'a',
-        },
-      }),
-    write: () =>
-      Promise.resolve({
-        cdn: {
-          scope: 'a',
-          objectParams: {
-            Expires: 60,
-            ACL: 'public-read',
+    const configHelperMock = {
+      read: () =>
+        Promise.resolve({
+          cdn: {
+            scope: 'a',
           },
-        },
-      }),
-  }
+        }),
+      write: () =>
+        Promise.resolve({
+          cdn: {
+            scope: 'a',
+            objectParams: {
+              Expires: 60,
+              ACL: 'public-read',
+            },
+          },
+        }),
+    }
 
-  mockery.registerMock(configHelperModule, configHelperMock)
+    mockery.registerMock(configHelperModule, configHelperMock)
 
-  const read = require('../../lib/commands/cdn/lib/read')
-  const tenant = require('../../lib/config').TENANTS.ONEBLINK
+    const read = require('../../lib/commands/cdn/lib/read')
 
-  return read('', tenant).then(s => t.deepEqual(s, expected))
-})
+    return read('').then((s) => t.deepEqual(s, expected))
+  },
+)

@@ -9,8 +9,8 @@ const CWD = 'current working directory'
 const PATH_RESOLVE = 'returned from path resolve'
 const MODULE = 'module path'
 
-test.beforeEach(t => {
-  t.context.getTestSubject = overrides => {
+test.beforeEach((t) => {
+  t.context.getTestSubject = (overrides) => {
     overrides = overrides || {}
     return proxyquire(
       TEST_SUBJECT,
@@ -20,8 +20,8 @@ test.beforeEach(t => {
             resolve: () => PATH_RESOLVE,
           },
 
-          '@jokeyrhyme/pify-fs': {
-            stat: path => Promise.resolve(),
+          fs: {
+            stat: (path, cb) => cb(),
           },
         },
         overrides,
@@ -30,16 +30,16 @@ test.beforeEach(t => {
   }
 })
 
-test('Should contain error if route does not start with "/"', t => {
+test('Should contain error if route does not start with "/"', (t) => {
   const validate = t.context.getTestSubject()
 
   return validate(CWD, {
     route: 'test',
     module: 'test',
-  }).then(errors => t.deepEqual(errors, ['Route must start with a "/"']))
+  }).then((errors) => t.deepEqual(errors, ['Route must start with a "/"']))
 })
 
-test('Should contain error if timeout is invalid', t => {
+test('Should contain error if timeout is invalid', (t) => {
   const validate = t.context.getTestSubject()
   const tests = [
     {
@@ -57,40 +57,40 @@ test('Should contain error if timeout is invalid', t => {
   return tests.reduce((prev, config) => {
     return prev
       .then(() => validate(CWD, config.args))
-      .then(result => t.deepEqual(result, config.expected))
+      .then((result) => t.deepEqual(result, config.expected))
   }, Promise.resolve())
 })
 
-test('Should contain error message if module can not be found', t => {
+test('Should contain error message if module can not be found', (t) => {
   const errorMessage = 'This is an error'
   const validate = t.context.getTestSubject({
-    '@jokeyrhyme/pify-fs': {
-      stat: path => Promise.reject(new Error(errorMessage)),
+    fs: {
+      stat: (path, cb) => cb(new Error(errorMessage)),
     },
   })
   return validate(CWD, {
     route: '/test',
     module: 'test',
-  }).then(errors => t.deepEqual(errors, [errorMessage]))
+  }).then((errors) => t.deepEqual(errors, [errorMessage]))
 })
 
-test('Should contain different error message if module can not be found with ENOENT code', t => {
+test('Should contain different error message if module can not be found with ENOENT code', (t) => {
   const validate = t.context.getTestSubject({
-    '@jokeyrhyme/pify-fs': {
-      stat: path => {
+    fs: {
+      stat: (path, cb) => {
         const err = new Error()
         err.code = 'ENOENT'
-        return Promise.reject(err)
+        cb(err)
       },
     },
   })
   return validate(CWD, {
     route: '/test',
     module: MODULE,
-  }).then(errors => t.deepEqual(errors, [`Could not find module: ${MODULE}`]))
+  }).then((errors) => t.deepEqual(errors, [`Could not find module: ${MODULE}`]))
 })
 
-test('Input for for fs.stat() should be the result of path.resolve()', t => {
+test('Input for for fs.stat() should be the result of path.resolve()', (t) => {
   t.plan(3)
   const validate = t.context.getTestSubject({
     path: {
@@ -101,9 +101,15 @@ test('Input for for fs.stat() should be the result of path.resolve()', t => {
       },
     },
     '@jokeyrhyme/pify-fs': {
-      stat: path => {
+      stat: (path) => {
         t.is(path, PATH_RESOLVE)
         return Promise.resolve()
+      },
+    },
+    fs: {
+      stat: (path, cb) => {
+        t.is(path, PATH_RESOLVE)
+        cb()
       },
     },
   })

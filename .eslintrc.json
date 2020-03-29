@@ -1,13 +1,19 @@
 {
-  "extends": ["eslint:recommended", "plugin:node/recommended", "standard"],
   "env": {
-    "node": true,
-    "es6": true
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": ["eslint:recommended", "prettier"],
+  "plugins": ["prettier"],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020
   },
   "rules": {
-    "no-console": "off",
-    "comma-dangle": "off",
-    "space-before-function-paren": "off"
-  },
-  "plugins": ["node"]
+    "no-console": "off"
+  }
 }

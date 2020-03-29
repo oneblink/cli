@@ -12,8 +12,8 @@ const CORS = {
   exposedHeaders: ['Accept', 'Content-Type'],
 }
 
-test.beforeEach(t => {
-  t.context.getTestSubject = overrides => {
+test.beforeEach((t) => {
+  t.context.getTestSubject = (overrides) => {
     overrides = overrides || {}
     return proxyquire(
       TEST_SUBJECT,
@@ -33,10 +33,10 @@ test.beforeEach(t => {
   }
 })
 
-test('Should call read() with correct input', t => {
+test('Should call read() with correct input', (t) => {
   t.plan(1)
   const display = t.context.getTestSubject({
-    './read.js': cwd => {
+    './read.js': (cwd) => {
       t.is(cwd, CWD)
       return Promise.resolve(CORS)
     },
@@ -45,10 +45,10 @@ test('Should call read() with correct input', t => {
   return display(t.context.logger, CWD)
 })
 
-test('Should not log or validate if read() does not return cors', t => {
+test('Should not log or validate if read() does not return cors', (t) => {
   const display = t.context.getTestSubject({
-    './read.js': cwd => Promise.resolve(),
-    './validate.js': cors => {
+    './read.js': () => Promise.resolve(),
+    './validate.js': () => {
       t.fail('Should not validate')
       return Promise.resolve(CORS)
     },
@@ -59,9 +59,9 @@ test('Should not log or validate if read() does not return cors', t => {
   )
 })
 
-test('Should call validate() with correct input', t => {
+test('Should call validate() with correct input', (t) => {
   const display = t.context.getTestSubject({
-    './validate.js': cors => {
+    './validate.js': (cors) => {
       t.deepEqual(cors, CORS)
       return Promise.resolve(cors)
     },
@@ -70,7 +70,7 @@ test('Should call validate() with correct input', t => {
   return display(t.context.logger, CWD)
 })
 
-test('Should not log the cors and reject if no routes are found', t => {
+test('Should not log the cors and reject if no routes are found', (t) => {
   t.plan(1)
   const display = t.context.getTestSubject({
     './validate.js': () => Promise.reject(new Error()),
@@ -82,7 +82,7 @@ test('Should not log the cors and reject if no routes are found', t => {
   ).catch(() => t.pass())
 })
 
-test('Should log the cors', t => {
+test('Should log the cors', (t) => {
   t.plan(1)
   const display = t.context.getTestSubject()
 

@@ -18,12 +18,12 @@ const JWT = 'valid jwt'
 const CODE = 'abc123'
 const VERIFIER_CHALLENGE = 'verifier challenge'
 
-test.beforeEach(t => {
+test.beforeEach((t) => {
   t.context.log = console.log
   // $FlowFixMe
-  console.log = function(content) {}
+  console.log = function () {}
 
-  t.context.loginProviderBase = loginProviderBaseMock(jwt => {
+  t.context.loginProviderBase = loginProviderBaseMock((jwt) => {
     return Promise.resolve(jwt)
   })
 
@@ -37,23 +37,23 @@ test.beforeEach(t => {
     )
   })
 
-  t.context.inquirer = inquirerMock(questions => {
+  t.context.inquirer = inquirerMock(() => {
     return Promise.resolve({
       code: CODE,
     })
   })
 
-  t.context.open = (url, options) => {}
+  t.context.open = () => {}
 
-  t.context.base64url = base64urlMock(bytes => VERIFIER_CHALLENGE)
+  t.context.base64url = base64urlMock(() => VERIFIER_CHALLENGE)
 })
 
-test.afterEach(t => {
+test.afterEach((t) => {
   // $FlowFixMe
   console.log = t.context.log
 })
 
-test.cb('login() should return valid jwt', t => {
+test.cb('login() should return valid jwt', (t) => {
   const BrowserLoginProvider = proxyquire(TEST_SUBJECT, {
     inquirer: t.context.inquirer,
     request: t.context.request,
@@ -65,17 +65,17 @@ test.cb('login() should return valid jwt', t => {
 
   browserLoginProvider
     .login()
-    .then(jwt => {
+    .then((jwt) => {
       t.is(jwt, JWT)
       t.end()
     })
-    .catch(error => {
+    .catch((error) => {
       t.fail(error)
       t.end()
     })
 })
 
-test.cb('login() should call opn with correct data in url', t => {
+test.cb('login() should call opn with correct data in url', (t) => {
   const BrowserLoginProvider = proxyquire(TEST_SUBJECT, {
     inquirer: t.context.inquirer,
     request: t.context.request,
@@ -99,13 +99,13 @@ test.cb('login() should call opn with correct data in url', t => {
   })
   const browserLoginProvider = new BrowserLoginProvider(config.TENANTS.ONEBLINK)
 
-  browserLoginProvider.login().catch(error => {
+  browserLoginProvider.login().catch((error) => {
     t.fail(error)
     t.end()
   })
 })
 
-test.cb('login() should log a message to the console', t => {
+test.cb('login() should log a message to the console', (t) => {
   const BrowserLoginProvider = proxyquire(TEST_SUBJECT, {
     inquirer: t.context.inquirer,
     request: t.context.request,
@@ -116,7 +116,7 @@ test.cb('login() should log a message to the console', t => {
   const browserLoginProvider = new BrowserLoginProvider(config.TENANTS.ONEBLINK)
 
   // $FlowFixMe
-  console.log = function(content) {
+  console.log = function (content) {
     t.is(
       content,
       'A browser has been opened to allow you to login. Once logged in, you will be granted a verification code.',
@@ -125,18 +125,18 @@ test.cb('login() should log a message to the console', t => {
 
   browserLoginProvider
     .login()
-    .then(jwt => {
+    .then(() => {
       t.end()
     })
-    .catch(error => {
+    .catch((error) => {
       t.fail(error)
       t.end()
     })
 })
 
-test.cb('login() should prompt with the correct question', t => {
+test.cb('login() should prompt with the correct question', (t) => {
   const BrowserLoginProvider = proxyquire(TEST_SUBJECT, {
-    inquirer: inquirerMock(questions => {
+    inquirer: inquirerMock((questions) => {
       t.is(questions.length, 1)
       t.deepEqual(questions[0], {
         type: 'input',
@@ -155,13 +155,13 @@ test.cb('login() should prompt with the correct question', t => {
   })
   const browserLoginProvider = new BrowserLoginProvider(config.TENANTS.ONEBLINK)
 
-  browserLoginProvider.login().catch(error => {
+  browserLoginProvider.login().catch((error) => {
     t.fail(error)
     t.end()
   })
 })
 
-test.cb('login() should make request with the correct url and data', t => {
+test.cb('login() should make request with the correct url and data', (t) => {
   const BrowserLoginProvider = proxyquire(TEST_SUBJECT, {
     inquirer: t.context.inquirer,
     request: requestMock((url, body, callback) => {
@@ -182,13 +182,13 @@ test.cb('login() should make request with the correct url and data', t => {
   })
   const browserLoginProvider = new BrowserLoginProvider(config.TENANTS.ONEBLINK)
 
-  browserLoginProvider.login().catch(error => {
+  browserLoginProvider.login().catch((error) => {
     t.fail(error)
     t.end()
   })
 })
 
-test('login() should should reject if request returns an error', t => {
+test('login() should should reject if request returns an error', (t) => {
   t.plan(1)
   const BrowserLoginProvider = proxyquire(TEST_SUBJECT, {
     inquirer: t.context.inquirer,
@@ -201,14 +201,14 @@ test('login() should should reject if request returns an error', t => {
   })
   const browserLoginProvider = new BrowserLoginProvider(config.TENANTS.ONEBLINK)
 
-  return browserLoginProvider.login().catch(error => {
+  return browserLoginProvider.login().catch((error) => {
     t.deepEqual(error, new Error('Test error message'))
   })
 })
 
 test.cb(
   'login() should should reject if request returns an error in the body',
-  t => {
+  (t) => {
     const BrowserLoginProvider = proxyquire(TEST_SUBJECT, {
       inquirer: t.context.inquirer,
       request: requestMock((url, body, callback) => {
@@ -235,7 +235,7 @@ test.cb(
         t.fail()
         t.end()
       })
-      .catch(error => {
+      .catch((error) => {
         t.deepEqual(error, new Error('test error message'))
         t.end()
       })

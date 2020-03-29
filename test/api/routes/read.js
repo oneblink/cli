@@ -9,8 +9,8 @@ const CWD = 'current working directory'
 const CONFIGURATION_ROUTES = [{ route: 'configuration routes' }]
 const PROJECT_ROUTES = [{ route: 'project routes' }]
 
-test.beforeEach(t => {
-  t.context.getTestSubject = overrides => {
+test.beforeEach((t) => {
+  t.context.getTestSubject = (overrides) => {
     overrides = overrides || {}
     return proxyquire(
       TEST_SUBJECT,
@@ -33,11 +33,11 @@ test.beforeEach(t => {
   }
 })
 
-test('Should use configuration routes if available', t => {
+test('Should use configuration routes if available', (t) => {
   t.plan(2)
   const read = t.context.getTestSubject({
     '../scope.js': {
-      read: cwd => {
+      read: (cwd) => {
         t.is(cwd, CWD)
         return Promise.resolve({
           routes: CONFIGURATION_ROUTES,
@@ -45,48 +45,48 @@ test('Should use configuration routes if available', t => {
       },
     },
     '../project.js': {
-      listRoutes: cwd => {
+      listRoutes: () => {
         t.fail('Should not be looking in project for routes')
         return Promise.resolve()
       },
     },
   })
 
-  return read(CWD).then(routes => t.deepEqual(routes, CONFIGURATION_ROUTES))
+  return read(CWD).then((routes) => t.deepEqual(routes, CONFIGURATION_ROUTES))
 })
 
-test('Should use project routes if configuration routes are unavailable', t => {
+test('Should use project routes if configuration routes are unavailable', (t) => {
   t.plan(2)
   const read = t.context.getTestSubject({
     '../scope.js': {
       read: () => Promise.resolve({}),
     },
     '../project.js': {
-      listRoutes: cwd => {
+      listRoutes: (cwd) => {
         t.is(cwd, CWD)
         return Promise.resolve(PROJECT_ROUTES)
       },
     },
   })
 
-  return read(CWD).then(routes => t.deepEqual(routes, PROJECT_ROUTES))
+  return read(CWD).then((routes) => t.deepEqual(routes, PROJECT_ROUTES))
 })
 
-test('Should not reject and should always return an array if no routes are found', t => {
+test('Should not reject and should always return an array if no routes are found', (t) => {
   t.plan(1)
   const read = t.context.getTestSubject({
     '../scope.js': {
       read: () => Promise.resolve({}),
     },
     '../project.js': {
-      listRoutes: cwd => Promise.resolve(null),
+      listRoutes: () => Promise.resolve(null),
     },
   })
 
-  return read(CWD).then(routes => t.deepEqual(routes, []))
+  return read(CWD).then((routes) => t.deepEqual(routes, []))
 })
 
-test('Timeouts should be set via priority default, project, route', t => {
+test('Timeouts should be set via priority default, project, route', (t) => {
   const read = t.context.getTestSubject({
     '../scope.js': {
       read: () =>
@@ -105,7 +105,7 @@ test('Timeouts should be set via priority default, project, route', t => {
     },
   })
 
-  return read(CWD).then(routes =>
+  return read(CWD).then((routes) =>
     t.deepEqual(routes, [
       {
         route: 'config timeout',

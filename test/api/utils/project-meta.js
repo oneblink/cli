@@ -10,18 +10,18 @@ const pkg = require('../../../package.json')
 const TEST_SUBJECT = '../../../lib/api/utils/project-meta.js'
 const CWD = path.join(__dirname, '..', 'fixtures', 'project-meta')
 
-test.beforeEach(t => {
-  t.context.getTestSubject = overrides => {
+test.beforeEach((t) => {
+  t.context.getTestSubject = (overrides) => {
     overrides = overrides || {}
     return proxyquire(TEST_SUBJECT, overrides || {})
   }
 })
 
-test('projectConfig() call configLoader with correct input', t => {
+test('projectConfig() call configLoader with correct input', (t) => {
   t.plan(1)
   const projectMeta = t.context.getTestSubject({
     '@blinkmobile/blinkmrc': {
-      projectConfig: options =>
+      projectConfig: (options) =>
         t.deepEqual(options, {
           name: pkg.name,
           cwd: CWD,
@@ -32,7 +32,7 @@ test('projectConfig() call configLoader with correct input', t => {
   projectMeta.projectConfig(CWD)
 })
 
-test('read() should return empty object if load() rejects', t => {
+test('read() should return empty object if load() rejects', (t) => {
   const projectMeta = t.context.getTestSubject({
     '@blinkmobile/blinkmrc': {
       projectConfig: () => ({
@@ -41,25 +41,25 @@ test('read() should return empty object if load() rejects', t => {
     },
   })
 
-  return projectMeta.read(CWD).then(meta => t.deepEqual(meta, {}))
+  return projectMeta.read(CWD).then((meta) => t.deepEqual(meta, {}))
 })
 
-test('read() should return contents of .blinkmrc.json file', t => {
+test('read() should return contents of .blinkmrc.json file', (t) => {
   const projectMeta = t.context.getTestSubject()
 
-  return projectMeta.read(CWD).then(meta =>
+  return projectMeta.read(CWD).then((meta) =>
     t.deepEqual(meta, {
       'project-meta': 'test',
     }),
   )
 })
 
-test('write() should call the updater function passed', t => {
+test('write() should call the updater function passed', (t) => {
   let updaterCalled = false
   const projectMeta = t.context.getTestSubject({
     '@blinkmobile/blinkmrc': {
       projectConfig: () => ({
-        update: updater => {
+        update: (updater) => {
           updater()
           return Promise.resolve()
         },
@@ -68,7 +68,7 @@ test('write() should call the updater function passed', t => {
   })
 
   return projectMeta
-    .write(CWD, config => {
+    .write(CWD, () => {
       updaterCalled = true
     })
     .then(() => t.truthy(updaterCalled))

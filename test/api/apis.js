@@ -41,15 +41,15 @@ const ROUTES = [
   },
 ]
 
-test.beforeEach(t => {
-  t.context.getTestSubject = overrides => {
+test.beforeEach((t) => {
+  t.context.getTestSubject = (overrides) => {
     overrides = overrides || {}
     return proxyquire(
       TEST_SUBJECT,
       Object.assign(
         {
           './handlers.js': {
-            getHandler: routeConfig =>
+            getHandler: (routeConfig) =>
               Promise.resolve({
                 handler: () => {},
                 params: routeConfig ? routeConfig.params : {},
@@ -62,7 +62,7 @@ test.beforeEach(t => {
   }
 })
 
-test('getHandlerConfig() should pass correct arguments to getHandler()', t => {
+test('getHandlerConfig() should pass correct arguments to getHandler()', (t) => {
   t.plan(2)
   const apis = t.context.getTestSubject({
     './handlers.js': {
@@ -76,7 +76,7 @@ test('getHandlerConfig() should pass correct arguments to getHandler()', t => {
   return apis.getHandlerConfig(ROUTE_CONFIG, METHOD)
 })
 
-test('getHandlerConfig() should reject if getHandler() throws an error', t => {
+test('getHandlerConfig() should reject if getHandler() throws an error', (t) => {
   const apis = t.context.getTestSubject({
     './handlers.js': {
       getHandler: () => Promise.reject(new Error('test error')),
@@ -85,22 +85,22 @@ test('getHandlerConfig() should reject if getHandler() throws an error', t => {
   return t.throwsAsync(() => apis.getHandlerConfig(ROUTE_CONFIG), 'test error')
 })
 
-test('getHandlerConfig() should return a handler from getHandler() and params from routeConfig', t => {
+test('getHandlerConfig() should return a handler from getHandler() and params from routeConfig', (t) => {
   const apis = t.context.getTestSubject({
     './handlers.js': {
       getHandler: () => Promise.resolve('this is my handler'),
     },
   })
-  return apis.getHandlerConfig({ params: undefined }).then(handlerConfig => {
+  return apis.getHandlerConfig({ params: undefined }).then((handlerConfig) => {
     t.is(handlerConfig.handler, 'this is my handler')
     t.deepEqual(handlerConfig.params, {})
   })
 })
 
-test('getRouteConfig() should pass correct arguments to readRoutes()', t => {
+test('getRouteConfig() should pass correct arguments to readRoutes()', (t) => {
   t.plan(1)
   const apis = t.context.getTestSubject({
-    './routes/read.js': cwd => {
+    './routes/read.js': (cwd) => {
       t.is(cwd, EXAMPLE_DIR)
       return Promise.resolve(ROUTES)
     },
@@ -108,14 +108,14 @@ test('getRouteConfig() should pass correct arguments to readRoutes()', t => {
   return apis.getRouteConfig(EXAMPLE_DIR, ROUTES[0].route)
 })
 
-test('getRouteConfig() should reject if readRoutes() throws an error', t => {
+test('getRouteConfig() should reject if readRoutes() throws an error', (t) => {
   const apis = t.context.getTestSubject({
-    './routes/read.js': cwd => Promise.reject(new Error('test error')),
+    './routes/read.js': () => Promise.reject(new Error('test error')),
   })
   return t.throwsAsync(() => apis.getRouteConfig(), 'test error')
 })
 
-test('getRouteConfig() should reject if route cannot be found', t => {
+test('getRouteConfig() should reject if route cannot be found', (t) => {
   const apis = t.context.getTestSubject()
   return t.throwsAsync(
     () => apis.getRouteConfig(CONFIGURATION_DIR, 'missing'),
@@ -123,11 +123,11 @@ test('getRouteConfig() should reject if route cannot be found', t => {
   )
 })
 
-test('getRouteConfig() should find correct route and return route params', t => {
+test('getRouteConfig() should find correct route and return route params', (t) => {
   const apis = t.context.getTestSubject()
   return apis
     .getRouteConfig(CONFIGURATION_DIR, '/books/123/chapters/1')
-    .then(routeConfig =>
+    .then((routeConfig) =>
       t.deepEqual(routeConfig, {
         route: '/books/{id}/chapters/{chapterNo}',
         module: path.resolve(CONFIGURATION_DIR, './api/chapter.js'),
