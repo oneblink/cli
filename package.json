@@ -1,7 +1,7 @@
 {
   "name": "@oneblink/cli",
   "description": "primary entry point for our CLI tools",
-  "version": "0.1.3",
+  "version": "0.1.4-beta.0",
   "author": "OneBlink <developers@oneblink> (https://github.com/blinkmobile)",
   "ava": {
     "files": [
