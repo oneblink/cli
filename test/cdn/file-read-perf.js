@@ -10,7 +10,7 @@ const temp = require('temp').track()
 const mockery = require('mockery')
 
 const config = require('../../lib/config')
-const OneBlinkIdentity = require('../../lib/identity')
+const OneBlinkAPIClient = require('../../lib/oneblink-api-client')
 // require now to avoid mockery warnings
 require('@blinkmobile/aws-s3')
 require('ora')
@@ -118,8 +118,7 @@ function makeTest(timerLabel, numFiles) {
           skip: true,
           prune: true,
         },
-        config.TENANTS.ONEBLINK,
-        new OneBlinkIdentity(),
+        new OneBlinkAPIClient(config.TENANTS.ONEBLINK),
       )
     }
 

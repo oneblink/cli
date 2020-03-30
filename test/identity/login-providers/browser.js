@@ -5,7 +5,6 @@ const test = require('ava')
 const proxyquire = require('proxyquire')
 const querystring = require('querystring')
 
-const requestMock = require('../helpers/request.js')
 const loginProviderBaseMock = require('../helpers/login-provider-base.js')
 const inquirerMock = require('../helpers/inquirer.js')
 const base64urlMock = require('../helpers/base-64-url.js')
@@ -27,15 +26,12 @@ test.beforeEach((t) => {
     return Promise.resolve(jwt)
   })
 
-  t.context.request = requestMock((url, body, callback) => {
-    callback(
-      null,
-      {},
-      {
-        id_token: JWT,
-      },
-    )
-  })
+  t.context['node-fetch'] = {
+    default: async () => ({
+      ok: true,
+      json: async () => ({ id_token: JWT }),
+    }),
+  }
 
   t.context.inquirer = inquirerMock(() => {
     return Promise.resolve({
@@ -56,7 +52,7 @@ test.afterEach((t) => {
 test.cb('login() should return valid jwt', (t) => {
   const BrowserLoginProvider = proxyquire(TEST_SUBJECT, {
     inquirer: t.context.inquirer,
-    request: t.context.request,
+    ['node-fetch']: t.context['node-fetch'],
     open: t.context.open,
     base64url: t.context.base64url,
     './login-provider-base.js': t.context.loginProviderBase,
@@ -78,7 +74,7 @@ test.cb('login() should return valid jwt', (t) => {
 test.cb('login() should call opn with correct data in url', (t) => {
   const BrowserLoginProvider = proxyquire(TEST_SUBJECT, {
     inquirer: t.context.inquirer,
-    request: t.context.request,
+    ['node-fetch']: t.context['node-fetch'],
     open: (url, options) => {
       const expectedQS = querystring.stringify({
         response_type: 'code',
@@ -108,7 +104,7 @@ test.cb('login() should call opn with correct data in url', (t) => {
 test.cb('login() should log a message to the console', (t) => {
   const BrowserLoginProvider = proxyquire(TEST_SUBJECT, {
     inquirer: t.context.inquirer,
-    request: t.context.request,
+    ['node-fetch']: t.context['node-fetch'],
     open: t.context.open,
     base64url: t.context.base64url,
     './login-provider-base.js': t.context.loginProviderBase,
@@ -129,6 +125,7 @@ test.cb('login() should log a message to the console', (t) => {
       t.end()
     })
     .catch((error) => {
+      t.log(error)
       t.fail(error)
       t.end()
     })
@@ -148,7 +145,7 @@ test.cb('login() should prompt with the correct question', (t) => {
         code: CODE,
       })
     }),
-    request: t.context.request,
+    ['node-fetch']: t.context['node-fetch'],
     open: t.context.open,
     base64url: t.context.base64url,
     './login-provider-base.js': t.context.loginProviderBase,
@@ -164,37 +161,47 @@ test.cb('login() should prompt with the correct question', (t) => {
 test.cb('login() should make request with the correct url and data', (t) => {
   const BrowserLoginProvider = proxyquire(TEST_SUBJECT, {
     inquirer: t.context.inquirer,
-    request: requestMock((url, body, callback) => {
-      t.is(url, `${config.TENANTS.ONEBLINK.loginUrl}/oauth2/token`)
-      t.deepEqual(body.form, {
-        code: CODE,
-        code_verifier: VERIFIER_CHALLENGE,
-        client_id: config.TENANTS.ONEBLINK.loginClientId,
-        grant_type: 'authorization_code',
-        redirect_uri: config.TENANTS.ONEBLINK.loginCallbackUrl,
-      })
-      t.end()
-      callback(null, {}, {})
-    }),
+    ['node-fetch']: {
+      default: async (url, { body }) => {
+        t.is(url, `${config.TENANTS.ONEBLINK.loginUrl}/oauth2/token`)
+        t.is(body.get('code'), CODE)
+        t.is(body.get('code_verifier'), VERIFIER_CHALLENGE)
+        t.is(body.get('client_id'), config.TENANTS.ONEBLINK.loginClientId)
+        t.is(body.get('grant_type'), 'authorization_code')
+        t.is(body.get('redirect_uri'), config.TENANTS.ONEBLINK.loginCallbackUrl)
+
+        return {
+          ok: true,
+          json: async () => ({}),
+        }
+      },
+    },
     open: t.context.open,
     base64url: t.context.base64url,
     './login-provider-base.js': t.context.loginProviderBase,
   })
   const browserLoginProvider = new BrowserLoginProvider(config.TENANTS.ONEBLINK)
 
-  browserLoginProvider.login().catch((error) => {
-    t.fail(error)
-    t.end()
-  })
+  browserLoginProvider
+    .login()
+    .then(() => {
+      t.end()
+    })
+    .catch((error) => {
+      t.fail(error)
+      t.end()
+    })
 })
 
 test('login() should should reject if request returns an error', (t) => {
   t.plan(1)
   const BrowserLoginProvider = proxyquire(TEST_SUBJECT, {
     inquirer: t.context.inquirer,
-    request: requestMock((url, body, callback) => {
-      callback(new Error('Test error message'))
-    }),
+    ['node-fetch']: {
+      default: async function () {
+        throw new Error('Test error message')
+      },
+    },
     open: t.context.open,
     base64url: t.context.base64url,
     './login-provider-base.js': t.context.loginProviderBase,
@@ -211,16 +218,15 @@ test.cb(
   (t) => {
     const BrowserLoginProvider = proxyquire(TEST_SUBJECT, {
       inquirer: t.context.inquirer,
-      request: requestMock((url, body, callback) => {
-        callback(
-          null,
-          {},
-          {
+      ['node-fetch']: {
+        default: async () => ({
+          ok: false,
+          json: async () => ({
             error: 'error code',
             error_description: 'test error message',
-          },
-        )
-      }),
+          }),
+        }),
+      },
       open: t.context.open,
       base64url: t.context.base64url,
       './login-provider-base.js': t.context.loginProviderBase,
