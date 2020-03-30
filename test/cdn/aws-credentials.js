@@ -2,9 +2,6 @@
 'use strict'
 
 const test = require('ava')
-const mockery = require('mockery')
-
-const requestModule = 'request'
 
 const CFG = {
   objectParams: {
@@ -17,100 +14,42 @@ const CFG = {
     origin: 'http://localhost',
   },
 }
-const ACCESS_TOKEN = 'jwt'
 
-const config = require('../../lib/config')
-test.beforeEach(() => {
-  mockery.enable({ useCleanCache: true })
-  mockery.warnOnUnregistered(false)
-})
-
-test.afterEach(() => {
-  mockery.warnOnUnregistered(true)
-  mockery.deregisterAll()
-  mockery.resetCache()
-  mockery.disable()
-})
-
-test.serial('it should resolve aws credentials', (t) => {
+test('it should resolve aws credentials', (t) => {
   const Credentials = {
     AccessKeyId: 'id',
     SecretAccessKey: 'secret',
     SessionToken: 'token',
   }
-  const requestMock = {
-    post: function (url, options, cb) {
-      cb(
-        null,
-        {
-          statusCode: 200,
-        },
-        {
-          Credentials,
-        },
-      )
+
+  // $FlowFixMe
+  const oneBlinkAPIClient /* : OneBlinkAPIClient */ = {
+    postRequest: async () => ({
+      Credentials,
+    }),
+  }
+
+  const getAwsCredentials = require('../../lib/commands/cdn/lib/aws-credentials.js')
+  return getAwsCredentials(CFG, 'dev', oneBlinkAPIClient).then(
+    (credentials) => {
+      t.is(credentials.accessKeyId, Credentials.AccessKeyId)
+      t.is(credentials.secretAccessKey, Credentials.SecretAccessKey)
+      t.is(credentials.sessionToken, Credentials.SessionToken)
+    },
+  )
+})
+
+test('it should reject and stop the spinner if request for aws credentials fails', (t) => {
+  // $FlowFixMe
+  const oneBlinkAPIClient /* : OneBlinkAPIClient */ = {
+    postRequest: async () => {
+      throw new Error('test error')
     },
   }
 
-  mockery.registerMock(requestModule, requestMock)
-
   const getAwsCredentials = require('../../lib/commands/cdn/lib/aws-credentials.js')
-  return getAwsCredentials(
-    CFG,
-    'dev',
-    ACCESS_TOKEN,
-    config.TENANTS.ONEBLINK,
-  ).then((credentials) => {
-    t.is(credentials.accessKeyId, Credentials.AccessKeyId)
-    t.is(credentials.secretAccessKey, Credentials.SecretAccessKey)
-    t.is(credentials.sessionToken, Credentials.SessionToken)
-  })
+  return t.throwsAsync(
+    () => getAwsCredentials(CFG, 'dev', oneBlinkAPIClient),
+    'test error',
+  )
 })
-
-test.serial(
-  'it should reject and stop the spinner if request for aws credentials fails',
-  (t) => {
-    const requestMock = {
-      post: function (url, options, cb) {
-        cb(new Error('test error'))
-      },
-    }
-
-    mockery.registerMock(requestModule, requestMock)
-
-    const getAwsCredentials = require('../../lib/commands/cdn/lib/aws-credentials.js')
-    return t.throwsAsync(
-      () =>
-        getAwsCredentials(CFG, 'dev', ACCESS_TOKEN, config.TENANTS.ONEBLINK),
-      'test error',
-    )
-  },
-)
-
-test.serial(
-  'it should reject and stop the spinner if aws credentials could not be retrieved',
-  (t) => {
-    const requestMock = {
-      post: function (url, options, cb) {
-        cb(
-          null,
-          {
-            statusCode: 403,
-          },
-          {
-            message: 'Forbidden',
-          },
-        )
-      },
-    }
-
-    mockery.registerMock(requestModule, requestMock)
-
-    const getAwsCredentials = require('../../lib/commands/cdn/lib/aws-credentials.js')
-    return t.throwsAsync(
-      () =>
-        getAwsCredentials(CFG, 'dev', ACCESS_TOKEN, config.TENANTS.ONEBLINK),
-      'Forbidden',
-    )
-  },
-)

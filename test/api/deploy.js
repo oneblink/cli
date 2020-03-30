@@ -8,11 +8,8 @@ const test = require('ava')
 const proxyquire = require('proxyquire')
 const yauzl = require('yauzl')
 
-const values = require('../../lib/config')
-
 const TEST_SUBJECT = '../../lib/api/deploy.js'
 
-const ACCESS_TOKEN = 'this is an access token'
 const UPLOAD_PATH = path.join(__dirname, 'fixtures', 'upload', 'project.zip')
 const ZIP_PATH = path.join(__dirname, 'fixtures', 'zip')
 const BUNDLE_KEY = 'this is a file key'
@@ -53,24 +50,16 @@ test('confirm() should prompt and log if force is false', (t) => {
 })
 
 test('authenticate() should call blinkMobileIdentity functions and stop updates', (t) => {
-  t.plan(2)
-  const deploy = t.context.getTestSubject({
-    './assume-aws-roles.js': {
-      assumeAWSRoleToDeploy: () => {
-        t.pass()
-        return Promise.resolve({})
-      },
-    },
-  })
+  t.plan(1)
+  const deploy = t.context.getTestSubject()
   return deploy.authenticate(
-    values.TENANTS.ONEBLINK,
-    {},
     {
-      getAccessToken: () => {
+      postRequest: () => {
         t.pass()
-        return Promise.resolve()
+        return Promise.resolve({ credentials: {} })
       },
     },
+    {},
     ENV,
   )
 })
@@ -84,11 +73,13 @@ test('authenticate() should call log correct updates if blinkMobileIdentity func
   })
   return deploy
     .authenticate(
-      values.TENANTS.ONEBLINK,
-      {},
       {
-        getAccessToken: () => Promise.resolve(),
+        postRequest: () => {
+          t.pass()
+          return Promise.resolve()
+        },
       },
+      {},
       ENV,
     )
     .catch((err) => t.is(err.message, 'test error'))
@@ -236,67 +227,37 @@ test('upload() should log correct updates and reject if upload returns an error'
 
 test('deploy() should log correct updates', (t) => {
   t.plan(2)
-  const deploy = t.context.getTestSubject({
-    request: {
-      post: (url, params, cb) => {
-        t.is(
-          url,
-          `${values.TENANTS.ONEBLINK.origin}/apis/${params.json.scope}/environments/${ENV}/deployments`,
-        )
-        t.deepEqual(params, {
-          auth: {
-            bearer: ACCESS_TOKEN,
-          },
-          json: {
-            payload: '123',
-            scope: 'scope',
-          },
+  const deploy = t.context.getTestSubject()
+  return deploy.deploy(
+    {
+      postRequest: (path, body) => {
+        t.is(path, `/apis/${body.scope}/environments/${ENV}/deployments`)
+        t.deepEqual(body, {
+          payload: '123',
+          scope: 'scope',
         })
-        cb(null, { statusCode: 200 }, { brandedUrl: 'https://example.com' })
+        return Promise.resolve({ brandedUrl: 'https://example.com' })
       },
     },
-  })
-  return deploy.deploy(
-    values.TENANTS.ONEBLINK,
     { payload: '123', scope: 'scope' },
-    ACCESS_TOKEN,
     ENV,
   )
 })
 
 test('deploy() should log correct updates and reject if request() returns an error', (t) => {
   t.plan(1)
-  const deploy = t.context.getTestSubject({
-    request: {
-      post: (url, params, cb) => {
-        cb(new Error('test error'))
-      },
-    },
-  })
+  const deploy = t.context.getTestSubject()
   return t.throwsAsync(
-    () => deploy.deploy(values.TENANTS.ONEBLINK, {}, ACCESS_TOKEN, ENV),
-    'test error',
-  )
-})
-
-test('deploy() should log correct updates and reject if request() returns an non 200 status code', (t) => {
-  t.plan(1)
-  const deploy = t.context.getTestSubject({
-    request: {
-      post: (url, params, cb) =>
-        cb(
-          null,
-          {},
-          {
-            message: 'error message',
-            error: 'ERROR',
-            statusCode: 500,
+    () =>
+      deploy.deploy(
+        {
+          postRequest: () => {
+            return Promise.reject(new Error('test error'))
           },
-        ),
-    },
-  })
-  return t.throwsAsync(
-    () => deploy.deploy(values.TENANTS.ONEBLINK, {}, ACCESS_TOKEN, ENV),
-    'error message',
+        },
+        {},
+        ENV,
+      ),
+    'test error',
   )
 })
