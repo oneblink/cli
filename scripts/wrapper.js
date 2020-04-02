@@ -285,11 +285,8 @@ async function handler(
   }
 }
 
-const ENTRY_FUNCTION = 'handler'
-
 module.exports = {
-  ENTRY_FUNCTION,
-  [ENTRY_FUNCTION]: handler,
+  [handlers.ENTRY_FUNCTION]: handler,
   normaliseLambdaRequest,
 }
 /* eslint-enable no-console */
