@@ -66,6 +66,8 @@ const uniloc = require('uniloc')
 
 const BmResponse = require('./bm-response.js')
 
+const ENTRY_FUNCTION = 'handler'
+
 function executeHandler(
   handler /* : Handler */,
   request /* : BmRequest */,
@@ -73,7 +75,7 @@ function executeHandler(
   const response = new BmResponse()
   return Promise.resolve()
     .then(() => handler(request, response))
-    .then(result => {
+    .then((result) => {
       // If a result has been returned:
       // try and set status code or
       // try and set payload
@@ -116,7 +118,7 @@ function findRouteConfig(
   const unilocRoute = unilocRouter.lookup(route, 'GET')
 
   const routeConfig = routeConfigs.find(
-    routeConfig => routeConfig.route === unilocRoute.name,
+    (routeConfig) => routeConfig.route === unilocRoute.name,
   )
   if (!routeConfig) {
     throw new Error(`Route has not been implemented: ${route}`)
@@ -127,6 +129,7 @@ function findRouteConfig(
 }
 
 module.exports = {
+  ENTRY_FUNCTION,
   findRouteConfig,
   executeHandler,
   getHandler,
@@ -726,11 +729,8 @@ async function handler(
   }
 }
 
-const ENTRY_FUNCTION = 'handler'
-
 module.exports = {
-  ENTRY_FUNCTION,
-  [ENTRY_FUNCTION]: handler,
+  [handlers.ENTRY_FUNCTION]: handler,
   normaliseLambdaRequest,
 }
 /* eslint-enable no-console */
