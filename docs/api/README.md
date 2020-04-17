@@ -30,8 +30,6 @@
 
 - [Limits & Known Issues](./limits-and-known-issues.md)
 
-- [Root Route](https://blinkmobile.github.io/server-cli/root-route.html)
-
 - [Suggestions](./suggestions.md)
 
 ## Examples

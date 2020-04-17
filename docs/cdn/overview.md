@@ -76,4 +76,4 @@ oneblink cdn deploy <path-to-files> --env <environment> --cwd <path-to-project> 
 
 Skip ignored files and directories during upload.
 
-See [.blinkmignore](https://github.com/blinkmobile/aws-s3.js#blinkmignore)
+See [.blinkmignore](https://github.com/oneblink/aws-s3.js#blinkmignore)

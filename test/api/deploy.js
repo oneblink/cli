@@ -49,7 +49,7 @@ test('confirm() should prompt and log if force is false', (t) => {
   return deploy.confirm({ log: () => t.pass() }, false)
 })
 
-test('authenticate() should call blinkMobileIdentity functions and stop updates', (t) => {
+test('authenticate() should call oneblinkIdentity functions and stop updates', (t) => {
   t.plan(1)
   const deploy = t.context.getTestSubject()
   return deploy.authenticate(
@@ -64,7 +64,7 @@ test('authenticate() should call blinkMobileIdentity functions and stop updates'
   )
 })
 
-test('authenticate() should call log correct updates if blinkMobileIdentity functions throw errors', (t) => {
+test('authenticate() should call log correct updates if oneblinkIdentity functions throw errors', (t) => {
   t.plan(1)
   const deploy = t.context.getTestSubject({
     './assume-aws-roles.js': {
