@@ -2,7 +2,7 @@
   "name": "@oneblink/cli",
   "description": "primary entry point for our CLI tools",
   "version": "0.1.4",
-  "author": "OneBlink <developers@oneblink> (https://github.com/blinkmobile)",
+  "author": "OneBlink <developers@oneblink> (https://github.com/oneblink)",
   "ava": {
     "files": [
       "test/**/*",
@@ -16,7 +16,7 @@
     "civicplus": "bin/civicplus.js"
   },
   "bugs": {
-    "url": "https://github.com/blinkmobile/cli/issues"
+    "url": "https://github.com/oneblink/cli/issues"
   },
   "contributors": [
     "Ron Waldon <jokeyrhyme@gmail.com> (https://github.com/jokeyrhyme)",
@@ -79,7 +79,7 @@
     "dist",
     "lib"
   ],
-  "homepage": "https://blinkmobile.github.io/cli",
+  "homepage": "https://oneblink.github.io/cli",
   "keywords": [],
   "license": "BSD-3-Clause",
   "main": "index.js",
@@ -88,7 +88,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/blinkmobile/cli.git"
+    "url": "git+https://github.com/oneblink/cli.git"
   },
   "scripts": {
     "ava": "ava",
