@@ -48,6 +48,12 @@ During development you will likely **not** wish to use the OneBlink Production E
 
 1. Update the [Changelog](./CHANGELOG.md) by replacing `Unreleased` with `x.x.x (YYYY-MM-DD)`
 
+1. Commit changes to the `master` branch
+
+   ```
+   git add -A && git commit -m "[CHANGELOG] x.x.x"
+   ```
+
 1. Bump the version and create a release commit
 
    ```

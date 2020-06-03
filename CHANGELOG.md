@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## 0.1.5 (2020-06-03)
+
 ### Fixed
 
 - `api teardown` command throwing error parsing JSON
