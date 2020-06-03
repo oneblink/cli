@@ -1,7 +1,7 @@
 {
   "name": "@oneblink/cli",
   "description": "primary entry point for our CLI tools",
-  "version": "0.1.5-beta.0",
+  "version": "0.1.5",
   "author": "OneBlink <developers@oneblink> (https://github.com/oneblink)",
   "ava": {
     "files": [
