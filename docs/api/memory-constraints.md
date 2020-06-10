@@ -6,7 +6,7 @@ By default Memory for your api is limited to 1024 MB (1 GB).
 
 ### Increasing Memory Size
 
-We allow for increasing the Memory Size of your api through the `server.memorySize` property in the `.blinkmrc.json` file;
+We allow for increasing the Memory Size of your api through the `server.memorySize` property in the `.blinkmrc.json` file. Only multiples of `64` are allowed;
 
 #### .blinkmrc.json
 
