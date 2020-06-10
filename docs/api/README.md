@@ -24,6 +24,8 @@
 
 11. [Network Configuration](./network.md)
 
+12. [Memory Constraints](./memory-constraints.md)
+
 ## More Information...
 
 - [Execution Environment](./environment.md)
