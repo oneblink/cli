@@ -2,6 +2,7 @@
   "server": {
     "project": "example.api.oneblink.io",
     "cors": true,
+    "memorySize": 128,
     "routes": [
       {
         "route": "/request",
