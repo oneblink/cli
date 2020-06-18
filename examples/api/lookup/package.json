@@ -3,6 +3,7 @@
   "description": "Example api endpoints",
   "version": "0.0.1",
   "dependencies": {
+    "uuid": "^8.1.0",
     "@oneblink/sdk": "^0.4.3"
   }
 }
