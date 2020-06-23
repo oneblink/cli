@@ -2,7 +2,7 @@
 
 ## Timeouts
 
-Each route will have a default of **15 seconds** to complete before it will automatically timeout. The timeout for all routes in the project can be set in `.blinkmrc.json`:
+Routes have a default of `15` seconds to complete before they automatically timeout. The timeout value can be set in `.blinkmrc.json` (timeout is **not** configurable per route):
 
 ```json
 {
