@@ -6,25 +6,27 @@
 
 2.  [Routes](./routes.md)
 
-3.  [Handler Functions](./handlers.md)
+3.  [Timeouts](./timeouts.md)
 
-4.  [Environment Variables](./environment-variables.md)
+4.  [Handler Functions](./handlers.md)
 
-5.  [CORS Configuration](./CORS.md)
+5.  [Environment Variables](./environment-variables.md)
 
-6.  [Sending Emails](./SES.md)
+6.  [CORS Configuration](./CORS.md)
 
-7.  [Local Development](./local-development.md)
+7.  [Sending Emails](./SES.md)
 
-8.  [Deployment Keys](./deployment-keys.md)
+8.  [Local Development](./local-development.md)
 
-9.  [Analytics](./analytics.md)
+9.  [Deployment Keys](./deployment-keys.md)
 
-10. [Viewing Server Logs](./logs.md)
+10. [Analytics](./analytics.md)
 
-11. [Network Configuration](./network.md)
+11. [Viewing Server Logs](./logs.md)
 
-12. [Memory Constraints](./memory-constraints.md)
+12. [Network Configuration](./network.md)
+
+13. [Memory Constraints](./memory-constraints.md)
 
 ## More Information...
 
