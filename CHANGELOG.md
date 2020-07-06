@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Added
+
+- `memorySize` option to API CLI configuration
+
 ## 0.1.5 (2020-06-03)
 
 ### Fixed
