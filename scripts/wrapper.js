@@ -23,8 +23,6 @@ type APIGatewayResult = {
 }
 */
 
-const https = require('https')
-const { URL } = require('url')
 const path = require('path')
 const querystring = require('querystring')
 
@@ -82,62 +80,6 @@ async function handler(
     )
     const endTime = Date.now()
     const requestTime = endTime - startTime
-
-    if (
-      process.env.ONEBLINK_ANALYTICS_ORIGIN &&
-      process.env.ONEBLINK_ANALYTICS_COLLECTOR_TOKEN
-    ) {
-      try {
-        const token = process.env.ONEBLINK_ANALYTICS_COLLECTOR_TOKEN
-        const hostname = new URL(process.env.ONEBLINK_ANALYTICS_ORIGIN).hostname
-        const httpsRequest = https.request({
-          hostname,
-          path: '/events',
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        httpsRequest.write(
-          JSON.stringify({
-            events: [
-              {
-                name: 'Server CLI Request',
-                date: new Date().toISOString(),
-                tags: {
-                  env: config.env,
-                  scope: config.scope,
-                  request: {
-                    method: request.method.toUpperCase(),
-                    query: request.url.query,
-                    port: 443,
-                    path: request.route,
-                    hostName: request.url.hostname,
-                    params: request.url.params,
-                    protocol: request.url.protocol,
-                  },
-                  response: {
-                    statusCode: statusCode,
-                  },
-                  requestTime: {
-                    startDateTime: new Date(startTime).toISOString(),
-                    startTimeStamp: startTime,
-                    endDateTime: new Date(endTime).toISOString(),
-                    endTimeStamp: endTime,
-                    ms: requestTime,
-                    s: requestTime / 1000,
-                  },
-                },
-              },
-            ],
-          }),
-        )
-        httpsRequest.end()
-      } catch (e) {
-        console.warn('An error occurred attempting to POST analytics event', e)
-      }
-    }
 
     let path = request.url.pathname
     const search = querystring.stringify(request.url.query)
