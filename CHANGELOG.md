@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Changed
+
+- SES api docs to advise usage of `us-east-2`
+
 ## 0.1.6 (2020-07-06)
 
 ### Added
