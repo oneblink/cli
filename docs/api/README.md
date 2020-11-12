@@ -20,13 +20,11 @@
 
 9.  [Deployment Keys](./deployment-keys.md)
 
-10. [Analytics](./analytics.md)
+10. [Viewing Server Logs](./logs.md)
 
-11. [Viewing Server Logs](./logs.md)
+11. [Network Configuration](./network.md)
 
-12. [Network Configuration](./network.md)
-
-13. [Memory Constraints](./memory-constraints.md)
+12. [Memory Constraints](./memory-constraints.md)
 
 ## More Information...
 

@@ -48,12 +48,7 @@ Below are all the properties that are supported in `.blinkmrc.json` file for the
       }
     },
     // Optionally provide the name of an AWS profile to allow local development to reflect the deployed environment.
-    "awsProfile": "name-of-profile",
-    // Optionally integrate with the Analytics service.
-    "analytics": {
-      "key": "ABCDEFGHIJKL123456789012",
-      "secret": "123456789012ABCDEFGHIJKL123456789012ABCDEFGHIJKL"
-    }
+    "awsProfile": "name-of-profile"
   }
 }
 ```
