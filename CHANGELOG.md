@@ -5,9 +5,37 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## 0.1.7 (2020-11-17)
+
 ### Removed
 
 - Analytics integration
+
+### Dependencies
+
+- update archiver to [5.0.2](https://github.com/archiverjs/node-archiver/releases/tag/5.0.2) (from [3.1.1](https://github.com/archiverjs/node-archiver/releases/tag/3.1.1))
+
+- update aws-sdk to [2.790.0](https://github.com/aws/aws-sdk-js/blob/master/CHANGELOG.md) (from [2.648.0](https://github.com/aws/aws-sdk-js/blob/master/CHANGELOG.md))
+
+- update chalk to 4.1.0 (from 3.0.0)
+
+- update execa to [4.1.0](https://github.com/sindresorhus/execa/releases/tag/v4.1.0) (from 4.0.0)
+
+- update [inquirer](https://www.npmjs.com/package/inquirer) to 7.3.3 (from 7.1.0)
+
+- update meow to 8.0.0 (from 6.1.0)
+
+- update node-fetch to 2.6.1 (from 2.6.0)
+
+- update [open](https://www.npmjs.com/package/open) to 7.3.0 (from 7.0.3)
+
+- update ora to 5.1.0 (from 4.0.3)
+
+- update [recursive-copy](https://www.npmjs.com/package/recursive-copy) to 2.0.11 (from 2.0.10)
+
+- update [temp](https://www.npmjs.com/package/temp) to 0.9.4 (from 0.9.1)
+
+- update [update-notifier](https://www.npmjs.com/package/update-notifier) to 5.0.1 (from 4.1.0)
 
 ## 0.1.6 (2020-07-06)
 
