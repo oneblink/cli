@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## 0.1.8 (2020-11-25)
+
 ### Added
 
 - Default header allowance for `X-OneBlink-User-Token`
