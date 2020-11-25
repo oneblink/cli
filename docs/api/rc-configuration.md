@@ -32,7 +32,8 @@ Below are all the properties that are supported in `.blinkmrc.json` file for the
         "If-None-Match",
         "X-Amz-Date",
         "X-Amz-Security-Token",
-        "X-Api-Key"
+        "X-Api-Key",
+        "X-OneBlink-User-Token"
       ],
       "exposedHeaders": ["Server-Authorization", "WWW-Authenticate"],
       "credentials": false,
