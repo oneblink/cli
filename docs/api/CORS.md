@@ -52,7 +52,8 @@ Cross-Origin resource sharing can also be configured as below:
         "If-None-Match",
         "X-Amz-Date",
         "X-Amz-Security-Token",
-        "X-Api-Key"
+        "X-Api-Key",
+        "X-OneBlink-User-Token"
       ],
       "exposedHeaders": ["Server-Authorization", "WWW-Authenticate"],
       "credentials": false,
