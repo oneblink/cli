@@ -1,4 +1,4 @@
-// flow-typed signature: a55365c78c95f8553665dfbb3ae8607e
+// flow-typed signature: d48da8db828529253fc20b80747846ea
 // flow-typed version: c6154227d1/minimist_v1.x.x/flow_>=v0.104.x
 
 declare module 'minimist' {

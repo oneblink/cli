@@ -5,12 +5,12 @@
 const createInternal = require('./utils/internal.js').createInternal
 
 /* ::
-import type {Headers} from './types.js'
+import type { Headers } from './types.js'
 */
 
 const internal = createInternal()
 
-class BmResponse {
+class BmResponseImplementation /* :: <T> implements OneBlinkAPIHostingResponse<T> */ {
   constructor() {
     Object.assign(internal(this), {
       headers: {},
@@ -31,24 +31,27 @@ class BmResponse {
     return internal(this).statusCode
   }
 
-  setHeader(key /* : string */, value /* : string */) /* : BmResponse */ {
+  setHeader(
+    key /* : string */,
+    value /* : string */,
+  ) /* : OneBlinkAPIHostingResponse<T> */ {
     key = key.toLowerCase()
     internal(this).headers[key] = value
     return this
   }
 
-  setPayload(payload /* : any */) /* : BmResponse */ {
+  setPayload(payload /* : any */) /* : OneBlinkAPIHostingResponse<T> */ {
     internal(this).payload = payload
     return this
   }
 
-  setStatusCode(code /* : number */) /* : BmResponse */ {
+  setStatusCode(code /* : number */) /* : OneBlinkAPIHostingResponse<T> */ {
     internal(this).statusCode = code
     return this
   }
 }
 
-module.exports = BmResponse
+module.exports = BmResponseImplementation
 
 },{"./utils/internal.js":3}],2:[function(require,module,exports){
 /* @flow */
@@ -56,8 +59,6 @@ module.exports = BmResponse
 
 /* ::
 import type {
-  Handler,
-  BmRequest,
   RouteConfiguration
 } from './types.js'
 */
@@ -68,10 +69,10 @@ const BmResponse = require('./bm-response.js')
 
 const ENTRY_FUNCTION = 'handler'
 
-function executeHandler(
-  handler /* : Handler */,
-  request /* : BmRequest */,
-) /* : Promise<BmResponse> */ {
+function executeHandler /* :: <In = void, Out = void> */(
+  handler /* : OneBlinkAPIHostingHandler<In, Out> */,
+  request /* : OneBlinkAPIHostingRequest<In> */,
+) /* : Promise<OneBlinkAPIHostingResponse<Out>> */ {
   const response = new BmResponse()
   return Promise.resolve()
     .then(() => handler(request, response))
@@ -80,7 +81,7 @@ function executeHandler(
       // try and set status code or
       // try and set payload
       if (result && result !== response) {
-        if (Number.isFinite(result)) {
+        if (Number.isFinite(result) && typeof result === 'number') {
           response.setStatusCode(result)
         } else {
           response.setPayload(result)
@@ -90,10 +91,10 @@ function executeHandler(
     })
 }
 
-function getHandler(
+function getHandler /* :: <In = void, Out = void> */(
   module /* : string */,
   method /* : string */,
-) /* : Promise<Handler | void> */ {
+) /* : Promise<OneBlinkAPIHostingHandler<In, Out> | void> */ {
   try {
     // $FlowIssue in this case, we explicitly `require()` dynamically
     let handler = require(module)
@@ -144,7 +145,7 @@ module.exports = {
 
 // simpler than alternative: https://www.npmjs.com/package/namespace
 
-function createInternal() {
+function createInternal() /* : (Object) => MapObject */ {
   const map /* : WeakMap<Object, MapObject> */ = new WeakMap()
   return (object /* : Object */) /* : MapObject */ => {
     const values = map.get(object) || {}
@@ -165,7 +166,6 @@ module.exports = {
 
 /* ::
 import type {
-  BmRequest,
   Headers,
   MapObject,
   Protocol
@@ -455,7 +455,6 @@ To bundle: `npm run build`
 
 /* ::
 import type {
-  BmRequest,
   Headers,
   LambdaEvent
 } from '../lib/api/types.js'
@@ -474,7 +473,9 @@ const handlers = require('../lib/api/handlers.js')
 const wrapper = require('../lib/api/wrapper.js')
 
 // return only the pertinent data from a API Gateway + Lambda event
-function normaliseLambdaRequest(event /* : LambdaEvent */) /* : BmRequest */ {
+function normaliseLambdaRequest /* :: <T> */(
+  event /* : LambdaEvent */,
+) /* : OneBlinkAPIHostingRequest<T> */ {
   const headers = wrapper.keysToLowerCase(event.headers)
   let body = event.body
   try {
@@ -671,10 +672,13 @@ async function handler(
   }
 }
 
-module.exports = {
+module.exports = ({
   [handlers.ENTRY_FUNCTION]: handler,
   normaliseLambdaRequest,
-}
+} /*: {
+  handler: typeof handler,
+  normaliseLambdaRequest: typeof normaliseLambdaRequest
+} */)
 /* eslint-enable no-console */
 
 },{"../lib/api/handlers.js":2,"../lib/api/wrapper.js":4,"path":undefined,"querystring":undefined}]},{},[6])(6)

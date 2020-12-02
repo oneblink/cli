@@ -1,9 +1,8 @@
-/* @flow */
 'use strict'
 
 const test = require('ava')
 
-test.serial('it should have the bucket name pre-configured', t => {
+test.serial('it should have the bucket name pre-configured', (t) => {
   const params = {
     region: 'region',
     params: {
@@ -18,5 +17,5 @@ test.serial('it should have the bucket name pre-configured', t => {
     accessKeyId: '',
     secretAccessKey: '',
     sessionToken: '',
-  }).then(s3 => t.is(s3.config.params.Bucket, params.params.Bucket))
+  }).then((s3) => t.is(s3.config.params.Bucket, params.params.Bucket))
 })

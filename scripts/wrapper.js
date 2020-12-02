@@ -11,7 +11,6 @@ To bundle: `npm run build`
 
 /* ::
 import type {
-  BmRequest,
   Headers,
   LambdaEvent
 } from '../lib/api/types.js'
@@ -30,7 +29,9 @@ const handlers = require('../lib/api/handlers.js')
 const wrapper = require('../lib/api/wrapper.js')
 
 // return only the pertinent data from a API Gateway + Lambda event
-function normaliseLambdaRequest(event /* : LambdaEvent */) /* : BmRequest */ {
+function normaliseLambdaRequest /* :: <T> */(
+  event /* : LambdaEvent */,
+) /* : OneBlinkAPIHostingRequest<T> */ {
   const headers = wrapper.keysToLowerCase(event.headers)
   let body = event.body
   try {
@@ -227,8 +228,11 @@ async function handler(
   }
 }
 
-module.exports = {
+module.exports = ({
   [handlers.ENTRY_FUNCTION]: handler,
   normaliseLambdaRequest,
-}
+} /*: {
+  handler: typeof handler,
+  normaliseLambdaRequest: typeof normaliseLambdaRequest
+} */)
 /* eslint-enable no-console */
