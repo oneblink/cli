@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Added
+
+- referencing environment variables during deployments
+
 ## 0.1.8 (2020-11-25)
 
 ### Added
