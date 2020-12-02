@@ -1,4 +1,3 @@
-// @flow
 'use strict'
 
 const path = require('path')
@@ -17,7 +16,7 @@ const EXAMPLE_DIR = path.join(
   'directory',
 )
 
-test('listAPIs()', t => {
+test('listAPIs()', (t) => {
   const expected = [
     'boom',
     'helloworld',
@@ -28,10 +27,10 @@ test('listAPIs()', t => {
   ]
   return lib
     .listAPIs(EXAMPLE_DIR)
-    .then(results => t.deepEqual(results, expected))
+    .then((results) => t.deepEqual(results, expected))
 })
 
-test('listRoutes()', t => {
+test('listRoutes()', (t) => {
   const expected = [
     {
       route: '/boom',
@@ -66,5 +65,5 @@ test('listRoutes()', t => {
   ]
   return lib
     .listRoutes(EXAMPLE_DIR)
-    .then(results => t.deepEqual(results, expected))
+    .then((results) => t.deepEqual(results, expected))
 })
