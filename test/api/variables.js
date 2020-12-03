@@ -13,6 +13,7 @@ const blinkmrc = {
         prod: 'prod scoped value',
       },
       MY_VARIABLE: 'unscoped value',
+      MY_REFERENCED_VARIABLE: '${MY_REFERENCE}',
     },
   },
 }
@@ -48,13 +49,16 @@ test('read() should handle an unitinitalised config file', (t) => {
 })
 
 test('read() should return the correct values for the scoped variables', (t) => {
+  const referencedValue = 'referenced value'
   const variables = t.context.getTestSubject()
+  process.env.MY_REFERENCE = referencedValue
 
   return variables
     .read(CWD, 'dev')
     .then((envVars) =>
       t.deepEqual(envVars, {
         MY_VARIABLE: 'unscoped value',
+        MY_REFERENCED_VARIABLE: referencedValue,
       }),
     )
     .then(() => variables.read(CWD, 'test'))
@@ -62,6 +66,7 @@ test('read() should return the correct values for the scoped variables', (t) => 
       t.deepEqual(envVars, {
         MY_VARIABLE_SCOPED: 'test scoped value',
         MY_VARIABLE: 'unscoped value',
+        MY_REFERENCED_VARIABLE: referencedValue,
       }),
     )
     .then(() => variables.read(CWD, 'prod'))
@@ -69,6 +74,7 @@ test('read() should return the correct values for the scoped variables', (t) => 
       t.deepEqual(envVars, {
         MY_VARIABLE_SCOPED: 'prod scoped value',
         MY_VARIABLE: 'unscoped value',
+        MY_REFERENCED_VARIABLE: referencedValue,
       }),
     )
 })
