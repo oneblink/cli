@@ -57,6 +57,7 @@ test('read() should return the correct values for the scoped variables', (t) => 
     .read(CWD, 'dev')
     .then((envVars) =>
       t.deepEqual(envVars, {
+        MY_VARIABLE_SCOPED: undefined,
         MY_VARIABLE: 'unscoped value',
         MY_REFERENCED_VARIABLE: referencedValue,
       }),
