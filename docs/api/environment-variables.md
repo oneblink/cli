@@ -20,7 +20,7 @@ We allow for variables to be scoped to a specific environment:
 
 - _Scoped_ variables are declared using an `object` notation
 
-The following configuration will allow `process.env.MY_VARIABLE` and `process.env.MY_VARIABLE_SCOPED` to available in code:
+The following configuration will allow `process.env.MY_VARIABLE` and `process.env.MY_VARIABLE_SCOPED` to be available in code:
 
 ```json
 {
@@ -37,8 +37,55 @@ The following configuration will allow `process.env.MY_VARIABLE` and `process.en
 }
 ```
 
-The value of `process.env.MY_VARIABLE_SCOPED` will depend on the value of `--env` flag used during `oneblink api deploy`
+The value of `process.env.MY_VARIABLE_SCOPED` will depend on the value of `--env` flag used during deployment
+
+```sh
+oneblink api deploy --env dev
+```
+
+```js
+module.exports = function handler() {
+  if (process.env.MY_VARIABLE_SCOPED === 'dev scoped value') {
+    // It works! :)
+  }
+}
+```
 
 #### Notes
 
 - If an environment does not exist, a _scoped_ variable will not be set at all
+
+### Referencing Environment Variables
+
+To reference environment variables, use the `${MY_VARIABLE}` syntax in your `.blinkmrc.json` configuration file.
+
+#### .blinkmrc.json
+
+The following configuration will set `process.env.MY_VARIABLE` at runtime to the value of `MY_EXISTING_VARIABLE` during the deploy process:
+
+```json
+{
+  "server": {
+    "variables": {
+      "MY_VARIABLE": "${MY_EXISTING_VARIABLE}"
+    }
+  }
+}
+```
+
+```sh
+export MY_EXISTING_VARIABLE="value"
+oneblink api deploy
+```
+
+```js
+module.exports = function handler() {
+  if (process.env.MY_VARIABLE === 'value') {
+    // It works! :)
+  }
+}
+```
+
+#### Notes
+
+- If the reference variable does not exist, the variable at runtime will not be set at all
