@@ -5,9 +5,17 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## 0.1.9 (2020-12-11)
+
 ### Added
 
 - referencing environment variables during deployments
+
+### Dependencies
+
+- update [archiver](https://www.npmjs.com/package/archiver) to [5.1.0](https://github.com/archiverjs/node-archiver/releases/tag/5.1.0) (from [5.0.2](https://github.com/archiverjs/node-archiver/releases/tag/5.0.2))
+
+- update [aws-sdk](https://www.npmjs.com/package/aws-sdk) to [2.801.0](https://github.com/aws/aws-sdk-js/releases/tag/v2.801.0) (from [2.790.0](https://github.com/aws/aws-sdk-js/releases/tag/v2.790.0))
 
 ## 0.1.8 (2020-11-25)
 
