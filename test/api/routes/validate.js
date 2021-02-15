@@ -44,14 +44,14 @@ test('Should contain error if timeout is invalid', (t) => {
   const tests = [
     {
       args: { route: '/test', module: 'test', timeout: 0 },
-      expected: ['Timeout must be between 1 and 300 (inclusive)'],
+      expected: ['Timeout must be between 1 and 900 (inclusive)'],
     },
     {
-      args: { route: '/test', module: 'test', timeout: 301 },
-      expected: ['Timeout must be between 1 and 300 (inclusive)'],
+      args: { route: '/test', module: 'test', timeout: 901 },
+      expected: ['Timeout must be between 1 and 900 (inclusive)'],
     },
     { args: { route: '/test', module: 'test', timeout: 1 }, expected: [] },
-    { args: { route: '/test', module: 'test', timeout: 300 }, expected: [] },
+    { args: { route: '/test', module: 'test', timeout: 900 }, expected: [] },
   ]
 
   return tests.reduce((prev, config) => {

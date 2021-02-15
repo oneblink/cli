@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Changed
+
+- maximum timeout validation from 300 to 900 seconds
+
 ## 0.1.9 (2020-12-11)
 
 ### Added
