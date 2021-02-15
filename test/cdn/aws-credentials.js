@@ -47,8 +47,7 @@ test('it should reject and stop the spinner if request for aws credentials fails
   }
 
   const getAwsCredentials = require('../../lib/commands/cdn/lib/aws-credentials.js')
-  return t.throwsAsync(
-    () => getAwsCredentials(CFG, 'dev', oneBlinkAPIClient),
-    'test error',
-  )
+  return t.throwsAsync(() => getAwsCredentials(CFG, 'dev', oneBlinkAPIClient), {
+    message: 'test error',
+  })
 })

@@ -55,7 +55,7 @@
   },
   "devDependencies": {
     "@oneblink/types": "github:oneblink/types",
-    "ava": "^2.4.0",
+    "ava": "^3.15.0",
     "browserify": "^17.0.0",
     "eslint": "^7.20.0",
     "eslint-config-prettier": "^7.2.0",

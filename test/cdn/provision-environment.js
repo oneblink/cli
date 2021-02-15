@@ -35,8 +35,7 @@ test('it should reject and stop the spinner if request fails', (t) => {
   }
 
   const provision = require('../../lib/commands/cdn/lib/provision-environment.js')
-  return t.throwsAsync(
-    () => provision(CFG, 'dev', oneBlinkAPIClient),
-    'test error',
-  )
+  return t.throwsAsync(() => provision(CFG, 'dev', oneBlinkAPIClient), {
+    message: 'test error',
+  })
 })

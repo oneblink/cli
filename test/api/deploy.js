@@ -146,7 +146,9 @@ test('zip() should log correct updates and reject if an temp emits an error', (t
       }),
     },
   })
-  return t.throwsAsync(() => deploy.zip(ZIP_PATH), 'test temp error')
+  return t.throwsAsync(() => deploy.zip(ZIP_PATH), {
+    message: 'test temp error',
+  })
 })
 
 test('zip() should log correct updates and reject if an archiver emits an error', (t) => {
@@ -173,7 +175,9 @@ test('zip() should log correct updates and reject if an archiver emits an error'
       }),
     },
   })
-  return t.throwsAsync(() => deploy.zip(ZIP_PATH), 'test archiver error')
+  return t.throwsAsync(() => deploy.zip(ZIP_PATH), {
+    message: 'test archiver error',
+  })
 })
 
 test('upload() should log correct updates and return bundle key after upload', (t) => {
@@ -220,7 +224,7 @@ test('upload() should log correct updates and reject if upload returns an error'
         credentials: {},
         s3: { bucket: 'string', key: 'string', region: 'string' },
       }),
-    'test upload error',
+    { message: 'test upload error' },
   )
 })
 
@@ -257,6 +261,6 @@ test('deploy() should log correct updates and reject if request() returns an err
         {},
         ENV,
       ),
-    'test error',
+    { message: 'test error' },
   )
 })

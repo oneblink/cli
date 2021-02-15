@@ -41,7 +41,9 @@ test('it should handle an unitinitalised config file', (t) => {
 
 test('it should reject if no scope is set', (t) => {
   const p = write('.', '')
-  return t.throwsAsync(() => p, 'Scope was not defined.')
+  return t.throwsAsync(() => p, {
+    message: 'Scope was not defined.',
+  })
 })
 
 test('it should merge new scope with the current config', (t) => {

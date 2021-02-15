@@ -82,7 +82,9 @@ test('getHandlerConfig() should reject if getHandler() throws an error', (t) => 
       getHandler: () => Promise.reject(new Error('test error')),
     },
   })
-  return t.throwsAsync(() => apis.getHandlerConfig(ROUTE_CONFIG), 'test error')
+  return t.throwsAsync(() => apis.getHandlerConfig(ROUTE_CONFIG), {
+    message: 'test error',
+  })
 })
 
 test('getHandlerConfig() should return a handler from getHandler() and params from routeConfig', (t) => {
@@ -112,14 +114,16 @@ test('getRouteConfig() should reject if readRoutes() throws an error', (t) => {
   const apis = t.context.getTestSubject({
     './routes/read.js': () => Promise.reject(new Error('test error')),
   })
-  return t.throwsAsync(() => apis.getRouteConfig(), 'test error')
+  return t.throwsAsync(() => apis.getRouteConfig(), { message: 'test error' })
 })
 
 test('getRouteConfig() should reject if route cannot be found', (t) => {
   const apis = t.context.getTestSubject()
   return t.throwsAsync(
     () => apis.getRouteConfig(CONFIGURATION_DIR, 'missing'),
-    'Route has not been implemented: missing',
+    {
+      message: 'Route has not been implemented: missing',
+    },
   )
 })
 

@@ -104,5 +104,7 @@ test('Should reject if configuration.read() throws an error', (t) => {
     ),
   })
 
-  return t.throwsAsync(() => read(CWD), 'test')
+  return t.throwsAsync(() => read(CWD), {
+    message: 'test',
+  })
 })

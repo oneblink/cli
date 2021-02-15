@@ -137,7 +137,7 @@ function makeTest(timerLabel, numFiles) {
 
 // Matt C (2017-05-19)
 // Skipping these tests as they are failing on windows machines
-// and we are sceptical in regards to there value
+// and we are skeptical in regards to there value
 test.skip('read 100 files from disk', makeTest('100Files', 100))
 
 test.skip('read 500 files from disk', makeTest('500Files', 500))

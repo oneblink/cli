@@ -1,4 +1,4 @@
-// flow-typed signature: efbb808a4137a87d1ecc8f5a38b53f5a
+// flow-typed signature: 6b6f30cbd786f679aff9051aff25544c
 // flow-typed version: <<STUB>>/@oneblink/types_vgithub:oneblink/types/flow_v0.138.0
 
 /**
@@ -58,6 +58,18 @@ declare module '@oneblink/types/flow-typed/forms' {
   declare module.exports: any;
 }
 
+declare module '@oneblink/types/flow-typed/geoscape/address-details' {
+  declare module.exports: any;
+}
+
+declare module '@oneblink/types/flow-typed/geoscape/addresses' {
+  declare module.exports: any;
+}
+
+declare module '@oneblink/types/flow-typed/geoscape' {
+  declare module.exports: any;
+}
+
 declare module '@oneblink/types/flow-typed/integrations' {
   declare module.exports: any;
 }
@@ -109,6 +121,18 @@ declare module '@oneblink/types/flow-typed/forms-apps.js' {
 }
 declare module '@oneblink/types/flow-typed/forms.js' {
   declare module.exports: $Exports<'@oneblink/types/flow-typed/forms'>;
+}
+declare module '@oneblink/types/flow-typed/geoscape/address-details.js' {
+  declare module.exports: $Exports<'@oneblink/types/flow-typed/geoscape/address-details'>;
+}
+declare module '@oneblink/types/flow-typed/geoscape/addresses.js' {
+  declare module.exports: $Exports<'@oneblink/types/flow-typed/geoscape/addresses'>;
+}
+declare module '@oneblink/types/flow-typed/geoscape/index' {
+  declare module.exports: $Exports<'@oneblink/types/flow-typed/geoscape'>;
+}
+declare module '@oneblink/types/flow-typed/geoscape/index.js' {
+  declare module.exports: $Exports<'@oneblink/types/flow-typed/geoscape'>;
 }
 declare module '@oneblink/types/flow-typed/integrations.js' {
   declare module.exports: $Exports<'@oneblink/types/flow-typed/integrations'>;

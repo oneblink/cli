@@ -35,18 +35,17 @@ function getTestSubject(overrides) {
   )
 }
 
-test('should return route config', t => {
+test('should return route config', (t) => {
   const lib = getTestSubject()
-  return lib(CWD, '/api/books/:id').then(routeConfig =>
+  return lib(CWD, '/api/books/:id').then((routeConfig) =>
     t.deepEqual(routeConfig, ROUTES[1]),
   )
 })
 
-test('should reject if a project does not contain route', t => {
+test('should reject if a project does not contain route', (t) => {
   const lib = getTestSubject()
   // $FlowFixMe
-  return t.throwsAsync(
-    () => lib(CWD, '/route'),
-    'Project does not contain route: /route',
-  )
+  return t.throwsAsync(() => lib(CWD, '/route'), {
+    message: 'Project does not contain route: /route',
+  })
 })

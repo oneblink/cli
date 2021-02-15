@@ -94,10 +94,9 @@ test('read() should reject if there is a variable with an unsupported type value
     },
   })
 
-  return t.throwsAsync(
-    () => variables.read(),
-    'Variable UNSUPPORTED_TYPE must be an object or a string',
-  )
+  return t.throwsAsync(() => variables.read(), {
+    message: 'Variable UNSUPPORTED_TYPE must be an object or a string',
+  })
 })
 
 test('read() should reject if there is a scoped variable with an unsupported type value', (t) => {
@@ -116,10 +115,9 @@ test('read() should reject if there is a scoped variable with an unsupported typ
     },
   })
 
-  return t.throwsAsync(
-    () => variables.read(CWD, 'dev'),
-    'Variable UNSUPPORTED_TYPE for Environment dev must be a string',
-  )
+  return t.throwsAsync(() => variables.read(CWD, 'dev'), {
+    message: 'Variable UNSUPPORTED_TYPE for Environment dev must be a string',
+  })
 })
 
 test('display() should not log anything if there are no variables to display', (t) => {
