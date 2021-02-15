@@ -1,10 +1,11 @@
-// flow-typed signature: efec52dc084b9d98dbb41fda30d67a54
-// flow-typed version: c6154227d1/morgan_v1.x.x/flow_>=v0.104.x
+// flow-typed signature: fadbb72401c304d097223b60dc0ff836
+// flow-typed version: 99a0971e1d/morgan_v1.x.x/flow_>=v0.104.x
 
 /* @flow */
-import type { Middleware, $Request, $Response } from "express";
 
 declare module "morgan" {
+  import type { Middleware, $Request, $Response } from "express";
+
   declare type FormatFn = (
     tokens: TokenIndexer,
     req: $Request,
