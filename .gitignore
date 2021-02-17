@@ -29,4 +29,4 @@ node_modules
 .eslintcache
 my-serverless
 local-scripts
-
+dist
