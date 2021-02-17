@@ -5,9 +5,33 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## 0.1.10 (2021-02-18)
+
 ### Changed
 
 - maximum timeout validation from 300 to 900 seconds
+
+### Dependencies
+
+- update [@hapi/boom](https://www.npmjs.com/package/@hapi/boom) to [9.1.1](https://github.com/hapijs/boom/releases/tag/v9.1.1) (from 9.1.0)
+
+- update [archiver](https://www.npmjs.com/package/archiver) to [5.2.0](https://github.com/archiverjs/node-archiver/releases/tag/5.2.0) (from [5.1.0](https://github.com/archiverjs/node-archiver/releases/tag/5.1.0))
+
+- update [aws-sdk](https://www.npmjs.com/package/aws-sdk) to [2.843.0](https://github.com/aws/aws-sdk-js/releases/tag/v2.843.0) (from [2.801.0](https://github.com/aws/aws-sdk-js/releases/tag/v2.801.0))
+
+- no longer depend upon [cli-table2](https://www.npmjs.com/package/cli-table2)
+
+- update [execa](https://www.npmjs.com/package/execa) to [5.0.0](https://github.com/sindresorhus/execa/releases/tag/v5.0.0) (from [4.1.0](https://github.com/sindresorhus/execa/releases/tag/v4.1.0))
+
+- update [meow](https://www.npmjs.com/package/meow) to [9.0.0](https://github.com/sindresorhus/meow/releases/tag/v9.0.0) (from [8.0.0](https://github.com/sindresorhus/meow/releases/tag/v8.0.0))
+
+- update [open](https://www.npmjs.com/package/open) to [7.4.1](https://github.com/sindresorhus/open/releases/tag/v7.4.1) (from [7.3.0](https://github.com/sindresorhus/open/releases/tag/v7.3.0))
+
+- update [ora](https://www.npmjs.com/package/ora) to [5.3.0](https://github.com/sindresorhus/ora/releases/tag/v5.3.0) (from [5.1.0](https://github.com/sindresorhus/ora/releases/tag/v5.1.0))
+
+- update [update-notifier](https://www.npmjs.com/package/update-notifier) to [5.1.0](https://github.com/yeoman/update-notifier/releases/tag/v5.1.0) (from [5.0.1](https://github.com/yeoman/update-notifier/releases/tag/v5.0.1))
+
+- depend upon [cli-table3](https://www.npmjs.com/package/cli-table3) [0.6.0](https://github.com/cli-table/cli-table3/blob/master/CHANGELOG.md)
 
 ## 0.1.9 (2020-12-11)
 
