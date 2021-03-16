@@ -17,4 +17,4 @@ curl -v localhost:3000/api/books/123
 
 ## Examples
 
-- /api/books/:id: displays the :id parameter in the url
+- `/api/books/:id`: displays the :id parameter in the url

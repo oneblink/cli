@@ -16,5 +16,5 @@ curl -v localhost:3000/helloworld
 
 ## Examples
 
-- helloworld: creates a simple string and responds
-- promise: simulates a time-consuming asynchronous process, then responds
+- `helloworld`: creates a simple string and responds
+- `promise`: simulates a time-consuming asynchronous process, then responds
