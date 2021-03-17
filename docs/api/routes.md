@@ -6,7 +6,7 @@ Routes can be defined in two different ways to allow for ease of use or flexibil
 
 ### Directory Defined
 
-- See [directory example](../examples/directory) for sample
+- See [directory example](../../examples/api/directory) for sample
 
 - Quick to get started
 
@@ -44,7 +44,7 @@ Would create the following routes:
 
 ### Configuration Defined
 
-- See [configuration example](../examples/configuration) for sample
+- See [configuration example](../../examples/api/configuration) for sample
 
 - Allows for any number of sections in URL path
 

@@ -13,7 +13,7 @@ A handler file can export either a single function or an object with [HTTP reque
 Will be executed for all HTTP request methods
 
 ```js
-module.exports = function(request, response) {
+module.exports = function (request, response) {
   // Will be executed for all HTTP request methods
 }
 ```
@@ -23,19 +23,19 @@ module.exports = function(request, response) {
 Must have properties containing functions for each supported HTTP request method
 
 ```js
-module.exports.get = function(request, response) {
+module.exports.get = function (request, response) {
   // Will only be executed for GET HTTP method requests
 }
 
-module.exports.post = function(request, response) {
+module.exports.post = function (request, response) {
   // Will only be executed for POST HTTP method requests
 }
 
-module.exports.put = function(request, response) {
+module.exports.put = function (request, response) {
   // Will only be executed for PUT HTTP method requests
 }
 
-module.exports.delete = function(request, response) {
+module.exports.delete = function (request, response) {
   // Will only be executed for DELETE HTTP method requests
 }
 ```
@@ -79,7 +79,7 @@ interface request = {
 ##### Example
 
 ```js
-module.exports = function(request, response) {
+module.exports = function (request, response) {
   return request
 }
 ```
@@ -119,7 +119,7 @@ curl "http://localhost:3000/request?key=123"
 
 - The `response` argument will allow handler functions to control HTTP status codes, payloads and response headers.
 
-- See [response example](../../examples/api/directory/response/index.js) for useage
+- See [response example](../../examples/api/directory/response/index.js) for usage
 
 ```js
 interface Response = {
