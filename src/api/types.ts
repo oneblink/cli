@@ -49,8 +49,8 @@ export type LambdaEvent = {
   headers: Headers
   httpMethod: string
   path: string
-  pathParameters: { [id: string]: string }
-  queryStringParameters: { [id: string]: string }
+  pathParameters: { [id: string]: string } | null
+  queryStringParameters: { [id: string]: string } | null
   resource: string
 }
 

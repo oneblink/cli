@@ -1,8 +1,5 @@
 'use strict'
 
-const test = require('ava')
-const proxyquire = require('proxyquire')
-
 const TEST_SUBJECT = '../../lib/api/variables.js'
 const CWD = 'current working directory'
 const blinkmrc = {
@@ -18,7 +15,7 @@ const blinkmrc = {
   },
 }
 
-test.beforeEach((t) => {
+beforeEach(() => {
   t.context.getTestSubject = (overrides) => {
     overrides = overrides || {}
     return proxyquire(
@@ -39,16 +36,16 @@ test.beforeEach((t) => {
   }
 })
 
-test('read() should handle an unitinitalised config file', (t) => {
+test('read() should handle an unitinitalised config file', () => {
   const variables = t.context.getTestSubject({
     './utils/project-meta.js': {
       read: () => Promise.resolve(),
     },
   })
-  return variables.read().then((envVars) => t.deepEqual(envVars, {}))
+  return variables.read().then((envVars) => expect(envVars).toEqual({}));
 })
 
-test('read() should return the correct values for the scoped variables', (t) => {
+test('read() should return the correct values for the scoped variables', () => {
   const referencedValue = 'referenced value'
   const variables = t.context.getTestSubject()
   process.env.MY_REFERENCE = referencedValue
@@ -56,7 +53,7 @@ test('read() should return the correct values for the scoped variables', (t) => 
   return variables
     .read(CWD, 'dev')
     .then((envVars) =>
-      t.deepEqual(envVars, {
+      expect(envVars).toEqual({
         MY_VARIABLE_SCOPED: undefined,
         MY_VARIABLE: 'unscoped value',
         MY_REFERENCED_VARIABLE: referencedValue,
@@ -64,7 +61,7 @@ test('read() should return the correct values for the scoped variables', (t) => 
     )
     .then(() => variables.read(CWD, 'test'))
     .then((envVars) =>
-      t.deepEqual(envVars, {
+      expect(envVars).toEqual({
         MY_VARIABLE_SCOPED: 'test scoped value',
         MY_VARIABLE: 'unscoped value',
         MY_REFERENCED_VARIABLE: referencedValue,
@@ -72,15 +69,15 @@ test('read() should return the correct values for the scoped variables', (t) => 
     )
     .then(() => variables.read(CWD, 'prod'))
     .then((envVars) =>
-      t.deepEqual(envVars, {
+      expect(envVars).toEqual({
         MY_VARIABLE_SCOPED: 'prod scoped value',
         MY_VARIABLE: 'unscoped value',
         MY_REFERENCED_VARIABLE: referencedValue,
       }),
-    )
+    );
 })
 
-test('read() should reject if there is a variable with an unsupported type value', (t) => {
+test('read() should reject if there is a variable with an unsupported type value', () => {
   const variables = t.context.getTestSubject({
     './utils/project-meta.js': {
       read: () =>
@@ -99,7 +96,7 @@ test('read() should reject if there is a variable with an unsupported type value
   })
 })
 
-test('read() should reject if there is a scoped variable with an unsupported type value', (t) => {
+test('read() should reject if there is a scoped variable with an unsupported type value', () => {
   const variables = t.context.getTestSubject({
     './utils/project-meta.js': {
       read: () =>
@@ -120,18 +117,18 @@ test('read() should reject if there is a scoped variable with an unsupported typ
   })
 })
 
-test('display() should not log anything if there are no variables to display', (t) => {
+test('display() should not log anything if there are no variables to display', done => {
   const variables = t.context.getTestSubject({
     './utils/project-meta.js': {
       read: () => Promise.resolve(),
     },
   })
 
-  return t.notThrows(() => variables.display({ log: () => t.fail() }))
+  return expect(() => variables.display({ log: () => done.fail() })).not.toThrow();
 })
 
-test('display() should log once', (t) => {
+test('display() should log once', () => {
   const variables = t.context.getTestSubject()
 
-  return variables.display({ log: () => t.pass() })
+  return variables.display({ log: () =>  });
 })

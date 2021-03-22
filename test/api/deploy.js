@@ -3,8 +3,6 @@
 const fs = require('fs')
 const path = require('path')
 
-const test = require('ava')
-const proxyquire = require('proxyquire')
 const yauzl = require('yauzl')
 
 const TEST_SUBJECT = '../../lib/api/deploy.js'
@@ -15,56 +13,54 @@ const BUNDLE_KEY = 'this is a file key'
 const BUNDLE_BUCKET = 'this is a file bucket'
 const ENV = 'test'
 
-test.beforeEach((t) => {
+beforeEach(() => {
   t.context.getTestSubject = (overrides) => {
     overrides = overrides || {}
     return proxyquire(TEST_SUBJECT, Object.assign({}, overrides))
   }
 })
 
-test('confirm() should not prompt or log if force is true', (t) => {
+test('confirm() should not prompt or log if force is true', done => {
   const deploy = t.context.getTestSubject({
     inquirer: {
-      prompt: () => t.fail('Should not call prompt'),
+      prompt: () => done.fail('Should not call prompt'),
     },
   })
   return deploy
-    .confirm({ log: () => t.fail('Should not log') }, true)
-    .then(() => t.pass())
+    .confirm({ log: () => done.fail('Should not log') }, true)
+    .then(() => );
 })
 
-test('confirm() should prompt and log if force is false', (t) => {
-  t.plan(2)
+test('confirm() should prompt and log if force is false', () => {
+  expect.assertions(2)
   const deploy = t.context.getTestSubject({
     inquirer: {
       prompt: () => {
-        t.pass()
         return Promise.resolve({
           confirmation: true,
         })
       },
     },
   })
-  return deploy.confirm({ log: () => t.pass() }, false)
+  return deploy.confirm({ log: () =>  }, false);
 })
 
-test('authenticate() should call oneblinkIdentity functions and stop updates', (t) => {
-  t.plan(1)
+test('authenticate() should call oneblinkIdentity functions and stop updates', () => {
+  expect.assertions(1)
   const deploy = t.context.getTestSubject()
   return deploy.authenticate(
     {
       postRequest: () => {
-        t.pass()
         return Promise.resolve({ credentials: {} })
       },
     },
     {},
     ENV,
-  )
+  );
 })
 
-test('authenticate() should call log correct updates if oneblinkIdentity functions throw errors', (t) => {
-  t.plan(1)
+test('authenticate() should call log correct updates if oneblinkIdentity functions throw errors', () => {
+  expect.assertions(1)
   const deploy = t.context.getTestSubject({
     './assume-aws-roles.js': {
       assumeAWSRoleToDeploy: () => Promise.reject(new Error('test error')),
@@ -74,30 +70,29 @@ test('authenticate() should call log correct updates if oneblinkIdentity functio
     .authenticate(
       {
         postRequest: () => {
-          t.pass()
           return Promise.resolve()
         },
       },
       {},
       ENV,
     )
-    .catch((err) => t.is(err.message, 'test error'))
+    .catch((err) => expect(err.message).toBe('test error'));
 })
 
-test.cb(
+test(
   'zip() should log correct updates and return an absolute path to a zip file',
-  (t) => {
-    t.plan(6)
+  done => {
+    expect.assertions(6)
     const deploy = t.context.getTestSubject({})
     deploy
       .zip(ZIP_PATH)
       .then((zipFilePath) => {
-        t.truthy(path.isAbsolute(zipFilePath))
-        t.is(path.extname(zipFilePath), '.zip')
-        t.truthy(fs.statSync(zipFilePath).isFile())
+        expect(path.isAbsolute(zipFilePath)).toBeTruthy()
+        expect(path.extname(zipFilePath)).toBe('.zip')
+        expect(fs.statSync(zipFilePath).isFile()).toBeTruthy()
         yauzl.open(zipFilePath, { lazyEntries: true }, (err, zip) => {
           if (err) {
-            t.end()
+            done()
             return
           }
           const entries = []
@@ -106,21 +101,21 @@ test.cb(
             zip.readEntry()
           })
           zip.on('end', () => {
-            t.truthy(entries.some((entry) => entry === '.blinkmrc.json'))
-            t.truthy(entries.some((entry) => entry === 'bm-server.json'))
-            t.truthy(entries.some((entry) => entry === 'helloworld/index.js'))
-            t.end()
+            expect(entries.some((entry) => entry === '.blinkmrc.json')).toBeTruthy()
+            expect(entries.some((entry) => entry === 'bm-server.json')).toBeTruthy()
+            expect(entries.some((entry) => entry === 'helloworld/index.js')).toBeTruthy()
+            done()
           })
-          zip.on('error', () => t.end())
+          zip.on('error', () => done())
           zip.readEntry()
         })
       })
-      .catch(() => t.end())
-  },
+      .catch(() => done())
+  }
 )
 
-test('zip() should log correct updates and reject if an temp emits an error', (t) => {
-  t.plan(2)
+test('zip() should log correct updates and reject if an temp emits an error', () => {
+  expect.assertions(2)
   const deploy = t.context.getTestSubject({
     archiver: {
       create: () => ({
@@ -134,7 +129,7 @@ test('zip() should log correct updates and reject if an temp emits an error', (t
       track: () => ({
         mkdir: () => {},
         createWriteStream: (options) => {
-          t.deepEqual(options, { suffix: '.zip' })
+          expect(options).toEqual({ suffix: '.zip' })
           return {
             on: (str, fn) => {
               if (str === 'error') {
@@ -151,8 +146,8 @@ test('zip() should log correct updates and reject if an temp emits an error', (t
   })
 })
 
-test('zip() should log correct updates and reject if an archiver emits an error', (t) => {
-  t.plan(1)
+test('zip() should log correct updates and reject if an archiver emits an error', () => {
+  expect.assertions(1)
   const deploy = t.context.getTestSubject({
     archiver: {
       create: () => ({
@@ -180,15 +175,15 @@ test('zip() should log correct updates and reject if an archiver emits an error'
   })
 })
 
-test('upload() should log correct updates and return bundle key after upload', (t) => {
-  t.plan(2)
+test('upload() should log correct updates and return bundle key after upload', () => {
+  expect.assertions(2)
   const deploy = t.context.getTestSubject({
     'aws-sdk': {
       config: {},
       S3: function () {
         this.upload = (params) => {
-          t.is(params.Bucket, BUNDLE_BUCKET)
-          t.is(params.Key, BUNDLE_KEY)
+          expect(params.Bucket).toBe(BUNDLE_BUCKET)
+          expect(params.Key).toBe(BUNDLE_KEY)
           return {
             on: () => {},
             send: (fn) => fn(null, { Key: BUNDLE_KEY }),
@@ -205,8 +200,8 @@ test('upload() should log correct updates and return bundle key after upload', (
     .catch(t.fail)
 })
 
-test('upload() should log correct updates and reject if upload returns an error', (t) => {
-  t.plan(1)
+test('upload() should log correct updates and reject if upload returns an error', () => {
+  expect.assertions(1)
   const deploy = t.context.getTestSubject({
     'aws-sdk': {
       config: {},
@@ -228,14 +223,14 @@ test('upload() should log correct updates and reject if upload returns an error'
   )
 })
 
-test('deploy() should log correct updates', (t) => {
-  t.plan(2)
+test('deploy() should log correct updates', () => {
+  expect.assertions(2)
   const deploy = t.context.getTestSubject()
   return deploy.deploy(
     {
       postRequest: (path, body) => {
-        t.is(path, `/apis/${body.scope}/environments/${ENV}/deployments`)
-        t.deepEqual(body, {
+        expect(path).toBe(`/apis/${body.scope}/environments/${ENV}/deployments`)
+        expect(body).toEqual({
           payload: '123',
           scope: 'scope',
         })
@@ -244,11 +239,11 @@ test('deploy() should log correct updates', (t) => {
     },
     { payload: '123', scope: 'scope' },
     ENV,
-  )
+  );
 })
 
-test('deploy() should log correct updates and reject if request() returns an error', (t) => {
-  t.plan(1)
+test('deploy() should log correct updates and reject if request() returns an error', () => {
+  expect.assertions(1)
   const deploy = t.context.getTestSubject()
   return t.throwsAsync(
     () =>
