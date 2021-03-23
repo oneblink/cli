@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## 0.1.11 (2021-03-23)
+
+### Fixed
+
+- `api serve` command not handling request payload and response payload correctly if they are not JSON
+
 ## 0.1.10 (2021-02-18)
 
 ### Changed
