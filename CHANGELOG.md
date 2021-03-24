@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Changed
+
+- documentation for sending emails from Hosted APIs
+
 ## 0.1.11 (2021-03-23)
 
 ### Fixed
