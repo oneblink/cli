@@ -2,8 +2,9 @@ import type { CLICommand } from '..'
 
 import chalk from 'chalk'
 import meow from 'meow'
+import logout from '../../identity/common/logout'
 
-const logoutCommand: CLICommand = async (tenant, inputs, oneBlinkAPIClient) => {
+const logoutCommand: CLICommand = async (tenant) => {
   const help = `
 ${chalk.bold(`${tenant.label} Logout Command`)}
 
@@ -27,7 +28,7 @@ ${chalk.bold('Examples')}
     return
   }
 
-  await oneBlinkAPIClient.oneBlinkIdentity.logout(tenant)
+  await logout(tenant)
   console.log(`
 Success! See you next time.`)
 }

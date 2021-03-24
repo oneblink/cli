@@ -3,27 +3,22 @@ import type { CLICommand } from '..'
 import chalk from 'chalk'
 import meow from 'meow'
 
-function getCLICommand(input: string) {
+async function getCLICommand(input: string) {
   switch (input) {
     case 'deploy': {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      return require('./deploy').default
+      return (await import('./deploy')).default
     }
     case 'info': {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      return require('./info').default
+      return (await import('./info')).default
     }
     case 'scope': {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      return require('./scope').default
+      return (await import('./scope')).default
     }
     case 'serve': {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      return require('./serve').default
+      return (await import('./serve')).default
     }
     case 'teardown': {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      return require('./teardown').default
+      return (await import('./teardown')).default
     }
   }
 }
@@ -117,7 +112,7 @@ ${chalk.bold('Examples')}
     },
   })
 
-  const runSubCommand = getCLICommand(inputs[0])
+  const runSubCommand = await getCLICommand(inputs[0])
 
   if (flags.help || !runSubCommand) {
     console.log(help)

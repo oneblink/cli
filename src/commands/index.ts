@@ -18,22 +18,18 @@ export type CLICommand = (
 async function getCLICommand(input: string): Promise<CLICommand | void> {
   switch (input) {
     case 'login': {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      return require('./login').default
+      return await (await import('./login')).default
     }
     case 'api':
     case 'server': {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      return require('./api').default
+      return await (await import('./api')).default
     }
     case 'cdn':
     case 'client': {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      return require('./cdn').default
+      return await (await import('./cdn')).default
     }
     case 'logout': {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      return require('./logout').default
+      return await (await import('./logout')).default
     }
   }
 }

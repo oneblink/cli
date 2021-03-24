@@ -1,7 +1,11 @@
-import type { LoginOptions } from '..'
-
 import UsernameLoginProvider from '../login-providers/username'
 import BrowserLoginProvider from '../login-providers/browser'
+
+export type LoginOptions = {
+  password?: string
+  username?: string | true
+  storeJwt?: boolean
+}
 
 export default async function login(
   tenant: Tenant,

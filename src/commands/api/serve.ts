@@ -21,7 +21,6 @@ export default async function (
   const cors = await readCors(cwd)
   const port = flags.port || 3000
   await serve.startServer(
-    tenant,
     logger,
     {
       cors,

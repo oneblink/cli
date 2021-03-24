@@ -1,5 +1,3 @@
-'use strict'
-
 import BmResponse from '../../src/api/bm-response'
 
 test('constructor() should set correct defaults', () => {

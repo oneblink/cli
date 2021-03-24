@@ -41,26 +41,26 @@ const command: CLICommand = async (tenant, inputs, oneBlinkAPIClient) => {
     const help = getHelp(tenant)
     const { flags } = meow(help, meowOptions)
 
-    const command = getCLICommand(inputs[0])
+    const command = await getCLICommand(inputs[0])
 
     if (flags.help || typeof command !== 'function') {
       console.log(help)
       return
     }
 
-    return command(tenant, inputs.slice(1), flags, oneBlinkAPIClient)
+    return command(inputs.slice(1), flags, oneBlinkAPIClient)
   } catch (err) {
     console.error('Command not found!')
   }
 }
 
-function getCLICommand(input: string) {
+async function getCLICommand(input: string) {
   switch (input) {
     case 'scope': {
-      return require('./lib/scope')
+      return (await import('./lib/scope')).default
     }
     case 'deploy': {
-      return require('./lib/deploy')
+      return (await import('./lib/deploy')).default
     }
   }
 }

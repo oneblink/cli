@@ -1,7 +1,10 @@
-import type { UserConfigStore } from '..'
-
 import pkg from '../../package'
 import blinkmrc from '@blinkmobile/blinkmrc'
+
+export type UserConfigStore = {
+  load: () => Promise<any>
+  update: (config: any) => Promise<any>
+}
 
 let userConfigStore: any
 

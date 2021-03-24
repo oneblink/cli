@@ -1,5 +1,5 @@
 import { TENANTS } from '../../../src/config'
-import { LoginOptions } from '../../../src/identity'
+import { LoginOptions } from '../../../src/identity/common/login'
 
 describe('login', () => {
   const JWT = 'valid jwt'

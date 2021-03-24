@@ -2,8 +2,9 @@ import type { CLICommand } from '..'
 
 import chalk from 'chalk'
 import meow from 'meow'
+import login from '../../identity/common/login'
 
-const loginCommand: CLICommand = async (tenant, inputs, oneBlinkAPIClient) => {
+const loginCommand: CLICommand = async (tenant) => {
   const help = `
 ${chalk.bold(`${tenant.label} Login Command`)}
 
@@ -45,7 +46,7 @@ ${chalk.bold('Examples')}
 
   let username: string | boolean | undefined = flags.username
   if (username === '') username = true
-  await oneBlinkAPIClient.oneBlinkIdentity.login(tenant, {
+  await login(tenant, {
     username,
     password: flags.password,
     storeJwt: true,

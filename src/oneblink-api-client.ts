@@ -1,23 +1,52 @@
 import querystring from 'querystring'
 
 import fetch from 'node-fetch'
+import jwt from 'jsonwebtoken'
 
 import pkg from './package'
-import OneBlinkIdentity from './identity'
+import verifyJWT from './identity/utils/verify-jwt'
+import getJWT from './identity/utils/get-jwt'
 
 const userAgent = `Node.js ${pkg.name} / ${pkg.version}`
 
+async function getBearerToken(): Promise<string> {
+  let key
+  let secret
+  // Keeping BLINKM_* variables for backward compatibility
+  // with the old Server CLI and Client CLI
+  if (process.env.BLINKM_ACCESS_KEY && process.env.BLINKM_SECRET_KEY) {
+    key = process.env.BLINKM_ACCESS_KEY
+    secret = process.env.BLINKM_SECRET_KEY
+  }
+  if (process.env.ONEBLINK_ACCESS_KEY && process.env.ONEBLINK_SECRET_KEY) {
+    key = process.env.ONEBLINK_ACCESS_KEY
+    secret = process.env.ONEBLINK_SECRET_KEY
+  }
+  if (key && secret) {
+    const expiryInMS = Date.now() + 1000 * 60 * 15 // expires in 15 minutes
+    return Promise.resolve(
+      jwt.sign(
+        {
+          iss: key,
+          exp: Math.floor(expiryInMS / 1000), // exp claim should be in seconds, not milliseconds
+        },
+        secret,
+      ),
+    )
+  }
+  const token = await getJWT()
+  return verifyJWT(token)
+}
+
 export default class OneBlinkAPIClient {
   tenant: Tenant
-  oneBlinkIdentity: OneBlinkIdentity
 
   constructor(tenant: Tenant) {
     this.tenant = tenant
-    this.oneBlinkIdentity = new OneBlinkIdentity()
   }
 
   async getRequest<TOut>(path: string): Promise<TOut> {
-    const accessToken = await this.oneBlinkIdentity.getAccessToken()
+    const accessToken = await getBearerToken()
     const response = await fetch(`${this.tenant.origin}${path}`, {
       method: 'GET',
       headers: {
@@ -49,7 +78,7 @@ export default class OneBlinkAPIClient {
   }
 
   async postRequest<T, TOut>(path: string, body: T | void): Promise<TOut> {
-    const accessToken = await this.oneBlinkIdentity.getAccessToken()
+    const accessToken = await getBearerToken()
     const response = await fetch(`${this.tenant.origin}${path}`, {
       method: 'POST',
       headers: {
@@ -73,7 +102,7 @@ export default class OneBlinkAPIClient {
   }
 
   async deleteRequest(path: string): Promise<void> {
-    const accessToken = await this.oneBlinkIdentity.getAccessToken()
+    const accessToken = await getBearerToken()
     const response = await fetch(`${this.tenant.origin}${path}`, {
       method: 'DELETE',
       headers: {
