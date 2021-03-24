@@ -1,4 +1,4 @@
-import provision from '../../src/commands/cdn/lib/provision-environment'
+import provision from '../../src/cdn/provision-environment'
 import OneBlinkAPIClient from '../../src/oneblink-api-client'
 
 describe('provision-environment', () => {

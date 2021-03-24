@@ -1,7 +1,12 @@
-import OneBlinkAPIClient from '../../../oneblink-api-client'
-
 import ora from 'ora'
-import { AWSCredentials } from '../../../types'
+
+import OneBlinkAPIClient from '../oneblink-api-client'
+
+type AWSCredentials = {
+  AccessKeyId: string
+  SecretAccessKey: string
+  SessionToken: string
+}
 
 async function awsCredentials(
   cfg: any,

@@ -1,4 +1,4 @@
-import getAwsCredentials from '../../src/commands/cdn/lib/aws-credentials'
+import getAwsCredentials from '../../src/cdn/aws-credentials'
 import OneBlinkAPIClient from '../../src/oneblink-api-client'
 
 describe('aws credentials', () => {

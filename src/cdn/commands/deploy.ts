@@ -8,10 +8,8 @@ import bucketParams from '../s3-bucket-params'
 import provisionEnvironment from '../provision-environment'
 import getAwsCredentials from '../aws-credentials'
 import s3Factory from '../s3-bucket-factory'
-
 import read from '../read'
-
-import OneBlinkAPIClient from '../../../../oneblink-api-client'
+import OneBlinkAPIClient from '../../oneblink-api-client'
 
 export default async function (
   input: Array<string>,

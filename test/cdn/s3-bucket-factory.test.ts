@@ -1,4 +1,4 @@
-import s3Factory from '../../src/commands/cdn/lib/s3-bucket-factory'
+import s3Factory from '../../src/cdn/s3-bucket-factory'
 
 test('it should have the bucket name pre-configured', async () => {
   const params = {

@@ -98,7 +98,7 @@
   "scripts": {
     "ava": "ava",
     "build": "npm run build:tsc && npm run build:api-handler",
-    "build:api-handler": "browserify --node --no-insert-globals --no-detect-globals --standalone wrapper ./dist/scripts/api-handler.js > ./dist/api-handler.js",
+    "build:api-handler": "browserify --node --no-insert-globals --no-detect-globals --standalone wrapper ./dist/api/scripts/api-handler.js > ./dist/api-handler.js",
     "build:tsc": "tsc --build",
     "eslint": "eslint --fix --cache --quiet ./src",
     "fixpack": "fixpack",

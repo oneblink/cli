@@ -23,12 +23,12 @@ describe('s3-bucket-params', () => {
       service: {},
     }
 
-    jest.mock('../../src/commands/cdn/lib/utils/config-helper', () => ({
+    jest.mock('cdn/utils/config-helper', () => ({
       read: () => Promise.resolve(config),
       write: () => new Error('should not be executed'),
     }))
 
-    const { default: read } = await import('../../src/commands/cdn/lib/read')
+    const { default: read } = await import('../../src/cdn/read')
     const s = await read('')
     expect(s).toEqual(expectedConfig)
   })
@@ -39,7 +39,7 @@ describe('s3-bucket-params', () => {
       service: {},
     }
 
-    jest.mock('../../src/commands/cdn/lib/utils/config-helper', () => ({
+    jest.mock('cdn/utils/config-helper', () => ({
       read: () =>
         Promise.resolve({
           cdn: {
@@ -58,7 +58,7 @@ describe('s3-bucket-params', () => {
         }),
     }))
 
-    const { default: read } = await import('../../src/commands/cdn/lib/read')
+    const { default: read } = await import('../../src/cdn/read')
     const s = await read('')
     expect(s).toEqual(expected)
   })

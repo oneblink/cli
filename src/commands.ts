@@ -6,8 +6,8 @@ import minimist from 'minimist'
 import updateNotifier from 'update-notifier'
 import packageEnginesNotifier from 'package-engines-notifier'
 
-import OneBlinkAPIClient from '../oneblink-api-client'
-import pkg from '../package'
+import OneBlinkAPIClient from './oneblink-api-client'
+import pkg from './package'
 
 export type CLICommand = (
   tenant: Tenant,
@@ -18,18 +18,18 @@ export type CLICommand = (
 async function getCLICommand(input: string): Promise<CLICommand | void> {
   switch (input) {
     case 'login': {
-      return await (await import('./login')).default
+      return await (await import('./identity/commands/login')).default
     }
     case 'api':
     case 'server': {
-      return await (await import('./api')).default
+      return await (await import('./api/commands')).default
     }
     case 'cdn':
     case 'client': {
-      return await (await import('./cdn')).default
+      return await (await import('./cdn/commands')).default
     }
     case 'logout': {
-      return await (await import('./logout')).default
+      return await (await import('./identity/commands/logout')).default
     }
   }
 }

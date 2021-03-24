@@ -1,8 +1,8 @@
-import type { CLICommand } from '..'
+import type { CLICommand } from '../../commands'
 
 import chalk from 'chalk'
 import meow from 'meow'
-import login from '../../identity/common/login'
+import login from '../common/login'
 
 const loginCommand: CLICommand = async (tenant) => {
   const help = `

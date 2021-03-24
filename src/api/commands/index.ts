@@ -1,4 +1,4 @@
-import type { CLICommand } from '..'
+import type { CLICommand } from '../../commands'
 
 import chalk from 'chalk'
 import meow from 'meow'

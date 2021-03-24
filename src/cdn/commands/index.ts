@@ -1,8 +1,8 @@
-import type { CLICommand } from '..'
+import type { CLICommand } from '../../commands'
 
 import meow from 'meow'
 
-import getHelp from './lib/cli/help'
+import getHelp from '../cli/help'
 
 export const meowOptions: Parameters<typeof meow>[0] = {
   flags: {
@@ -57,10 +57,10 @@ const command: CLICommand = async (tenant, inputs, oneBlinkAPIClient) => {
 async function getCLICommand(input: string) {
   switch (input) {
     case 'scope': {
-      return (await import('./lib/scope')).default
+      return (await import('./scope')).default
     }
     case 'deploy': {
-      return (await import('./lib/deploy')).default
+      return (await import('./deploy')).default
     }
   }
 }

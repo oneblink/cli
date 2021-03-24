@@ -1,7 +1,7 @@
 import path from 'path'
 import { LambdaEvent } from '../../../src/api/types'
 
-import lib from '../../../src/scripts/api-handler'
+import lib from '../../../src/api/scripts/api-handler'
 
 describe('api-handler', () => {
   const CONFIG_PATH = path.join(
@@ -10,6 +10,7 @@ describe('api-handler', () => {
     '..',
     '..',
     'src',
+    'api',
     'scripts',
     'bm-server.json',
   )

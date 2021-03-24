@@ -1,8 +1,8 @@
 import path from 'path'
 
-import read from '../../src/commands/cdn/lib/read'
-import show from '../../src/commands/cdn/lib/show'
-import write from '../../src/commands/cdn/lib/write'
+import read from '../../src/cdn/read'
+import show from '../../src/cdn/show'
+import write from '../../src/cdn/write'
 
 const EXISTING_PROJECT_PATH = path.join(
   __dirname,

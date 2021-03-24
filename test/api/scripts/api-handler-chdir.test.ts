@@ -1,6 +1,6 @@
 import { LambdaEvent } from '../../../src/api/types'
 
-import lib from '../../../src/scripts/api-handler'
+import lib from '../../../src/api/scripts/api-handler'
 
 // Must run with in its own file as it changes process.chdir()
 test('handler() should return 500 status code if current working directory cannot be changed', async () => {

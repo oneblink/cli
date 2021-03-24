@@ -1,8 +1,8 @@
-import type { CLIFlags, CLIOptions } from '../../api/types'
+import type { CLIFlags, CLIOptions } from '../types'
 
 import info from './info'
-import deploy from '../../api/deploy'
-import scope from '../../api/scope'
+import deploy from '../deploy'
+import scope from '../scope'
 
 export default async function (
   tenant: Tenant,

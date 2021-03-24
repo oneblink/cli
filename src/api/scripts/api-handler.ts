@@ -7,7 +7,7 @@ We bundle this module and its dependencies to "dist".
 To bundle: `npm run build`
 */
 
-import type { Headers, LambdaEvent } from '../api/types'
+import type { Headers, LambdaEvent } from '../types'
 import type { APITypes } from '@oneblink/types'
 
 type APIGatewayResult = {
@@ -18,8 +18,8 @@ type APIGatewayResult = {
 
 import path from 'path'
 import querystring from 'querystring'
-import handlers from '../api/handlers'
-import wrapper from '../api/wrapper'
+import handlers from '../handlers'
+import wrapper from '../wrapper'
 
 // return only the pertinent data from a API Gateway + Lambda event
 function normaliseLambdaRequest<T>(
