@@ -1,7 +1,5 @@
 import { LambdaEvent } from '../../../src/api/types'
 
-import lib from '../../../src/api/scripts/api-handler'
-
 // Must run with in its own file as it changes process.chdir()
 test('handler() should return 500 status code if current working directory cannot be changed', async () => {
   const EVENT: LambdaEvent = {
@@ -21,6 +19,7 @@ test('handler() should return 500 status code if current working directory canno
   spy.mockImplementation(() => {
     throw new Error('test chdir error')
   })
+  const { default: lib } = await import('../../../src/api/scripts/api-handler')
   const result = await lib.handler(event, {})
   spy.mockRestore()
 
