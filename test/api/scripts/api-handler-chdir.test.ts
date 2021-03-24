@@ -4,6 +4,9 @@ import lib from '../../../src/api/scripts/api-handler'
 
 // Must run with in its own file as it changes process.chdir()
 test('handler() should return 500 status code if current working directory cannot be changed', async () => {
+  const spy = jest.spyOn(process, 'chdir').mockImplementation(() => {
+    throw new Error('test chdir error')
+  })
   const EVENT: LambdaEvent = {
     httpMethod: 'GET',
     pathParameters: null,
@@ -14,10 +17,6 @@ test('handler() should return 500 status code if current working directory canno
       Host: 'this is the host',
     },
     resource: 'string',
-  }
-  const chdir = process.chdir
-  process.chdir = () => {
-    throw new Error('test chdir error')
   }
   const event = Object.assign({}, EVENT, { path: '/response' })
 
@@ -33,5 +32,5 @@ test('handler() should return 500 status code if current working directory canno
     },
     statusCode: 500,
   })
-  process.chdir = chdir
+  spy.mockRestore()
 })
