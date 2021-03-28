@@ -17,6 +17,7 @@ type APIGatewayResult = {
 }
 
 import path from 'path'
+import process from 'process'
 import querystring from 'querystring'
 import handlers from '../handlers'
 import wrapper from '../wrapper'

@@ -15,13 +15,14 @@ test('handler() should return 500 status code if current working directory canno
   }
   const event = Object.assign({}, EVENT, { path: '/response' })
 
-  const spy = jest.spyOn(process, 'chdir')
-  spy.mockImplementation(() => {
-    throw new Error('test chdir error')
-  })
+  jest.mock('process', () => ({
+    cwd: () => '.',
+    chdir: () => {
+      throw new Error('test chdir error')
+    },
+  }))
   const { default: lib } = await import('../../../src/api/scripts/api-handler')
   const result = await lib.handler(event, {})
-  spy.mockRestore()
 
   expect(result).toEqual({
     body: JSON.stringify({
