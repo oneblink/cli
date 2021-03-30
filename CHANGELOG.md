@@ -1,21 +1,23 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file.
-This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
 
 ### Changed
 
 - documentation for sending emails from Hosted APIs
 
-## 0.1.11 (2021-03-23)
+## [0.1.11] - 2021-03-23
 
 ### Fixed
 
 - `api serve` command not handling request payload and response payload correctly if they are not JSON
 
-## 0.1.10 (2021-02-18)
+## [0.1.10] - 2021-02-18
 
 ### Changed
 
@@ -43,7 +45,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 - depend upon [cli-table3](https://www.npmjs.com/package/cli-table3) [0.6.0](https://github.com/cli-table/cli-table3/blob/master/CHANGELOG.md)
 
-## 0.1.9 (2020-12-11)
+## [0.1.9] - 2020-12-11
 
 ### Added
 
@@ -55,13 +57,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 - update [aws-sdk](https://www.npmjs.com/package/aws-sdk) to [2.801.0](https://github.com/aws/aws-sdk-js/releases/tag/v2.801.0) (from [2.790.0](https://github.com/aws/aws-sdk-js/releases/tag/v2.790.0))
 
-## 0.1.8 (2020-11-25)
+## [0.1.8] - 2020-11-25
 
 ### Added
 
 - Default header allowance for `X-OneBlink-User-Token`
 
-## 0.1.7 (2020-11-17)
+## [0.1.7] - 2020-11-17
 
 ### Removed
 
@@ -93,19 +95,19 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 - update [update-notifier](https://www.npmjs.com/package/update-notifier) to 5.0.1 (from 4.1.0)
 
-## 0.1.6 (2020-07-06)
+## [0.1.6] - 2020-07-06
 
 ### Added
 
 - `memorySize` option to API CLI configuration
 
-## 0.1.5 (2020-06-03)
+## [0.1.5] - 2020-06-03
 
 ### Fixed
 
 - `api teardown` command throwing error parsing JSON
 
-## 0.1.4 (2020-04-03)
+## [0.1.4] - 2020-04-03
 
 ### Added
 
@@ -154,18 +156,18 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 - depend upon [node-fetch](https://www.npmjs.com/package/node-fetch) [2.6.0](https://github.com/node-fetch/node-fetch/releases/tag/v2.6.0)
 
-## 0.1.3 (2020-03-26)
+## [0.1.3] - 2020-03-26
 
 ### Fixed
 
 - `civicplus` entry point not using CivicPlus tenant
 
-## 0.1.2 (2020-03-11)
+## [0.1.2] - 2020-03-11
 
 ### Fixed
 
 - default entry point using civicplus
 
-## 0.1.1 (2020-03-11)
+## [0.1.1] - 2020-03-11
 
 - Initial Release

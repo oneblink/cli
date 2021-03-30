@@ -28,12 +28,6 @@ During development you will likely **not** wish to use the OneBlink Production E
    git push && git push --tags
    ```
 
-1. Publish changes to npm
-
-   ```
-   npm publish --tag beta
-   ```
-
 ## Production Release Process
 
 1. Checkout `master` and get the latest code
@@ -44,9 +38,9 @@ During development you will likely **not** wish to use the OneBlink Production E
 
 1. Run CLI `package-diff-summary {last-tag}`
 
-1. Copy result (if there is one) under a _Dependencies_ heading in [Changelog](./CHANGELOG.md)
+1. Copy result (if there is one) under a `### Dependencies` heading in [Changelog](./CHANGELOG.md)
 
-1. Update the [Changelog](./CHANGELOG.md) by replacing `Unreleased` with `x.x.x (YYYY-MM-DD)`
+1. Update the [Changelog](./CHANGELOG.md) by adding `## [x.x.x] - YYYY-MM-DD` under `## Unreleased`
 
 1. Commit changes to the `master` branch
 
@@ -64,10 +58,4 @@ During development you will likely **not** wish to use the OneBlink Production E
 
    ```
    git push && git push --tags
-   ```
-
-1. Publish changes to npm
-
-   ```
-   npm publish
    ```
