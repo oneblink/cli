@@ -102,7 +102,7 @@
     "build:tsc": "tsc --build",
     "eslint": "eslint --fix --cache --quiet ./src",
     "fixpack": "fixpack",
-    "jest": "jest --silent --runInBand",
+    "jest": "jest --silent",
     "prepare": "npm run build",
     "pretest": "npm run eslint && npm run fixpack",
     "test": "npm run jest"

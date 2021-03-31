@@ -1,7 +1,8 @@
 import path from 'path'
 import { LambdaEvent } from '../../../src/api/types'
 
-import lib from '../../../src/api/scripts/api-handler'
+import * as lib from '../../../src/api/scripts/api-handler'
+import handlers from '../../../src/api/handlers'
 
 describe('api-handler', () => {
   const CONFIG_PATH = path.join(
@@ -223,6 +224,43 @@ describe('api-handler', () => {
         'content-type': 'application/json',
       },
       statusCode: 200,
+    })
+  })
+
+  test.only('handler() should return 500 status code if current working directory cannot be changed', async () => {
+    const spy = jest.spyOn(handlers, 'getHandler')
+    jest.mock('../../../dist/bm-server.json', () => require(CONFIG_PATH), {
+      virtual: true,
+    })
+
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { handler } = require('../../../dist/api-handler')
+    const result = await handler(
+      {
+        httpMethod: 'GET',
+        pathParameters: null,
+        path: '/response',
+        queryStringParameters: null,
+        body: '{"test": 123}',
+        headers: {
+          Host: 'this is the host',
+        },
+        resource: 'string',
+      },
+      {},
+    )
+
+    expect(spy).not.toBeCalled()
+    expect(result).toEqual({
+      body: JSON.stringify({
+        error: 'Internal Server Error',
+        message: 'An internal server error occurred',
+        statusCode: 500,
+      }),
+      headers: {
+        'content-type': 'application/json',
+      },
+      statusCode: 500,
     })
   })
 })

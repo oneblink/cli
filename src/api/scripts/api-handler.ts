@@ -221,8 +221,6 @@ async function handler(
   }
 }
 
-export default {
-  [handlers.ENTRY_FUNCTION]: handler,
-  normaliseLambdaRequest,
-}
+export { handler, normaliseLambdaRequest }
+
 /* eslint-enable no-console */
