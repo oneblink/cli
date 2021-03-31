@@ -100,7 +100,7 @@ async function copy(
     await copyRecursive(cwd, getProjectPath(target))
 
     // Copy AWS Lambda entry point handler
-    const wrapperPath = path.join(__dirname, '..', 'api-handler')
+    const wrapperPath = path.join(__dirname, '..', 'api-handler.js')
     const handlerPath = path.join(target, `${HANDLER}.js`)
     await copyRecursive(wrapperPath, handlerPath)
 
