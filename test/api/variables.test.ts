@@ -7,7 +7,7 @@ describe('variables', () => {
           test: 'test scoped value',
           prod: 'prod scoped value',
         },
-        MY_VARIABLE: 'unscoped value',
+        MY_VARIABLE: 'unscoped$value',
         MY_REFERENCED_VARIABLE: '${MY_REFERENCE}',
       },
     },
@@ -38,21 +38,21 @@ describe('variables', () => {
     const devVars = await variables.read(CWD, 'dev')
     expect(devVars).toEqual({
       MY_VARIABLE_SCOPED: undefined,
-      MY_VARIABLE: 'unscoped value',
+      MY_VARIABLE: 'unscoped$value',
       MY_REFERENCED_VARIABLE: referencedValue,
     })
 
     const testVars = await variables.read(CWD, 'test')
     expect(testVars).toEqual({
       MY_VARIABLE_SCOPED: 'test scoped value',
-      MY_VARIABLE: 'unscoped value',
+      MY_VARIABLE: 'unscoped$value',
       MY_REFERENCED_VARIABLE: referencedValue,
     })
 
     const prodVars = await variables.read(CWD, 'prod')
     expect(prodVars).toEqual({
       MY_VARIABLE_SCOPED: 'prod scoped value',
-      MY_VARIABLE: 'unscoped value',
+      MY_VARIABLE: 'unscoped$value',
       MY_REFERENCED_VARIABLE: referencedValue,
     })
   })

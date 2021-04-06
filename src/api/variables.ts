@@ -65,7 +65,11 @@ function read(
     })
 }
 
-function display(logger: any, cwd: string, env: string): Promise<void> {
+function display(
+  logger: typeof console,
+  cwd: string,
+  env: string,
+): Promise<void> {
   return read(cwd, env).then((envVars) => _display(logger, envVars, env))
 }
 
