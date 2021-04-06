@@ -1,48 +1,47 @@
-import createInternal from './utils/internal'
-
-import type { Headers } from './types'
 import { APITypes } from '@oneblink/types'
-
-const internal = createInternal()
 
 class BmResponseImplementation<T>
   implements APITypes.OneBlinkAPIHostingResponse<T> {
+  private _headers: APITypes.OneBlinkAPIHostingResponse<T>['headers']
+  private _payload: T
+  private _statusCode: APITypes.OneBlinkAPIHostingResponse<T>['statusCode']
+
   constructor() {
-    Object.assign(internal(this), {
-      headers: {},
-      payload: undefined,
-      statusCode: 200,
-    })
+    this._headers = {}
+    this._statusCode = 200
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    this._payload = undefined as any
   }
 
-  get headers(): Headers {
-    return Object.assign({}, internal(this).headers)
+  get headers(): APITypes.OneBlinkAPIHostingResponse<T>['headers'] {
+    return Object.assign({}, this._headers)
   }
 
-  get payload(): any {
-    return internal(this).payload
+  get payload(): T {
+    return this._payload
   }
 
-  get statusCode(): number {
-    return internal(this).statusCode
+  get statusCode(): APITypes.OneBlinkAPIHostingResponse<T>['statusCode'] {
+    return this._statusCode
   }
 
   setHeader(
     key: string,
     value: string,
   ): APITypes.OneBlinkAPIHostingResponse<T> {
-    key = key.toLowerCase()
-    internal(this).headers[key] = value
+    this._headers[key.toLowerCase()] = value
     return this
   }
 
-  setPayload(payload: any): APITypes.OneBlinkAPIHostingResponse<T> {
-    internal(this).payload = payload
+  setPayload(payload: T): APITypes.OneBlinkAPIHostingResponse<T> {
+    this._payload = payload
     return this
   }
 
-  setStatusCode(code: number): APITypes.OneBlinkAPIHostingResponse<T> {
-    internal(this).statusCode = code
+  setStatusCode(
+    code: APITypes.OneBlinkAPIHostingResponse<T>['statusCode'],
+  ): APITypes.OneBlinkAPIHostingResponse<T> {
+    this._statusCode = code
     return this
   }
 }

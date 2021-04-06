@@ -20,7 +20,7 @@ async function executeHandler<In = void, Out = void>(
     if (Number.isFinite(result) && typeof result === 'number') {
       response.setStatusCode(result)
     } else {
-      response.setPayload(result)
+      response.setPayload(result as Out)
     }
   }
   return response
