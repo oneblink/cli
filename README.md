@@ -1,4 +1,4 @@
-# OneBlink CLI [![npm module](https://img.shields.io/npm/v/@oneblink/cli.svg)](https://www.npmjs.com/package/@oneblink/cli) [![AppVeyor Status](https://ci.appveyor.com/api/projects/status/github/oneblink/cli?branch=master&svg=true)](https://ci.appveyor.com/project/oneblink/cli) [![Travis CI Status](https://travis-ci.com/oneblink/cli.svg?branch=master)](https://travis-ci.com/oneblink/cli)
+# OneBlink CLI [![npm module](https://img.shields.io/npm/v/@oneblink/cli.svg)](https://www.npmjs.com/package/@oneblink/cli) [![tests](https://github.com/oneblink/cli/actions/workflows/test.yml/badge.svg)](https://github.com/oneblink/cli/actions)
 
 Primary entry point for our CLI tools
 

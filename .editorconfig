@@ -100,7 +100,7 @@ indent_style = space
 # https://github.com/Microsoft/TypeScript/blob/master/.editorconfig
 [*.ts]
 indent_style = space
-indent_size = 4
+indent_size = 2
 
 # YAML
 # http://yaml.org/spec/1.2/2009-07-21/spec.html#id2576668
