@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **[BREAKING]** runtime version from Node.js 12 to [Node.js 14](https://nodejs.medium.com/node-js-version-14-available-now-8170d384567e)
+
 ## [0.1.13] - 2021-04-15
 
 ### Changed

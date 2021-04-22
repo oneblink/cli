@@ -46,6 +46,7 @@
     "write-json-file": "^4.3.0"
   },
   "devDependencies": {
+    "@oneblink/release-cli": "^1.0.0",
     "@oneblink/types": "github:oneblink/types",
     "@types/archiver": "^5.1.0",
     "@types/cors": "^2.8.10",
@@ -78,7 +79,7 @@
     "test": "test"
   },
   "engines": {
-    "node": ">=12",
+    "node": ">=14",
     "npm": ">=6"
   },
   "files": [
