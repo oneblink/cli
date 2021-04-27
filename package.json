@@ -1,7 +1,7 @@
 {
   "name": "@oneblink/cli",
   "description": "primary entry point for our CLI tools",
-  "version": "0.1.14-beta.2",
+  "version": "0.2.0-beta.1",
   "author": "OneBlink <developers@oneblink> (https://github.com/oneblink)",
   "bin": {
     "oneblink": "dist/bin/oneblink.js",
@@ -105,6 +105,7 @@
     "jest": "jest --silent",
     "prepare": "npm run build",
     "pretest": "npm run eslint && npm run fixpack",
+    "release": "oneblink-release",
     "test": "npm run jest"
   }
 }
