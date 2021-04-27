@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- [Node.js](https://nodejs.org/) 12.0 or newer
+- [Node.js](https://nodejs.org/) 14.0 or newer
 - NPM 6.0 or newer
 
 ## Installation
