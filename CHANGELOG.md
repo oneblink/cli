@@ -7,9 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2021-05-13
+
 ### Changed
 
 - **[BREAKING]** runtime version from Node.js 12 to [Node.js 14](https://nodejs.medium.com/node-js-version-14-available-now-8170d384567e)
+
+### Dependencies
+
+- update [@hapi/boom](https://www.npmjs.com/package/@hapi/boom) to 9.1.2 (from [9.1.1](https://github.com/hapijs/boom/releases/tag/v9.1.1))
+
+- update [archiver](https://www.npmjs.com/package/archiver) to [5.3.0](https://github.com/archiverjs/node-archiver/releases/tag/5.3.0) (from [5.2.0](https://github.com/archiverjs/node-archiver/releases/tag/5.2.0))
+
+- update [aws-sdk](https://www.npmjs.com/package/aws-sdk) to [2.876.0](https://github.com/aws/aws-sdk-js/releases/tag/v2.876.0) (from [2.843.0](https://github.com/aws/aws-sdk-js/releases/tag/v2.843.0))
+
+- update [inquirer](https://www.npmjs.com/package/inquirer) to 8.0.0 (from 7.3.3)
+
+- update [open](https://www.npmjs.com/package/open) to [8.0.4](https://github.com/sindresorhus/open/releases/tag/v8.0.4) (from [7.4.1](https://github.com/sindresorhus/open/releases/tag/v7.4.1))
+
+- update [ora](https://www.npmjs.com/package/ora) to [5.4.0](https://github.com/sindresorhus/ora/releases/tag/v5.4.0) (from [5.3.0](https://github.com/sindresorhus/ora/releases/tag/v5.3.0))
 
 ## [0.1.13] - 2021-04-15
 
