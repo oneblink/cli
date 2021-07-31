@@ -1,0 +1,12 @@
+{
+  "server": {
+    "project": "form-server-validate.api.oneblink.io",
+    "cors": true,
+    "routes": [
+      {
+        "route": "/validate-form",
+        "module": "./src/validate-form.js"
+      }
+    ]
+  }
+}
