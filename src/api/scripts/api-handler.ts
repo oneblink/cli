@@ -80,9 +80,9 @@ async function handler(
     if (search) {
       path += `?${search}`
     }
-    let referrer = request.headers.referrer
-    if (typeof referrer !== 'string' || !referrer) {
-      referrer = '-'
+    let referer = request.headers.referer
+    if (typeof referer !== 'string' || !referer) {
+      referer = '-'
     }
     let userAgent = request.headers['user-agent']
     if (typeof userAgent !== 'string' || !userAgent) {
@@ -91,7 +91,7 @@ async function handler(
     console.log(
       `${request.method.toUpperCase()} ${path}${querystring.stringify(
         request.url.query,
-      )} ${statusCode} "${requestTime} ms" "${referrer}" "${userAgent}"`,
+      )} ${statusCode} "${requestTime} ms" "${referer}" "${userAgent}"`,
     )
 
     const result: APIGatewayResult = {
