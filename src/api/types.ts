@@ -44,15 +44,29 @@ export type HandlerConfiguration<In = void, Out = void> = {
 
 export type Headers = APITypes.OneBlinkAPIHostingRequest['headers']
 
-export type LambdaEvent = {
-  body: any
-  headers: Headers
-  httpMethod: string
-  path: string
-  pathParameters: { [id: string]: string } | null
-  queryStringParameters: { [id: string]: string } | null
-  resource: string
-}
+export type LambdaEvent =
+  | {
+      version?: '1.0'
+      body: unknown
+      headers: Headers
+      httpMethod: string
+      path: string
+      pathParameters: { [id: string]: string } | null
+      queryStringParameters: { [id: string]: string } | null
+    }
+  | {
+      version: '2.0'
+      body: unknown
+      headers: Headers
+      requestContext: {
+        http: {
+          method: string
+        }
+      }
+      rawPath: string
+      pathParameters: { [id: string]: string } | null
+      queryStringParameters: { [id: string]: string } | null
+    }
 
 export type MapObject = Record<string, any>
 
