@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Form Server Validation example
 
+### Fixed
+
+- `Referer` HTTP request header not being logged correctly
+
 ## [0.2.0] - 2021-05-13
 
 ### Changed
