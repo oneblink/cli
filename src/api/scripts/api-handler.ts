@@ -114,7 +114,7 @@ async function handler(
     } catch (error) {
       return finish(404, {
         error: 'Not Found',
-        message: error.message,
+        message: (error as Error).message,
         statusCode: 404,
       })
     }
@@ -192,7 +192,7 @@ async function handler(
 
     const response = await handlers.executeHandler(handler, request)
     return finish(response.statusCode, response.payload, response.headers)
-  } catch (error) {
+  } catch (error: any) {
     if (
       error &&
       error.isBoom &&

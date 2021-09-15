@@ -96,7 +96,7 @@ async function startServer(
         try {
           body = JSON.parse(body)
         } catch (error) {
-          throw Boom.boomify(error, {
+          throw Boom.boomify(error as Error, {
             statusCode: 400,
             message: 'Could not parse request as JSON',
           })
@@ -129,8 +129,8 @@ async function startServer(
         .status(bmResponse.statusCode)
         .set(bmResponse.headers)
         .send(bmResponse.payload)
-    } catch (error) {
-      let err = error
+    } catch (error: any) {
+      let err: Boom.Boom = error
       if (!err || !err.isBoom) {
         err = Boom.boomify(err, {
           statusCode: 500,
