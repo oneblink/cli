@@ -3,7 +3,6 @@ import type OneBlinkAPIClient from '../oneblink-api-client'
 import type { BlinkMRCServer, DeploymentCredentials } from './types'
 import type { APITypes } from '@oneblink/types'
 
-import util from 'util'
 import fs from 'fs'
 import path from 'path'
 
@@ -30,7 +29,6 @@ temp.track()
 
 const EXT = 'zip'
 const HANDLER = 'handler'
-const pMkdir = util.promisify(temp.mkdir)
 
 const getProjectPath = (target: string) => path.join(target, 'project')
 
@@ -94,7 +92,7 @@ async function copy(
       throw new Error('scope has not been set yet')
     }
 
-    const target = await pMkdir('api-deployment')
+    const target = await temp.mkdir('api-deployment')
 
     // Copy project code
     await copyRecursive(cwd, getProjectPath(target))

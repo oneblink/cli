@@ -138,7 +138,7 @@ describe('handlers', () => {
     for (const { method, module } of tests) {
       try {
         await lib.getHandler(module, method)
-      } catch (error) {
+      } catch (error: any) {
         expect(error.message.includes('Cannot find module')).toBe(true)
         expect(error.message.includes(module)).toBe(true)
       }

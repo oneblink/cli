@@ -30,7 +30,7 @@ export default async function (
     try {
       await task()
     } catch (error) {
-      errors.push(error)
+      errors.push(error as Error)
     }
   }
   if (errors && errors.length) {
