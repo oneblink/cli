@@ -27,22 +27,29 @@ function normaliseLambdaRequest<T>(
 ): APITypes.OneBlinkAPIHostingRequest<T> {
   const headers = wrapper.keysToLowerCase(event.headers)
   let body = event.body
-  try {
-    body = JSON.parse(body)
-  } catch (e) {
-    // Do nothing...
+  if (typeof body === 'string') {
+    try {
+      body = JSON.parse(body)
+    } catch (e) {
+      // Do nothing...
+    }
   }
+  const path = event.version === '2.0' ? event.rawPath : event.path
   const host = headers['x-forwarded-host'] || headers.host
   return {
-    body,
+    body: body as T,
     headers,
-    method: wrapper.normaliseMethod(event.httpMethod),
-    route: event.path,
+    method: wrapper.normaliseMethod(
+      event.version === '2.0'
+        ? event.requestContext.http.method
+        : event.httpMethod,
+    ),
+    route: path,
     url: {
       host,
       hostname: host,
       params: {},
-      pathname: event.path,
+      pathname: path,
       protocol: wrapper.protocolFromHeaders(headers),
       query: event.queryStringParameters || {},
     },
@@ -108,7 +115,7 @@ async function handler(
     // Get handler module based on route
     let routeConfig
     try {
-      routeConfig = handlers.findRouteConfig(event.path, config.routes)
+      routeConfig = handlers.findRouteConfig(request.route, config.routes)
       request.url.params = routeConfig.params || {}
       request.route = routeConfig.route
     } catch (error) {
