@@ -41,7 +41,6 @@ describe('api-handler', () => {
     headers: {
       Host: 'this is the host',
     },
-    resource: 'string',
   }
 
   afterEach(() => {

@@ -26,19 +26,18 @@ async function executeHandler<In = void, Out = void>(
   return response
 }
 
-function getHandler<In = void, Out = void>(
+async function getHandler<In = void, Out = void>(
   module: string,
   method: string,
 ): Promise<APITypes.OneBlinkAPIHostingHandler<In, Out> | void> {
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    let handler = require(module)
-    if (handler && method && typeof handler[method] === 'function') {
-      handler = handler[method]
+  const handler: { default: any; [key: string]: any } = await import(module)
+
+  if (handler) {
+    if (method && typeof handler[method] === 'function') {
+      return handler[method]
+    } else {
+      return handler.default
     }
-    return Promise.resolve(handler)
-  } catch (err) {
-    return Promise.reject(err)
   }
 }
 

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- API Gateway to Lambda version 2.0 integration
+
 ## [0.2.1] - 2021-08-12
 
 ### Added
