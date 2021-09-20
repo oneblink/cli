@@ -7,9 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.2] - 2021-09-20
+
 ### Added
 
 - API Gateway to Lambda version 2.0 integration
+
+### Dependencies
+
+- update [@hapi/boom](https://www.npmjs.com/package/@hapi/boom) to 9.1.4 (from 9.1.2)
+
+- update [aws-sdk](https://www.npmjs.com/package/aws-sdk) to [2.989.0](https://github.com/aws/aws-sdk-js/releases/tag/v2.989.0) (from [2.876.0](https://github.com/aws/aws-sdk-js/releases/tag/v2.876.0))
+
+- update [chalk](https://www.npmjs.com/package/chalk) to [4.1.2](https://github.com/chalk/chalk/releases/tag/v4.1.2) (from [4.1.0](https://github.com/chalk/chalk/releases/tag/v4.1.0))
+
+- update [execa](https://www.npmjs.com/package/execa) to [5.1.1](https://github.com/sindresorhus/execa/releases/tag/v5.1.1) (from [5.0.0](https://github.com/sindresorhus/execa/releases/tag/v5.0.0))
+
+- update [glob](https://www.npmjs.com/package/glob) to 7.1.7 (from 7.1.6)
+
+- update [inquirer](https://www.npmjs.com/package/inquirer) to 8.1.4 (from 8.0.0)
+
+- update [node-fetch](https://www.npmjs.com/package/node-fetch) to [2.6.2](https://github.com/node-fetch/node-fetch/releases/tag/v2.6.2) (from [2.6.1](https://github.com/node-fetch/node-fetch/releases/tag/v2.6.1))
+
+- update [open](https://www.npmjs.com/package/open) to [8.2.1](https://github.com/sindresorhus/open/releases/tag/v8.2.1) (from [8.0.4](https://github.com/sindresorhus/open/releases/tag/v8.0.4))
+
+- update [ora](https://www.npmjs.com/package/ora) to [5.4.1](https://github.com/sindresorhus/ora/releases/tag/v5.4.1) (from [5.4.0](https://github.com/sindresorhus/ora/releases/tag/v5.4.0))
+
+- update [recursive-copy](https://www.npmjs.com/package/recursive-copy) to 2.0.13 (from 2.0.11)
 
 ## [0.2.1] - 2021-08-12
 
