@@ -1,6 +1,5 @@
-import { URLSearchParams } from 'url'
+import { URLSearchParams, URL } from 'url'
 
-import querystring from 'querystring'
 import crypto from 'crypto'
 import fetch from 'node-fetch'
 import inquirer from 'inquirer'
@@ -17,18 +16,20 @@ export default class BrowserLoginProvider extends LoginProviderBase {
     const verifierChallenge = base64url.encode(
       crypto.createHash('sha256').update(verifier).digest(),
     )
-    const qs = querystring.stringify({
-      response_type: 'code',
-      scope: constants.SCOPE,
-      client_id: this.CONSTANTS.loginClientId,
-      redirect_uri: this.CONSTANTS.loginCallbackUrl,
-      code_challenge: verifierChallenge,
-      code_challenge_method: 'S256',
-    })
+    const authorizeUrl = new URL('/oauth2/authorize', this.CONSTANTS.loginUrl)
+    authorizeUrl.searchParams.append('response_type', 'code')
+    authorizeUrl.searchParams.append('scope', constants.SCOPE)
+    authorizeUrl.searchParams.append('client_id', this.CONSTANTS.loginClientId)
+    authorizeUrl.searchParams.append(
+      'redirect_uri',
+      this.CONSTANTS.loginCallbackUrl,
+    )
+    authorizeUrl.searchParams.append('code_challenge', verifierChallenge)
+    authorizeUrl.searchParams.append('code_challenge_method', 'S256')
     // Open a browser and initiate the authentication process with Auth0
     // The callback URL is a simple website that simply displays the OAuth2 authz code
     // User will copy the value and then paste it here for the process to complete.
-    open(`${this.CONSTANTS.loginUrl}/authorize?${qs}`, { wait: false })
+    open(authorizeUrl.href, { wait: false })
 
     console.log(
       'A browser has been opened to allow you to login. Once logged in, you will be granted a verification code.',
@@ -51,7 +52,8 @@ export default class BrowserLoginProvider extends LoginProviderBase {
     params.append('grant_type', 'authorization_code')
     params.append('redirect_uri', this.CONSTANTS.loginCallbackUrl)
 
-    const response = await fetch(this.CONSTANTS.loginUrl + '/oauth2/token', {
+    const tokenUrl = new URL('/oauth2/token', this.CONSTANTS.loginUrl)
+    const response = await fetch(tokenUrl.href, {
       method: 'POST',
       body: params,
     })

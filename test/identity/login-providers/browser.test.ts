@@ -1,4 +1,4 @@
-import querystring from 'querystring'
+import { URL } from 'url'
 
 import constants from '../../../src/identity/constants'
 import { TENANTS } from '../../../src/config'
@@ -59,15 +59,21 @@ describe('', () => {
     // should call opn with correct data in url
     expect(mockOpen).toBeCalled()
     const openUrl = mockOpen.mock.calls[0][0]
-    const openSearch = querystring.stringify({
-      response_type: 'code',
-      scope: constants.SCOPE,
-      client_id: TENANTS.ONEBLINK.loginClientId,
-      redirect_uri: TENANTS.ONEBLINK.loginCallbackUrl,
-      code_challenge: VERIFIER_CHALLENGE,
-      code_challenge_method: 'S256',
-    })
-    expect(openUrl).toBe(`${TENANTS.ONEBLINK.loginUrl}/authorize?${openSearch}`)
+
+    const authorizeUrl = new URL('/oauth2/authorize', TENANTS.ONEBLINK.loginUrl)
+    authorizeUrl.searchParams.append('response_type', 'code')
+    authorizeUrl.searchParams.append('scope', constants.SCOPE)
+    authorizeUrl.searchParams.append(
+      'client_id',
+      TENANTS.ONEBLINK.loginClientId,
+    )
+    authorizeUrl.searchParams.append(
+      'redirect_uri',
+      TENANTS.ONEBLINK.loginCallbackUrl,
+    )
+    authorizeUrl.searchParams.append('code_challenge', VERIFIER_CHALLENGE)
+    authorizeUrl.searchParams.append('code_challenge_method', 'S256')
+    expect(openUrl).toBe(authorizeUrl.href)
     const openOptions = mockOpen.mock.calls[0][1]
     expect(openOptions).toEqual({
       wait: false,
