@@ -9,7 +9,7 @@ test('storeJWT() should store jwt', async () => {
   }))
 
   const { default: LoginProviderBase } = await import(
-    '../../../src/identity/login-providers/username'
+    '../../../src/identity/login-providers/login-provider-base'
   )
   const loginProviderBase = new LoginProviderBase(TENANTS.ONEBLINK)
 

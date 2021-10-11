@@ -8,33 +8,17 @@ const loginCommand: CLICommand = async (tenant) => {
   const help = `
 ${chalk.bold(`${tenant.label} Login Command`)}
 
-${chalk.blue('login')} ${chalk.grey(
-    '...............',
-  )} Start the login process, if no flags are passed, a browser based login will begin
-  ${chalk.blue('--username')} ${chalk.grey(
-    '........',
-  )} Username to login with, if password is not specified, you will be prompted for it
-  ${chalk.blue('--password')} ${chalk.grey(
-    '........',
-  )} Password to login with, requires the username flag as well
+${chalk.blue('login')} ${chalk.grey('...............')} Start the login process
 
 ${chalk.bold('Examples')}
 
-  ${chalk.blue(`${tenant.command} login`)}
-  ${chalk.blue(`${tenant.command} login --username`)}
-  ${chalk.blue(`${tenant.command} login --username email@provider.com`)}`
+  ${chalk.blue(`${tenant.command} login`)}`
 
   const { flags } = meow({
     help,
     flags: {
       help: {
         type: 'boolean',
-      },
-      username: {
-        type: 'string',
-      },
-      password: {
-        type: 'string',
       },
     },
   })
@@ -44,13 +28,7 @@ ${chalk.bold('Examples')}
     return
   }
 
-  let username: string | boolean | undefined = flags.username
-  if (username === '') username = true
-  await login(tenant, {
-    username,
-    password: flags.password,
-    storeJwt: true,
-  })
+  await login(tenant)
   console.log(`
 Success! Welcome to ${tenant.label}. Be sure to logout when you're finished.`)
 }
