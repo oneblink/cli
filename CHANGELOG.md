@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- `memorySize` max in docs for api hosting
+
 ### Removed
 
 - username and password login option
