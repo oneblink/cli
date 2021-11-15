@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.3] - 2021-11-15
+
 ### Changed
 
 - `memorySize` max in docs for api hosting
@@ -14,6 +16,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 - username and password login option
+
+### Dependencies
+
+- update [aws-sdk](https://www.npmjs.com/package/aws-sdk) to [2.1002.0](https://github.com/aws/aws-sdk-js/releases/tag/v2.1002.0) (from [2.989.0](https://github.com/aws/aws-sdk-js/releases/tag/v2.989.0))
+
+- update [glob](https://www.npmjs.com/package/glob) to 7.2.0 (from 7.1.7)
+
+- update [inquirer](https://www.npmjs.com/package/inquirer) to 8.2.0 (from 8.1.4)
+
+- update [node-fetch](https://www.npmjs.com/package/node-fetch) to 2.6.5 (from [2.6.2](https://github.com/node-fetch/node-fetch/releases/tag/v2.6.2))
 
 ## [0.2.2] - 2021-09-20
 
