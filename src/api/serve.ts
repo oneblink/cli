@@ -61,7 +61,7 @@ async function startServer(
   }
   app.use(cors(corsConfiguration))
 
-  app.use(express.text({ type: '*/*' }))
+  app.use(express.text({ type: '*/*', limit: '6mb' }))
 
   // Handler to catch all routes
   app.use(async function (
@@ -120,10 +120,8 @@ async function startServer(
         },
       }
 
-      const bmResponse: APITypes.OneBlinkAPIHostingResponse<unknown> = await handlers.executeHandler(
-        handler,
-        request,
-      )
+      const bmResponse: APITypes.OneBlinkAPIHostingResponse<unknown> =
+        await handlers.executeHandler(handler, request)
 
       res
         .status(bmResponse.statusCode)
