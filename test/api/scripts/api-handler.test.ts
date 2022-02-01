@@ -37,6 +37,7 @@ describe('api-handler', () => {
     pathParameters: null,
     path: 'this is the path',
     queryStringParameters: null,
+    multiValueQueryStringParameters: null,
     body: '{"test": 123}',
     headers: {
       Host: 'this is the host',
@@ -65,6 +66,7 @@ describe('api-handler', () => {
         pathname: 'this is the path',
         protocol: 'http:',
         query: {},
+        querystring: ''
       },
     })
   })

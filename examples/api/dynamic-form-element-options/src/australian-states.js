@@ -4,35 +4,35 @@ module.exports.get = function () {
   return [
     {
       value: 'act',
-      label: 'Australian Capital Territory (ACT)'
+      label: 'Australian Capital Territory (ACT)',
     },
     {
       value: 'nsw',
-      label: 'New South Wales'
+      label: 'New South Wales',
     },
     {
       value: 'nt',
-      label: 'Northern Territory '
+      label: 'Northern Territory ',
     },
     {
       value: 'qld',
-      label: 'Queensland'
+      label: 'Queensland',
     },
     {
       value: 'sa',
-      label: 'South Australia'
+      label: 'South Australia',
     },
     {
       value: 'tas',
-      label: 'Tasmania'
+      label: 'Tasmania',
     },
     {
       value: 'vic',
-      label: 'Victoria'
+      label: 'Victoria',
     },
     {
       value: 'wa',
-      label: 'Western Australia'
-    }
+      label: 'Western Australia',
+    },
   ]
 }

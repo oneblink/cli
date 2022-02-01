@@ -11,13 +11,13 @@ module.exports.get = function () {
       attributes: [
         {
           label: stateLabel,
-          value: 'NSW'
+          value: 'NSW',
         },
         {
           label: countryLabel,
-          value: 'AUS'
-        }
-      ]
+          value: 'AUS',
+        },
+      ],
     },
     {
       value: 'ATL',
@@ -25,13 +25,13 @@ module.exports.get = function () {
       attributes: [
         {
           label: stateLabel,
-          value: 'GA'
+          value: 'GA',
         },
         {
           label: countryLabel,
-          value: 'USA'
-        }
-      ]
+          value: 'USA',
+        },
+      ],
     },
     {
       value: 'PEK',
@@ -39,13 +39,13 @@ module.exports.get = function () {
       attributes: [
         {
           label: stateLabel,
-          value: 'Chaoyang-Shunyi'
+          value: 'Chaoyang-Shunyi',
         },
         {
           label: countryLabel,
-          value: 'CHN'
-        }
-      ]
+          value: 'CHN',
+        },
+      ],
     },
     {
       value: 'DXB',
@@ -53,9 +53,9 @@ module.exports.get = function () {
       attributes: [
         {
           label: countryLabel,
-          value: 'UAE'
-        }
-      ]
+          value: 'UAE',
+        },
+      ],
     },
     {
       value: 'LAX',
@@ -63,13 +63,13 @@ module.exports.get = function () {
       attributes: [
         {
           label: stateLabel,
-          value: 'CA'
+          value: 'CA',
         },
         {
           label: countryLabel,
-          value: 'USA'
-        }
-      ]
+          value: 'USA',
+        },
+      ],
     },
     {
       value: 'MEL',
@@ -77,13 +77,13 @@ module.exports.get = function () {
       attributes: [
         {
           label: stateLabel,
-          value: 'VIC'
+          value: 'VIC',
         },
         {
           label: countryLabel,
-          value: 'AUS'
-        }
-      ]
+          value: 'AUS',
+        },
+      ],
     },
     {
       value: 'BNE',
@@ -91,13 +91,13 @@ module.exports.get = function () {
       attributes: [
         {
           label: stateLabel,
-          value: 'QLD'
+          value: 'QLD',
         },
         {
           label: countryLabel,
-          value: 'AUS'
-        }
-      ]
-    }
+          value: 'AUS',
+        },
+      ],
+    },
   ]
 }

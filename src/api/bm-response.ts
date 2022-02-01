@@ -1,10 +1,9 @@
-import { APITypes } from '@oneblink/types'
+import { OneBlinkAPIHostingResponse } from '../..'
 
-class BmResponseImplementation<T>
-  implements APITypes.OneBlinkAPIHostingResponse<T> {
-  private _headers: APITypes.OneBlinkAPIHostingResponse<T>['headers']
+class BmResponseImplementation<T> implements OneBlinkAPIHostingResponse<T> {
+  private _headers: OneBlinkAPIHostingResponse<T>['headers']
   private _payload: T
-  private _statusCode: APITypes.OneBlinkAPIHostingResponse<T>['statusCode']
+  private _statusCode: OneBlinkAPIHostingResponse<T>['statusCode']
 
   constructor() {
     this._headers = {}
@@ -13,7 +12,7 @@ class BmResponseImplementation<T>
     this._payload = undefined as any
   }
 
-  get headers(): APITypes.OneBlinkAPIHostingResponse<T>['headers'] {
+  get headers(): OneBlinkAPIHostingResponse<T>['headers'] {
     return Object.assign({}, this._headers)
   }
 
@@ -21,26 +20,23 @@ class BmResponseImplementation<T>
     return this._payload
   }
 
-  get statusCode(): APITypes.OneBlinkAPIHostingResponse<T>['statusCode'] {
+  get statusCode(): OneBlinkAPIHostingResponse<T>['statusCode'] {
     return this._statusCode
   }
 
-  setHeader(
-    key: string,
-    value: string,
-  ): APITypes.OneBlinkAPIHostingResponse<T> {
+  setHeader(key: string, value: string): OneBlinkAPIHostingResponse<T> {
     this._headers[key.toLowerCase()] = value
     return this
   }
 
-  setPayload(payload: T): APITypes.OneBlinkAPIHostingResponse<T> {
+  setPayload(payload: T): OneBlinkAPIHostingResponse<T> {
     this._payload = payload
     return this
   }
 
   setStatusCode(
-    code: APITypes.OneBlinkAPIHostingResponse<T>['statusCode'],
-  ): APITypes.OneBlinkAPIHostingResponse<T> {
+    code: OneBlinkAPIHostingResponse<T>['statusCode'],
+  ): OneBlinkAPIHostingResponse<T> {
     this._statusCode = code
     return this
   }

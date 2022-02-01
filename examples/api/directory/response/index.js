@@ -3,7 +3,7 @@
 module.exports.get = function (request) {
   // Can return a payload, status code will default 200 OK
   return {
-    key: 'value'
+    key: 'value',
   }
 }
 
@@ -30,12 +30,13 @@ module.exports.post = function (request, response) {
   // response.payload === (request.body || 'body of the response')
 
   // Each 'set' function returns the response to allow for chaining
-  response.setStatusCode(202)
+  response
+    .setStatusCode(202)
     .setHeader('my-second-header', 'header value')
     .setPayload({
       headers: response.headers,
       payload: response.payload,
-      statusCode: response.statusCode
+      statusCode: response.statusCode,
     })
 
   // NOTE: No return statement is required.

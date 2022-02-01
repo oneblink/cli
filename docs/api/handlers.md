@@ -69,8 +69,9 @@ interface request = {
     },
     pathname: string,
     protocol: 'http:' | 'https:',
+    querystring: string,
     query: {
-      [id:string]: string
+      [id:string]: string | string[]
     }
   }
 }

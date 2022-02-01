@@ -8,7 +8,6 @@ To bundle: `npm run build`
 */
 
 import type { Headers, LambdaEvent } from '../types'
-import type { APITypes } from '@oneblink/types'
 
 type APIGatewayResult = {
   statusCode: number
@@ -17,14 +16,32 @@ type APIGatewayResult = {
 }
 
 import path from 'path'
-import querystring from 'querystring'
 import handlers from '../handlers'
 import wrapper from '../wrapper'
+import { URLSearchParams } from 'url'
+import { OneBlinkAPIHostingRequest } from '../../..'
+
+function generateURLSearchParams(event: LambdaEvent): URLSearchParams {
+  if (event.version === '2.0') {
+    return new URLSearchParams(event.rawQueryString || '')
+  }
+  const options = Object.entries(
+    event.multiValueQueryStringParameters || {},
+  ).reduce<readonly [string, string][]>(
+    (memo, [key, values]) => [
+      ...memo,
+      ...values.map((value) => [key, value] as [string, string]),
+    ],
+    [],
+  )
+  return new URLSearchParams(options)
+}
 
 // return only the pertinent data from a API Gateway + Lambda event
 function normaliseLambdaRequest<T>(
   event: LambdaEvent,
-): APITypes.OneBlinkAPIHostingRequest<T> {
+): OneBlinkAPIHostingRequest<T> {
+  console.log('Lambda event', JSON.stringify(event, null, 2))
   const headers = wrapper.keysToLowerCase(event.headers)
   let body = event.body
   if (typeof body === 'string') {
@@ -36,6 +53,18 @@ function normaliseLambdaRequest<T>(
   }
   const path = event.version === '2.0' ? event.rawPath : event.path
   const host = headers['x-forwarded-host'] || headers.host
+  const urlSearchParams = generateURLSearchParams(event)
+  const query: OneBlinkAPIHostingRequest['url']['query'] = {}
+  urlSearchParams.forEach((value, key) => {
+    const existingValue = query[key]
+    if (typeof existingValue === 'string') {
+      query[key] = [existingValue, value]
+    } else if (Array.isArray(existingValue)) {
+      query[key] = [...existingValue, value]
+    } else {
+      query[key] = value
+    }
+  })
   return {
     body: body as T,
     headers,
@@ -51,7 +80,8 @@ function normaliseLambdaRequest<T>(
       params: {},
       pathname: path,
       protocol: wrapper.protocolFromHeaders(headers),
-      query: event.queryStringParameters || {},
+      query,
+      querystring: urlSearchParams.toString(),
     },
   }
 }
@@ -83,9 +113,10 @@ async function handler(
     const requestTime = endTime - startTime
 
     let path = request.url.pathname
-    const search = querystring.stringify(request.url.query)
-    if (search) {
-      path += `?${search}`
+    const urlSearchParams = new URLSearchParams(request.url.querystring)
+    const querystring = urlSearchParams.toString()
+    if (querystring) {
+      path += `?${querystring}`
     }
     let referer = request.headers.referer
     if (typeof referer !== 'string' || !referer) {
@@ -96,9 +127,7 @@ async function handler(
       userAgent = '-'
     }
     console.log(
-      `${request.method.toUpperCase()} ${path}${querystring.stringify(
-        request.url.query,
-      )} ${statusCode} "${requestTime} ms" "${referer}" "${userAgent}"`,
+      `${request.method.toUpperCase()} ${path} ${statusCode} "${requestTime} ms" "${referer}" "${userAgent}"`,
     )
 
     const result: APIGatewayResult = {
@@ -146,17 +175,15 @@ async function handler(
       }
       // Headers for all cross origin requests
       internalHeaders['Access-Control-Allow-Origin'] = request.headers.origin
-      internalHeaders[
-        'Access-Control-Expose-Headers'
-      ] = config.cors.exposedHeaders.join(',')
+      internalHeaders['Access-Control-Expose-Headers'] =
+        config.cors.exposedHeaders.join(',')
       // Headers for OPTIONS cross origin requests
       if (
         request.method === 'options' &&
         request.headers['access-control-request-method']
       ) {
-        internalHeaders[
-          'Access-Control-Allow-Headers'
-        ] = config.cors.headers.join(',')
+        internalHeaders['Access-Control-Allow-Headers'] =
+          config.cors.headers.join(',')
         internalHeaders['Access-Control-Allow-Methods'] =
           request.headers['access-control-request-method']
         internalHeaders['Access-Control-Max-Age'] = config.cors.maxAge
