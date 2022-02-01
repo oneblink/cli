@@ -2,7 +2,7 @@ import path from 'path'
 
 import lib from '../../src/api/handlers'
 import BmResponse from '../../src/api/bm-response'
-import { APITypes } from '@oneblink/types'
+import { OneBlinkAPIHostingRequest } from '../..'
 
 describe('handlers', () => {
   const EXAMPLE_DIR = path.join(
@@ -22,7 +22,7 @@ describe('handlers', () => {
     'configuration',
   )
 
-  const request: APITypes.OneBlinkAPIHostingRequest<undefined> = {
+  const request: OneBlinkAPIHostingRequest<undefined> = {
     body: undefined,
     headers: {},
     method: 'GET',
@@ -34,13 +34,14 @@ describe('handlers', () => {
       pathname: '/',
       protocol: 'https:',
       query: {},
+      querystring: '',
     },
   }
 
   test('executeHandler() should call handler()', () => {
     expect.assertions(1)
     return lib.executeHandler<undefined, undefined>(
-      (req: APITypes.OneBlinkAPIHostingRequest<undefined>) => {
+      (req: OneBlinkAPIHostingRequest<undefined>) => {
         expect(req).toBe(request)
       },
       request,
@@ -52,7 +53,7 @@ describe('handlers', () => {
     const payload: Record<string, string> = {
       key: 'value',
     }
-    const headers: APITypes.OneBlinkAPIHostingRequest<undefined>['headers'] = {
+    const headers: OneBlinkAPIHostingRequest<undefined>['headers'] = {
       one: '1',
       two: '2',
     }
