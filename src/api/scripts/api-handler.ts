@@ -41,7 +41,6 @@ function generateURLSearchParams(event: LambdaEvent): URLSearchParams {
 function normaliseLambdaRequest<T>(
   event: LambdaEvent,
 ): OneBlinkAPIHostingRequest<T> {
-  console.log('Lambda event', JSON.stringify(event, null, 2))
   const headers = wrapper.keysToLowerCase(event.headers)
   let body = event.body
   if (typeof body === 'string') {
