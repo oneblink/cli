@@ -5,7 +5,12 @@ module.exports.get = function (request) {
 }
 
 module.exports.put = function (request) {
-  return 'Update book and return book for id: ' + request.url.params.id + ' - ' + JSON.stringify(request.body)
+  return (
+    'Update book and return book for id: ' +
+    request.url.params.id +
+    ' - ' +
+    JSON.stringify(request.body)
+  )
 }
 
 module.exports.delete = function (request) {
