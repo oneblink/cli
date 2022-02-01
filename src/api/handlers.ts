@@ -3,14 +3,18 @@ import type { RouteConfiguration } from './types'
 import uniloc from 'uniloc'
 
 import BmResponse from './bm-response'
-import { APITypes } from '@oneblink/types'
+import {
+  OneBlinkAPIHostingHandler,
+  OneBlinkAPIHostingRequest,
+  OneBlinkAPIHostingResponse,
+} from '../..'
 
 export const ENTRY_FUNCTION = 'handler'
 
 async function executeHandler<In = void, Out = void>(
-  handler: APITypes.OneBlinkAPIHostingHandler<In, Out>,
-  request: APITypes.OneBlinkAPIHostingRequest<In>,
-): Promise<APITypes.OneBlinkAPIHostingResponse<Out>> {
+  handler: OneBlinkAPIHostingHandler<In, Out>,
+  request: OneBlinkAPIHostingRequest<In>,
+): Promise<OneBlinkAPIHostingResponse<Out>> {
   const response = new BmResponse<Out>()
   const result = await handler(request, response)
   // If a result has been returned:
@@ -29,7 +33,7 @@ async function executeHandler<In = void, Out = void>(
 async function getHandler<In = void, Out = void>(
   module: string,
   method: string,
-): Promise<APITypes.OneBlinkAPIHostingHandler<In, Out> | void> {
+): Promise<OneBlinkAPIHostingHandler<In, Out> | void> {
   const handler: { default: any; [key: string]: any } = await import(module)
 
   if (handler) {

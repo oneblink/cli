@@ -2,6 +2,7 @@ import type OneBlinkAPIClient from '../oneblink-api-client'
 
 import type { BlinkMRCServer } from './types'
 import type { APITypes } from '@oneblink/types'
+import { OneBlinkAPIHostingRequest, OneBlinkAPIHostingResponse } from '../..'
 
 import http from 'http'
 
@@ -103,7 +104,7 @@ async function startServer(
         }
       }
 
-      const request: APITypes.OneBlinkAPIHostingRequest<undefined> = {
+      const request: OneBlinkAPIHostingRequest<undefined> = {
         body,
         // @ts-expect-error headers match
         headers: req.headers,
@@ -120,7 +121,7 @@ async function startServer(
         },
       }
 
-      const bmResponse: APITypes.OneBlinkAPIHostingResponse<unknown> =
+      const bmResponse: OneBlinkAPIHostingResponse<unknown> =
         await handlers.executeHandler(handler, request)
 
       res
