@@ -82,7 +82,8 @@
     "npm": ">=6"
   },
   "files": [
-    "dist"
+    "dist",
+    "index.d.ts"
   ],
   "homepage": "https://oneblink.github.io/cli",
   "keywords": [],
