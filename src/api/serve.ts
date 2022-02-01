@@ -7,6 +7,7 @@ import { OneBlinkAPIHostingRequest, OneBlinkAPIHostingResponse } from '../..'
 import http from 'http'
 
 import Boom from '@hapi/boom'
+import { URL } from 'url'
 import cors from 'cors'
 import express from 'express'
 import morgan from 'morgan'
@@ -104,6 +105,7 @@ async function startServer(
         }
       }
 
+      const url = new URL(req.originalUrl, 'http://domain')
       const request: OneBlinkAPIHostingRequest<undefined> = {
         body,
         // @ts-expect-error headers match
@@ -118,6 +120,7 @@ async function startServer(
           protocol: 'http:',
           // @ts-expect-error query matches
           query: req.query || {},
+          querystring: url.search.substring(1),
         },
       }
 
