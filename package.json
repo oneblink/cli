@@ -1,7 +1,7 @@
 {
   "name": "@oneblink/cli",
   "description": "primary entry point for our CLI tools",
-  "version": "0.3.0-beta.1",
+  "version": "0.3.0-beta.2",
   "author": "OneBlink <developers@oneblink> (https://github.com/oneblink)",
   "bin": {
     "oneblink": "dist/bin/oneblink.js",
