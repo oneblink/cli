@@ -7,9 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2022-07-04
+
 ### Changed
 
 - **[BREAKING]** runtime version from Node.js 14 to [Node.js 16](https://medium.com/the-node-js-collection/node-js-16-available-now-7f5099a97e70)
+
+### Dependencies
+
+- update [node-fetch](https://www.npmjs.com/package/node-fetch) to [2.6.7](https://github.com/node-fetch/node-fetch/releases/tag/v2.6.7) (from 2.6.5)
 
 ## [0.3.0] - 2022-02-10
 
