@@ -4,6 +4,8 @@
 
 Handlers are the files that hold the function(s) that are executed for HTTP requests.
 
+
+[Note: ES Modules are now supported natively by the OneBlink API CLI. See how to upgrade here.](./upgrading-to-es-modules.md)
 ### Exports
 
 A handler file can export either a single function or an object with [HTTP request methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) for properties.
