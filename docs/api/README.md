@@ -32,8 +32,6 @@
 
 - [Execution Environment](./environment.md)
 
-- [Limits & Known Issues](./limits-and-known-issues.md)
-
 - [Suggestions](./suggestions.md)
 
 ## Examples

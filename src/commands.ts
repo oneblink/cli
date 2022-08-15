@@ -58,7 +58,7 @@ export default async function runCommands(tenant: Tenant): Promise<void> {
     return
   }
 
-  const { _: inputs, version, help } = minimist(process.argv.slice(2))
+  const { _: inputs, version } = minimist(process.argv.slice(2))
 
   try {
     if (version) {
@@ -88,7 +88,7 @@ Need more help? Use the ${chalk.blue('--help')} flag on any sub-command:
 
     const command = inputs[0]
     const { default: runCommand } = await getCLICommand(command)
-    if (help || !runCommand) {
+    if (!runCommand) {
       console.log(helpInformation)
       return
     }
