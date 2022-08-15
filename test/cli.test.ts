@@ -1,6 +1,7 @@
-import execa from 'execa'
+import { expect, test } from '@jest/globals'
+import { execa } from 'execa'
 
-import { TENANTS } from '../src/config'
+import { TENANTS } from '../src/config.js'
 
 test('it use correct tenant when using "oneblink" installed globally', async () => {
   const { stdout } = await execa('oneblink', ['--help'])

@@ -6,13 +6,15 @@ import inquirer from 'inquirer'
 import open from 'open'
 import base64url from 'base64url'
 
-import constants from '../constants'
-import LoginProviderBase from './login-provider-base'
+import constants from '../constants.js'
+import LoginProviderBase from './login-provider-base.js'
 
 export default class BrowserLoginProvider extends LoginProviderBase {
   async login(storeJwt: boolean | undefined): Promise<string> {
     // Generate the verifier, and the corresponding challenge
+    // @ts-expect-error ???
     const verifier = base64url.encode(crypto.randomBytes(32))
+    // @ts-expect-error ???
     const verifierChallenge = base64url.encode(
       crypto.createHash('sha256').update(verifier).digest(),
     )
@@ -58,10 +60,14 @@ export default class BrowserLoginProvider extends LoginProviderBase {
       body: params,
     })
 
-    const body = await response.json()
+    const body = (await response.json()) as {
+      id_token: string
+      access_token: string
+      refresh_token: string
+    }
     if (!response.ok) {
       throw new Error(
-        body.error_description ||
+        (body as { error_description?: string }).error_description ||
           'Unknown error, please try again and contact support if the problem persists',
       )
     }

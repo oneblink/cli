@@ -1,4 +1,4 @@
-import userConfig from '../utils/user-config'
+import userConfig from '../utils/user-config.js'
 
 /**
  * Base class representing a login provider.

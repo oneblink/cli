@@ -1,8 +1,8 @@
-import type { CLICommand } from '../../commands'
+import type { CLICommand } from '../../commands.js'
 
 import chalk from 'chalk'
 import meow from 'meow'
-import login from '../common/login'
+import login from '../common/login.js'
 
 const loginCommand: CLICommand = async (tenant) => {
   const help = `
@@ -15,6 +15,7 @@ ${chalk.bold('Examples')}
   ${chalk.blue(`${tenant.command} login`)}`
 
   const { flags } = meow({
+    importMeta: import.meta,
     help,
     flags: {
       help: {

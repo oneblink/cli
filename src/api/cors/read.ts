@@ -1,7 +1,7 @@
 import type { APITypes } from '@oneblink/types'
 
-import projectMeta from '../utils/project-meta'
-import values from '../values'
+import projectMeta from '../utils/project-meta.js'
+import values from '../values.js'
 
 function readCors(
   cwd: string,

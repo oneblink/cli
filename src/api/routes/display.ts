@@ -3,8 +3,8 @@ import os from 'os'
 import Table from 'cli-table3'
 import chalk from 'chalk'
 
-import readRoutes from './read'
-import validateRoute from './validate'
+import readRoutes from './read.js'
+import validateRoute from './validate.js'
 
 function displayRoutes(logger: typeof console, cwd: string): Promise<void> {
   return readRoutes(cwd).then((routeConfigs) => {

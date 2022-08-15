@@ -1,5 +1,5 @@
-import write from '../write'
-import show from '../show'
+import write from '../write.js'
+import show from '../show.js'
 
 export default async function (
   input: Array<string>,

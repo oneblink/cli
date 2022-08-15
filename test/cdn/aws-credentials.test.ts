@@ -1,5 +1,7 @@
-import getAwsCredentials from '../../src/cdn/aws-credentials'
-import OneBlinkAPIClient from '../../src/oneblink-api-client'
+import { describe, expect, test } from '@jest/globals'
+
+import getAwsCredentials from '../../src/cdn/aws-credentials.js'
+import OneBlinkAPIClient from '../../src/oneblink-api-client.js'
 
 describe('aws credentials', () => {
   const CFG = {

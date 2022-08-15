@@ -1,3 +1,5 @@
+import { describe, expect, test, jest } from '@jest/globals'
+
 describe('read', () => {
   const CWD = 'current working directory'
   const CONFIGURATION_ROUTES = [{ route: 'configuration routes' }]
@@ -9,17 +11,19 @@ describe('read', () => {
   })
 
   test('Should use configuration routes if available', async () => {
-    const mockScopeRead = jest.fn()
-    mockScopeRead.mockResolvedValue({
+    const mockScopeRead = jest.fn(async () => ({
       routes: CONFIGURATION_ROUTES,
-    })
-    jest.mock('api/scope', () => ({
-      read: mockScopeRead,
+    }))
+    jest.unstable_mockModule('api/scope', () => ({
+      default: {
+        read: mockScopeRead,
+      },
     }))
 
-    const mockListRoutes = jest.fn()
-    mockListRoutes.mockResolvedValue(PROJECT_ROUTES)
-    jest.mock('api/listDirectoryRoutes', () => mockListRoutes)
+    const mockListRoutes = jest.fn(async () => PROJECT_ROUTES)
+    jest.unstable_mockModule('api/listDirectoryRoutes', () => ({
+      default: mockListRoutes,
+    }))
     const { default: read } = await import('../../../src/api/routes/read')
 
     const routes = await read(CWD)
@@ -29,12 +33,15 @@ describe('read', () => {
   })
 
   test('Should use project routes if configuration routes are unavailable', async () => {
-    jest.mock('api/scope', () => ({
-      read: async () => ({}),
+    jest.unstable_mockModule('api/scope', () => ({
+      default: {
+        read: async () => ({}),
+      },
     }))
-    const mockListRoutes = jest.fn()
-    mockListRoutes.mockResolvedValue(PROJECT_ROUTES)
-    jest.mock('api/listDirectoryRoutes', () => mockListRoutes)
+    const mockListRoutes = jest.fn(async () => PROJECT_ROUTES)
+    jest.unstable_mockModule('api/listDirectoryRoutes', () => ({
+      default: mockListRoutes,
+    }))
     const { default: read } = await import('../../../src/api/routes/read')
 
     const routes = await read(CWD)
@@ -43,12 +50,16 @@ describe('read', () => {
   })
 
   test('Should not reject and should always return an array if no routes are found', async () => {
-    jest.mock('api/scope', () => ({
-      read: async () => ({
-        routes: [],
-      }),
+    jest.unstable_mockModule('api/scope', () => ({
+      default: {
+        read: async () => ({
+          routes: [],
+        }),
+      },
     }))
-    jest.mock('api/listDirectoryRoutes', () => async () => [])
+    jest.unstable_mockModule('api/listDirectoryRoutes', () => ({
+      default: async () => [],
+    }))
     const { default: read } = await import('../../../src/api/routes/read')
 
     const routes = await read(CWD)
@@ -56,19 +67,21 @@ describe('read', () => {
   })
 
   test('Timeouts should be set via priority default, project, route', async () => {
-    jest.mock('api/scope', () => ({
-      read: async () => ({
-        timeout: 20,
-        routes: [
-          {
-            route: 'config timeout',
-          },
-          {
-            route: 'route timeout',
-            timeout: 25,
-          },
-        ],
-      }),
+    jest.unstable_mockModule('api/scope', () => ({
+      default: {
+        read: async () => ({
+          timeout: 20,
+          routes: [
+            {
+              route: 'config timeout',
+            },
+            {
+              route: 'route timeout',
+              timeout: 25,
+            },
+          ],
+        }),
+      },
     }))
     const { default: read } = await import('../../../src/api/routes/read')
 

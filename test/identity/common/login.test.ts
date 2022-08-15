@@ -1,4 +1,6 @@
-import { TENANTS } from '../../../src/config'
+import { describe, expect, test, jest } from '@jest/globals'
+
+import { TENANTS } from '../../../src/config.js'
 
 describe('login', () => {
   const JWT = 'valid jwt'
@@ -9,18 +11,18 @@ describe('login', () => {
   })
 
   test('login() should create a BrowserLoginProvider if no options are passed', async () => {
-    const mockBrowserLogin = jest.fn()
-    mockBrowserLogin.mockResolvedValue(JWT)
-    jest.mock(
+    const mockBrowserLogin = jest.fn(async () => JWT)
+    jest.unstable_mockModule(
       '../../../src/identity/login-providers/browser',
-      () =>
-        class {
+      () => ({
+        default: class {
           login = mockBrowserLogin
         },
+      }),
     )
 
     const { default: login } = await import(
-      '../../../src/identity/common/login'
+      '../../../src/identity/common/login.js'
     )
 
     await login(TENANTS.ONEBLINK)

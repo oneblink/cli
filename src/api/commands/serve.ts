@@ -1,13 +1,13 @@
-import type { CLIFlags, CLIOptions } from '../../api/types'
+import type { CLIFlags, CLIOptions } from '../../api/types.js'
 
 import path from 'path'
 
 import chalk from 'chalk'
 
-import readCors from '../../api/cors/read'
-import serve from '../../api/serve'
-import displayRoutes from '../../api/routes/display'
-import scope from '../../api/scope'
+import readCors from '../../api/cors/read.js'
+import serve from '../../api/serve.js'
+import displayRoutes from '../../api/routes/display.js'
+import scope from '../../api/scope.js'
 
 export default async function (
   tenant: Tenant,

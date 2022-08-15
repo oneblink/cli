@@ -1,8 +1,26 @@
-import type { CLIFlags, CLIOptions } from '../types'
-
-import info from './info'
-import deploy from '../deploy'
-import scope from '../scope'
+import { APITypes } from '@oneblink/types'
+import { fileURLToPath, URL } from 'url'
+import path from 'path'
+import ora from 'ora'
+import temp from 'temp'
+import { writeJsonFile } from 'write-json-file'
+import type {
+  BlinkMRCServer,
+  CLIFlags,
+  CLIOptions,
+  DeploymentCredentials,
+} from '../types.js'
+import info from './info.js'
+import deploy from '../deploy.js'
+import scope from '../scope.js'
+import readCors from '../cors/read.js'
+import readRoutes from '../routes/read.js'
+import network from '../network.js'
+import validateCors from '../cors/validate.js'
+import { ENTRY_FUNCTION } from '../handlers.js'
+import copyRecursive from '../utils/copy-recursive.js'
+import values from '../values.js'
+import variables from '../variables.js'
 
 export default async function (
   tenant: Tenant,
@@ -29,7 +47,7 @@ export default async function (
     env,
   )
 
-  const [out, apiDeploymentPayload] = await deploy.copy(
+  const [out, apiDeploymentPayload] = await copy(
     deploymentCredentials,
     config,
     cwd,
@@ -39,4 +57,67 @@ export default async function (
   const zipFilePath = await deploy.zip(out)
   await deploy.upload(zipFilePath, deploymentCredentials)
   await deploy.deploy(oneblinkAPIClient, apiDeploymentPayload, env)
+}
+
+async function copy(
+  deploymentCredentials: DeploymentCredentials,
+  config: BlinkMRCServer,
+  cwd: string,
+  env: string,
+): Promise<[string, APITypes.APIDeploymentPayload]> {
+  const spinner = ora('Validating project...').start()
+  try {
+    const scope = config.project
+    if (!scope) {
+      throw new Error('scope has not been set yet')
+    }
+
+    const target = await temp.mkdir('api-deployment')
+
+    // Copy project code
+    await copyRecursive(cwd, deploy.getProjectPath(target))
+
+    // Copy AWS Lambda entry point handler
+    const HANDLER = 'handler'
+    const __dirname = fileURLToPath(new URL('.', import.meta.url))
+
+    const wrapperPath = path.join(__dirname, '..', '..', 'api-handler.js')
+    const handlerPath = path.join(target, `${HANDLER}.mjs`)
+    await copyRecursive(wrapperPath, handlerPath)
+
+    // Copy configuration file required by handler
+    const configPath = path.join(target, 'bm-server.json')
+
+    const [cors, routes, networkConfig, envVars] = await Promise.all([
+      readCors(cwd),
+      readRoutes(cwd),
+      network.readNetwork(cwd, env),
+      variables.read(cwd, env),
+    ])
+
+    const apiDeploymentPayload: APITypes.APIDeploymentPayload = {
+      s3: deploymentCredentials.s3,
+      timeout: config.timeout || values.DEFAULT_TIMEOUT_SECONDS,
+      cors: cors ? await validateCors(cors) : false,
+      handler: `${HANDLER}.${ENTRY_FUNCTION}`,
+      routes: routes.map((routeConfig) => {
+        routeConfig.module = path.posix.join('project', routeConfig.module)
+        return routeConfig
+      }),
+      scope,
+      env,
+      network: networkConfig,
+      runtime: values.AWS_LAMBDA_RUNTIME,
+      variables: envVars,
+      memorySize: config.memorySize,
+    }
+
+    await writeJsonFile(configPath, apiDeploymentPayload)
+
+    spinner.succeed('Validation complete!')
+    return [target, apiDeploymentPayload]
+  } catch (error) {
+    spinner.fail('Validation failed...')
+    throw error
+  }
 }

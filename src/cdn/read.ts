@@ -1,4 +1,4 @@
-import configHelper from './utils/config-helper'
+import configHelper from './utils/config-helper.js'
 export default (cwd: string): Promise<any> => {
   return configHelper
     .read(cwd)

@@ -1,3 +1,5 @@
+import { describe, expect, test, jest } from '@jest/globals'
+
 describe('get-route-config', () => {
   const CWD = 'current working directory'
   const ROUTES = [
@@ -21,7 +23,9 @@ describe('get-route-config', () => {
   })
 
   test('should return route config', async () => {
-    jest.mock('api/routes/read', () => async () => ROUTES)
+    jest.unstable_mockModule('api/routes/read', () => ({
+      default: async () => ROUTES,
+    }))
 
     const { default: getRouteConfig } = await import(
       '../../../src/api/routes/get-route-config'
@@ -32,7 +36,9 @@ describe('get-route-config', () => {
   })
 
   test('should reject if a project does not contain route', async () => {
-    jest.mock('api/routes/read', () => async () => ROUTES)
+    jest.unstable_mockModule('api/routes/read', () => ({
+      default: async () => ROUTES,
+    }))
 
     const { default: getRouteConfig } = await import(
       '../../../src/api/routes/get-route-config'

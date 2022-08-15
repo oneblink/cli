@@ -1,4 +1,4 @@
-import type OneBlinkAPIClient from '../oneblink-api-client'
+import type OneBlinkAPIClient from '../oneblink-api-client.js'
 
 import chalk from 'chalk'
 import inquirer from 'inquirer'

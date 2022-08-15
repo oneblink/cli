@@ -1,3 +1,5 @@
+import { describe, expect, test, jest } from '@jest/globals'
+
 describe('display', () => {
   const CWD = 'current working directory'
   const ROUTES = [
@@ -22,10 +24,11 @@ describe('display', () => {
 
   test('Should call read() with correct input and log', async () => {
     const spy = jest.spyOn(console, 'log')
-    const mockRead = jest.fn()
-    mockRead.mockResolvedValue(ROUTES)
-    jest.mock('api/routes/read', () => mockRead)
-    jest.mock('api/routes/validate', () => async () => [])
+    const mockRead = jest.fn(async () => ROUTES)
+    jest.unstable_mockModule('api/routes/read', () => ({ default: mockRead }))
+    jest.unstable_mockModule('api/routes/validate', () => ({
+      default: async () => [],
+    }))
     const { default: display } = await import('../../../src/api/routes/display')
     await display(console, CWD)
     expect(mockRead).toBeCalledWith(CWD)
@@ -34,7 +37,9 @@ describe('display', () => {
 
   test('Should log the routes and reject if no routes are found', async () => {
     const spy = jest.spyOn(console, 'log')
-    jest.mock('api/routes/read', () => async () => [])
+    jest.unstable_mockModule('api/routes/read', () => ({
+      default: async () => [],
+    }))
 
     const { default: display } = await import('../../../src/api/routes/display')
     const promise = display(console, CWD)
@@ -45,10 +50,13 @@ describe('display', () => {
   })
 
   test('Should call validate() for each route returned from read()', async () => {
-    const mockValidate = jest.fn()
-    mockValidate.mockResolvedValue([])
-    jest.mock('api/routes/read', () => async () => ROUTES)
-    jest.mock('api/routes/validate', () => mockValidate)
+    const mockValidate = jest.fn(async () => [])
+    jest.unstable_mockModule('api/routes/read', () => ({
+      default: async () => ROUTES,
+    }))
+    jest.unstable_mockModule('api/routes/validate', () => ({
+      default: mockValidate,
+    }))
     const { default: display } = await import('../../../src/api/routes/display')
     await display(console, CWD)
     expect(mockValidate).toBeCalledTimes(ROUTES.length)
@@ -56,8 +64,12 @@ describe('display', () => {
 
   test('Should log the table and reject if errors are return from validate()', async () => {
     const spy = jest.spyOn(console, 'log')
-    jest.mock('api/routes/read', () => async () => ROUTES)
-    jest.mock('api/routes/validate', () => async () => ['error1', 'error2'])
+    jest.unstable_mockModule('api/routes/read', () => ({
+      default: async () => ROUTES,
+    }))
+    jest.unstable_mockModule('api/routes/validate', () => ({
+      default: async () => ['error1', 'error2'],
+    }))
 
     const { default: display } = await import('../../../src/api/routes/display')
     const promise = display(console, CWD)

@@ -3,7 +3,7 @@ import os from 'os'
 import Table from 'cli-table3'
 import chalk from 'chalk'
 
-import projectMeta from './utils/project-meta'
+import projectMeta from './utils/project-meta.js'
 import { APITypes } from '@oneblink/types'
 
 async function displayNetwork(

@@ -1,6 +1,6 @@
 import configLoader from '@blinkmobile/blinkmrc'
 
-import pkg from '../../package'
+import pkg from '../../package.js'
 
 function projectConfig(cwd: string): any {
   return configLoader.projectConfig({

@@ -1,6 +1,9 @@
-import type OneblinkAPIClient from '../oneblink-api-client'
+import type OneblinkAPIClient from '../oneblink-api-client.js'
 import { APITypes } from '@oneblink/types'
-import { OneBlinkAPIHostingHandler, OneBlinkAPIHostingRequest } from '../..'
+import {
+  OneBlinkAPIHostingHandler,
+  OneBlinkAPIHostingRequest,
+} from '../../index.js'
 
 export type BlinkMRC = {
   server?: BlinkMRCServer

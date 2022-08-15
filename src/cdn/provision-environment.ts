@@ -1,4 +1,4 @@
-import OneBlinkAPIClient from '../oneblink-api-client'
+import OneBlinkAPIClient from '../oneblink-api-client.js'
 
 import chalk from 'chalk'
 import ora from 'ora'

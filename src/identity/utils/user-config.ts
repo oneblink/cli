@@ -1,4 +1,4 @@
-import pkg from '../../package'
+import pkg from '../../package.js'
 import blinkmrc from '@blinkmobile/blinkmrc'
 
 export type UserConfigStore = {

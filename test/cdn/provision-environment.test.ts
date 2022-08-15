@@ -1,5 +1,7 @@
-import provision from '../../src/cdn/provision-environment'
-import OneBlinkAPIClient from '../../src/oneblink-api-client'
+import { describe, expect, test } from '@jest/globals'
+
+import provision from '../../src/cdn/provision-environment.js'
+import OneBlinkAPIClient from '../../src/oneblink-api-client.js'
 
 describe('provision-environment', () => {
   const CFG = {

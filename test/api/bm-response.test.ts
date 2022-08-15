@@ -1,4 +1,5 @@
-import BmResponse from '../../src/api/bm-response'
+import { expect, test } from '@jest/globals'
+import BmResponse from '../../src/api/bm-response.js'
 
 test('constructor() should set correct defaults', () => {
   const bmResponse = new BmResponse()

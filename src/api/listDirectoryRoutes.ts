@@ -1,10 +1,10 @@
-import type { RouteConfiguration } from './types'
+import type { RouteConfiguration } from './types.js'
 
 import util from 'util'
 
 import glob from 'glob'
 
-import values from './values'
+import values from './values.js'
 
 const globAsync = util.promisify(glob)
 

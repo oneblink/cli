@@ -3,9 +3,9 @@ import querystring from 'querystring'
 import fetch from 'node-fetch'
 import jwt from 'jsonwebtoken'
 
-import pkg from './package'
-import verifyJWT from './identity/utils/verify-jwt'
-import getJWT from './identity/utils/get-jwt'
+import pkg from './package.js'
+import verifyJWT from './identity/utils/verify-jwt.js'
+import getJWT from './identity/utils/get-jwt.js'
 
 const userAgent = `Node.js ${pkg.name} / ${pkg.version}`
 
@@ -57,10 +57,10 @@ export default class OneBlinkAPIClient {
       },
     })
 
-    const payload = await response.json()
+    const payload = (await response.json()) as TOut
     if (!response.ok) {
       throw new Error(
-        payload.message ||
+        (payload as { message?: string }).message ||
           'Unknown error, please try again and contact support if the problem persists',
       )
     }
@@ -90,10 +90,10 @@ export default class OneBlinkAPIClient {
       body: JSON.stringify(body),
     })
 
-    const payload = await response.json()
+    const payload = (await response.json()) as TOut
     if (!response.ok) {
       throw new Error(
-        payload.message ||
+        (payload as { message?: string }).message ||
           'Unknown error, please try again and contact support if the problem persists',
       )
     }
@@ -115,7 +115,7 @@ export default class OneBlinkAPIClient {
     if (!response.ok) {
       const payload = await response.json()
       throw new Error(
-        payload.message ||
+        (payload as { message?: string }).message ||
           'Unknown error, please try again and contact support if the problem persists',
       )
     }

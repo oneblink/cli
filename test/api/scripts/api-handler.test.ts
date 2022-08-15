@@ -1,8 +1,9 @@
+import { describe, expect, test, jest } from '@jest/globals'
+import url from 'url'
 import path from 'path'
 import { LambdaEvent } from '../../../src/api/types'
 
-import * as lib from '../../../src/api/scripts/api-handler'
-import handlers from '../../../src/api/handlers'
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
 
 describe('api-handler', () => {
   const CONFIG_PATH = path.join(
@@ -49,7 +50,8 @@ describe('api-handler', () => {
     jest.clearAllMocks()
   })
 
-  test('normaliseLambdaRequest()', () => {
+  test('normaliseLambdaRequest()', async () => {
+    const lib = await import('../../../src/api/scripts/api-handler')
     const request = lib.normaliseLambdaRequest(EVENT)
 
     expect(request).toEqual({
@@ -66,7 +68,7 @@ describe('api-handler', () => {
         pathname: 'this is the path',
         protocol: 'http:',
         query: {},
-        querystring: ''
+        querystring: '',
       },
     })
   })
@@ -74,6 +76,7 @@ describe('api-handler', () => {
   test('handler() should return correct response', async () => {
     const event = Object.assign({}, EVENT, { path: '/response' })
 
+    const lib = await import('../../../src/api/scripts/api-handler')
     const result = await lib.handler(event, {})
     expect(result).toEqual({
       body: JSON.stringify({ handler: 123 }),
@@ -88,6 +91,7 @@ describe('api-handler', () => {
   test('handler() should return correct boom response', async () => {
     const event = Object.assign({}, EVENT, { path: '/boom' })
 
+    const lib = await import('../../../src/api/scripts/api-handler')
     const result = await lib.handler(event, {})
     expect(result).toEqual({
       body: JSON.stringify({
@@ -106,6 +110,7 @@ describe('api-handler', () => {
     const route = '/missing'
     const event = Object.assign({}, EVENT, { path: route })
 
+    const lib = await import('../../../src/api/scripts/api-handler')
     const result = await lib.handler(event, {})
     expect(result).toEqual({
       body: JSON.stringify({
@@ -126,6 +131,7 @@ describe('api-handler', () => {
       path: '/response',
     })
 
+    const lib = await import('../../../src/api/scripts/api-handler')
     const result = await lib.handler(event, {})
     expect(result).toEqual({
       body: JSON.stringify({
@@ -150,6 +156,7 @@ describe('api-handler', () => {
       },
     })
 
+    const lib = await import('../../../src/api/scripts/api-handler')
     const result = await lib.handler(event, {})
     expect(result).toEqual({
       body: JSON.stringify({
@@ -184,6 +191,7 @@ describe('api-handler', () => {
       path: '/response',
     })
 
+    const lib = await import('../../../src/api/scripts/api-handler')
     const result = await lib.handler(event, {})
     expect(result).toEqual({
       headers: {
@@ -219,6 +227,7 @@ describe('api-handler', () => {
       path: '/response',
     })
 
+    const lib = await import('../../../src/api/scripts/api-handler')
     const result = await lib.handler(event, {})
     expect(result).toEqual({
       headers: {
@@ -228,15 +237,20 @@ describe('api-handler', () => {
     })
   })
 
-  test.only('handler() should return 500 status code if current working directory cannot be changed', async () => {
-    const spy = jest.spyOn(handlers, 'getHandler')
-    jest.mock('../../../dist/bm-server.json', () => require(CONFIG_PATH), {
-      virtual: true,
-    })
+  test('handler() should return 500 status code if current working directory cannot be changed', async () => {
+    jest.unstable_mockModule('process', () => ({
+      default: {
+        cwd: () => '',
+        chdir: () => {
+          throw new Error('could not change cwd')
+        },
+      },
+    }))
 
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { handler } = require('../../../dist/api-handler')
-    const result = await handler(
+    const { default: handlers } = await import('../../../src/api/handlers')
+    const spy = jest.spyOn(handlers, 'getHandler')
+    const lib = await import('../../../src/api/scripts/api-handler')
+    const result = await lib.handler(
       {
         httpMethod: 'GET',
         pathParameters: null,
@@ -246,7 +260,7 @@ describe('api-handler', () => {
         headers: {
           Host: 'this is the host',
         },
-        resource: 'string',
+        multiValueQueryStringParameters: {},
       },
       {},
     )
