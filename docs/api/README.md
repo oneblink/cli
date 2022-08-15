@@ -26,6 +26,8 @@
 
 12. [Memory Constraints](./memory-constraints.md)
 
+13.  [ES Modules](./upgrading-to-es-modules.md)
+
 ## More Information...
 
 - [`.blinkmrc.json`](./rc-configuration.md)
