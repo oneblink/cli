@@ -1,7 +1,9 @@
+import { describe, expect, test, jest } from '@jest/globals'
+
 import { URL } from 'url'
 
-import constants from '../../../src/identity/constants'
-import { TENANTS } from '../../../src/config'
+import constants from '../../../src/identity/constants.js'
+import { TENANTS } from '../../../src/config.js'
 
 describe('', () => {
   const JWT = 'valid jwt'
@@ -10,7 +12,7 @@ describe('', () => {
 
   const importBrowserLoginProvider = async () => {
     const { default: BrowserLoginProvider } = await import(
-      '../../../src/identity/login-providers/browser'
+      '../../../src/identity/login-providers/browser.js'
     )
     return new BrowserLoginProvider(TENANTS.ONEBLINK)
   }
@@ -22,10 +24,12 @@ describe('', () => {
 
   beforeEach(() => {
     jest.mock('open', () => () => undefined)
-    jest.mock('inquirer', () => ({
-      prompt: async () => ({
-        code: CODE,
-      }),
+    jest.unstable_mockModule('inquirer', () => ({
+      default: {
+        prompt: async () => ({
+          code: CODE,
+        }),
+      },
     }))
   })
 
@@ -35,19 +39,19 @@ describe('', () => {
     }))
     const mockOpen = jest.fn()
     jest.mock('open', () => mockOpen)
-    const mockPrompt = jest.fn()
-    mockPrompt.mockResolvedValue({
+    const mockPrompt = jest.fn(async () => ({
       code: CODE,
-    })
-    jest.mock('inquirer', () => ({
-      prompt: mockPrompt,
     }))
-    const mockNodeFetch = jest.fn()
-    mockNodeFetch.mockResolvedValue({
+    jest.unstable_mockModule('inquirer', () => ({
+      default: {
+        prompt: mockPrompt,
+      },
+    }))
+    const mockNodeFetch = jest.fn(async () => ({
       ok: true,
       json: async () => ({ id_token: JWT }),
-    })
-    jest.mock('node-fetch', () => mockNodeFetch)
+    }))
+    jest.unstable_mockModule('node-fetch', () => ({ default: mockNodeFetch }))
     const spy = jest.spyOn(console, 'log')
 
     const browserLoginProvider = await importBrowserLoginProvider()
@@ -81,15 +85,22 @@ describe('', () => {
 
     // should make POST request with the correct url and data
     expect(mockNodeFetch).toBeCalled()
+    // @ts-expect-error ???
     const nodeFetchUrl = mockNodeFetch.mock.calls[0][0]
     expect(nodeFetchUrl).toBe(`${TENANTS.ONEBLINK.loginUrl}/oauth2/token`)
+    // @ts-expect-error ???
     const nodeFetchOptions = mockNodeFetch.mock.calls[0][1]
+    // @ts-expect-error ???
     expect(nodeFetchOptions.body.get('code')).toBe(CODE)
+    // @ts-expect-error ???
     expect(nodeFetchOptions.body.get('code_verifier')).toBe(VERIFIER_CHALLENGE)
+    // @ts-expect-error ???
     expect(nodeFetchOptions.body.get('client_id')).toBe(
       TENANTS.ONEBLINK.loginClientId,
     )
+    // @ts-expect-error ???
     expect(nodeFetchOptions.body.get('grant_type')).toBe('authorization_code')
+    // @ts-expect-error ???
     expect(nodeFetchOptions.body.get('redirect_uri')).toBe(
       TENANTS.ONEBLINK.loginCallbackUrl,
     )
@@ -110,9 +121,11 @@ describe('', () => {
   })
 
   test('login() should should reject if request returns an error', async () => {
-    jest.mock('node-fetch', () => async () => {
-      throw new Error('Test error message')
-    })
+    jest.unstable_mockModule('node-fetch', () => ({
+      default: async () => {
+        throw new Error('Test error message')
+      },
+    }))
 
     const browserLoginProvider = await importBrowserLoginProvider()
 
@@ -122,11 +135,13 @@ describe('', () => {
   })
 
   test('login() should should reject if request returns an error', async () => {
-    jest.mock('node-fetch', () => async () => ({
-      ok: false,
-      json: async () => ({
-        error: 'error code',
-        error_description: 'test error message',
+    jest.unstable_mockModule('node-fetch', () => ({
+      default: async () => ({
+        ok: false,
+        json: async () => ({
+          error: 'error code',
+          error_description: 'test error message',
+        }),
       }),
     }))
 

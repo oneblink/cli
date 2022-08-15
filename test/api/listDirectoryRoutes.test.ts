@@ -1,6 +1,10 @@
+import { expect, test } from '@jest/globals'
 import path from 'path'
-import listDirectoryRoutes from '../../src/api/listDirectoryRoutes'
-import values from '../../src/api/values'
+import url from 'url'
+import listDirectoryRoutes from '../../src/api/listDirectoryRoutes.js'
+import values from '../../src/api/values.js'
+
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
 
 test('listDirectoryRoutes()', () => {
   const EXAMPLE_DIR = path.join(

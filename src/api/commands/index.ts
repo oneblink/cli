@@ -1,4 +1,4 @@
-import type { CLICommand } from '../../commands'
+import type { CLICommand } from '../../commands.js'
 
 import chalk from 'chalk'
 import meow from 'meow'
@@ -6,19 +6,19 @@ import meow from 'meow'
 async function getCLICommand(input: string) {
   switch (input) {
     case 'deploy': {
-      return (await import('./deploy')).default
+      return (await import('./deploy.js')).default
     }
     case 'info': {
-      return (await import('./info')).default
+      return (await import('./info.js')).default
     }
     case 'scope': {
-      return (await import('./scope')).default
+      return (await import('./scope.js')).default
     }
     case 'serve': {
-      return (await import('./serve')).default
+      return (await import('./serve.js')).default
     }
     case 'teardown': {
-      return (await import('./teardown')).default
+      return (await import('./teardown.js')).default
     }
   }
 }
@@ -92,6 +92,7 @@ ${chalk.bold('Examples')}
   ${chalk.blue(`${tenant.command} api teardown --env prod --force`)}`
 
   const { flags } = meow({
+    importMeta: import.meta,
     help,
     flags: {
       force: {

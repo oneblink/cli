@@ -1,10 +1,14 @@
+import { describe, expect, test, jest } from '@jest/globals'
 import fs from 'fs'
 import path from 'path'
+import url from 'url'
 
 import yauzl from 'yauzl'
 
-import OneBlinkAPIClient from '../../src/oneblink-api-client'
-import { TENANTS } from '../../src/config'
+import OneBlinkAPIClient from '../../src/oneblink-api-client.js'
+import { TENANTS } from '../../src/config.js'
+
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
 
 describe('deploy', () => {
   const UPLOAD_PATH = path.join(__dirname, 'fixtures', 'upload', 'project.zip')
@@ -44,10 +48,12 @@ describe('deploy', () => {
   test('confirm() should not prompt or log if force is true', async () => {
     const spy = jest.spyOn(console, 'log')
     const mockPrompt = jest.fn()
-    jest.mock('inquirer', () => ({
-      prompt: mockPrompt,
+    jest.unstable_mockModule('inquirer', () => ({
+      default: {
+        prompt: mockPrompt,
+      },
     }))
-    const { default: deploy } = await import('../../src/api/deploy')
+    const { default: deploy } = await import('../../src/api/deploy.js')
     await deploy.confirm(console, true, ENV)
     expect(spy).not.toHaveBeenCalled()
     expect(mockPrompt).not.toHaveBeenCalled()
@@ -55,28 +61,29 @@ describe('deploy', () => {
 
   test('confirm() should prompt and log if force is false', async () => {
     const spy = jest.spyOn(console, 'log')
-    const mockPrompt = jest.fn()
-    mockPrompt.mockResolvedValue({
+    const mockPrompt = jest.fn(async () => ({
       confirmation: true,
-    })
-    jest.mock('inquirer', () => ({
-      prompt: mockPrompt,
     }))
-    const { default: deploy } = await import('../../src/api/deploy')
+    jest.unstable_mockModule('inquirer', () => ({
+      default: {
+        prompt: mockPrompt,
+      },
+    }))
+    const { default: deploy } = await import('../../src/api/deploy.js')
     await deploy.confirm(console, false, ENV)
     expect(spy).toHaveBeenCalled()
     expect(mockPrompt).toHaveBeenCalled()
   })
 
   test('authenticate() should call oneblinkIdentity functions and stop updates', async () => {
-    const mockPostRequest = jest.fn()
-    mockPostRequest.mockResolvedValue({
+    const mockPostRequest = jest.fn(async () => ({
       credentials: {},
-    })
+    }))
     const oneBlinkAPIClient = new OneBlinkAPIClient(TENANTS.ONEBLINK)
-    oneBlinkAPIClient.postRequest = mockPostRequest
+    oneBlinkAPIClient.postRequest =
+      mockPostRequest as OneBlinkAPIClient['postRequest']
 
-    const { default: deploy } = await import('../../src/api/deploy')
+    const { default: deploy } = await import('../../src/api/deploy.js')
 
     await deploy.authenticate(oneBlinkAPIClient, {}, ENV)
     expect(mockPostRequest).toBeCalled()
@@ -84,12 +91,14 @@ describe('deploy', () => {
 
   test('authenticate() should call log correct updates if oneblinkIdentity functions throw errors', async () => {
     const oneBlinkAPIClient = new OneBlinkAPIClient(TENANTS.ONEBLINK)
-    jest.mock('api/assume-aws-roles', () => ({
-      assumeAWSRoleToDeploy: async () => {
-        throw new Error('test error')
+    jest.unstable_mockModule('api/assume-aws-roles', () => ({
+      default: {
+        assumeAWSRoleToDeploy: async () => {
+          throw new Error('test error')
+        },
       },
     }))
-    const { default: deploy } = await import('../../src/api/deploy')
+    const { default: deploy } = await import('../../src/api/deploy.js')
 
     const promise = deploy.authenticate(oneBlinkAPIClient, {}, ENV)
     await expect(promise).rejects.toThrow('test error')
@@ -97,7 +106,7 @@ describe('deploy', () => {
 
   test('zip() should log correct updates and return an absolute path to a zip file', async () => {
     expect.assertions(6)
-    const { default: deploy } = await import('../../src/api/deploy')
+    const { default: deploy } = await import('../../src/api/deploy.js')
     const zipFilePath = await deploy.zip(ZIP_PATH)
     if (typeof zipFilePath !== 'string') {
       fail('"zipFilePath" must be string')
@@ -138,10 +147,10 @@ describe('deploy', () => {
   test('zip() should log correct updates and reject if an temp emits an error', async () => {
     jest.mock('archiver', () => ({
       create: () => ({
-        on: () => {},
-        pipe: () => {},
-        glob: () => {},
-        finalize: () => {},
+        on: () => undefined,
+        pipe: () => undefined,
+        glob: () => undefined,
+        finalize: () => undefined,
       }),
     }))
     const mockCreateWriteStream = jest.fn()
@@ -159,7 +168,7 @@ describe('deploy', () => {
       mkdir: (directory: string, cb: (error?: Error) => void) => cb(),
       createWriteStream: mockCreateWriteStream,
     }))
-    const { default: deploy } = await import('../../src/api/deploy')
+    const { default: deploy } = await import('../../src/api/deploy.js')
 
     const promise = deploy.zip(ZIP_PATH)
     await expect(promise).rejects.toThrow('test temp error')
@@ -174,20 +183,20 @@ describe('deploy', () => {
             fn(new Error('test archiver error'))
           }
         },
-        pipe: () => {},
-        glob: () => {},
-        finalize: () => {},
+        pipe: () => undefined,
+        glob: () => undefined,
+        finalize: () => undefined,
       }),
     }))
     jest.mock('temp', () => ({
       track: () => undefined,
       mkdir: (directory: string, cb: (error?: Error) => void) => cb(),
       createWriteStream: () => ({
-        on: () => {},
+        on: () => undefined,
       }),
     }))
 
-    const { default: deploy } = await import('../../src/api/deploy')
+    const { default: deploy } = await import('../../src/api/deploy.js')
 
     const promise = deploy.zip(ZIP_PATH)
     await expect(promise).rejects.toThrow('test archiver error')
@@ -196,7 +205,7 @@ describe('deploy', () => {
   test('upload() should log correct updates and return bundle key after upload', async () => {
     const mockUpload = jest.fn()
     mockUpload.mockReturnValue({
-      on: () => {},
+      on: () => undefined,
       send: (fn: (error: null, result: { Key: string }) => void) =>
         fn(null, { Key: deploymentCredentials.s3.key }),
     })
@@ -205,12 +214,15 @@ describe('deploy', () => {
         upload = mockUpload
       },
     }))
-    const { default: deploy } = await import('../../src/api/deploy')
+    const { default: deploy } = await import('../../src/api/deploy.js')
 
     await deploy.upload(UPLOAD_PATH, deploymentCredentials)
-    const params = mockUpload.mock.calls[0][0]
-    expect(params.Bucket).toBe(deploymentCredentials.s3.bucket)
-    expect(params.Key).toBe(deploymentCredentials.s3.key)
+    expect(mockUpload).toBeCalledWith(
+      expect.objectContaining({
+        Bucket: deploymentCredentials.s3.bucket,
+        Key: deploymentCredentials.s3.key,
+      }),
+    )
   })
 
   test('upload() should log correct updates and reject if upload returns an error', async () => {
@@ -218,27 +230,27 @@ describe('deploy', () => {
       S3: class {
         upload() {
           return {
-            on: () => {},
+            on: () => undefined,
             send: (fn: (error: Error) => void) =>
               fn(new Error('test upload error')),
           }
         }
       },
     }))
-    const { default: deploy } = await import('../../src/api/deploy')
+    const { default: deploy } = await import('../../src/api/deploy.js')
 
     const promise = deploy.upload(UPLOAD_PATH, deploymentCredentials)
     expect(promise).rejects.toThrow('test upload error')
   })
 
   test('deploy() should log correct updates', async () => {
-    const mockPostRequest = jest.fn()
-    mockPostRequest.mockResolvedValue({
+    const mockPostRequest = jest.fn(async () => ({
       credentials: {},
-    })
+    }))
     const oneBlinkAPIClient = new OneBlinkAPIClient(TENANTS.ONEBLINK)
-    oneBlinkAPIClient.postRequest = mockPostRequest
-    const { default: deploy } = await import('../../src/api/deploy')
+    oneBlinkAPIClient.postRequest =
+      mockPostRequest as OneBlinkAPIClient['postRequest']
+    const { default: deploy } = await import('../../src/api/deploy.js')
     await deploy.deploy(oneBlinkAPIClient, apiDeploymentPayload, ENV)
     expect(mockPostRequest).toHaveBeenCalledWith(
       `/apis/${apiDeploymentPayload.scope}/environments/${ENV}/deployments`,
@@ -251,7 +263,7 @@ describe('deploy', () => {
     oneBlinkAPIClient.postRequest = async () => {
       throw new Error('test error')
     }
-    const { default: deploy } = await import('../../src/api/deploy')
+    const { default: deploy } = await import('../../src/api/deploy.js')
     const promise = deploy.deploy(oneBlinkAPIClient, apiDeploymentPayload, ENV)
     expect(promise).rejects.toThrow('test error')
   })

@@ -1,3 +1,5 @@
+import { describe, expect, test, jest } from '@jest/globals'
+
 describe('verify-jwt', () => {
   const JWT = 'a valid jwt'
   const DECODED = {
@@ -16,7 +18,7 @@ describe('verify-jwt', () => {
     }))
 
     const { default: verifyJWT } = await import(
-      '../../../src/identity/utils/verify-jwt'
+      '../../../src/identity/utils/verify-jwt.js'
     )
     const jwt = await verifyJWT(JWT)
     expect(jwt).toBe(JWT)
@@ -25,7 +27,7 @@ describe('verify-jwt', () => {
 
   test('verifyJWT() should reject if a jwt is not passed in', async () => {
     const { default: verifyJWT } = await import(
-      '../../../src/identity/utils/verify-jwt'
+      '../../../src/identity/utils/verify-jwt.js'
     )
 
     const promise = verifyJWT()
@@ -39,7 +41,7 @@ describe('verify-jwt', () => {
       decode: () => null,
     }))
     const { default: verifyJWT } = await import(
-      '../../../src/identity/utils/verify-jwt'
+      '../../../src/identity/utils/verify-jwt.js'
     )
     const promise = verifyJWT(JWT)
     await expect(promise).rejects.toThrow(
@@ -55,7 +57,7 @@ describe('verify-jwt', () => {
     }))
 
     const { default: verifyJWT } = await import(
-      '../../../src/identity/utils/verify-jwt'
+      '../../../src/identity/utils/verify-jwt.js'
     )
     const promise = verifyJWT(JWT)
     await expect(promise).rejects.toThrow(

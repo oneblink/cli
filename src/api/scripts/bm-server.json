@@ -1,11 +1,11 @@
 {
   "routes": [
     {
-      "module": "./project/test-response.js",
+      "module": "./project/test-response.cjs",
       "route": "/response"
     },
     {
-      "module": "./project/test-boom.js",
+      "module": "./project/test-boom.cjs",
       "route": "/boom"
     }
   ]

@@ -1,15 +1,21 @@
-const TEST_SUBJECT = describe('validate', () => {
+import { describe, expect, test, jest } from '@jest/globals'
+
+describe('validate', () => {
   const CWD = 'current working directory'
   const PATH_RESOLVE = 'returned from path resolve'
   const MODULE = 'module path'
 
   beforeEach(() => {
-    jest.mock('path', () => ({
-      resolve: () => PATH_RESOLVE,
+    jest.unstable_mockModule('path', () => ({
+      default: {
+        resolve: () => PATH_RESOLVE,
+      },
     }))
-    jest.mock('fs', () => ({
-      stat: (path: string, cb: () => void) => {
-        cb()
+    jest.unstable_mockModule('fs', () => ({
+      default: {
+        stat: (path: string, cb: () => void) => {
+          cb()
+        },
       },
     }))
   })
@@ -56,9 +62,11 @@ const TEST_SUBJECT = describe('validate', () => {
 
   test('Should contain error message if module can not be found', async () => {
     const errorMessage = 'This is an error'
-    jest.mock('fs', () => ({
-      stat: (path: string, cb: (error: Error | undefined) => void) => {
-        cb(new Error(errorMessage))
+    jest.unstable_mockModule('fs', () => ({
+      default: {
+        stat: (path: string, cb: (error: Error | undefined) => void) => {
+          cb(new Error(errorMessage))
+        },
       },
     }))
     const { default: validate } = await import(
@@ -72,12 +80,14 @@ const TEST_SUBJECT = describe('validate', () => {
   })
 
   test('Should contain different error message if module can not be found with ENOENT code', async () => {
-    jest.mock('fs', () => ({
-      stat: (path: string, cb: (error: Error | undefined) => void) => {
-        const error = new Error('This is an error')
-        // @ts-expect-error we are adding the property, you don't get a say typescript
-        error.code = 'ENOENT'
-        cb(error)
+    jest.unstable_mockModule('fs', () => ({
+      default: {
+        stat: (path: string, cb: (error: Error | undefined) => void) => {
+          const error = new Error('This is an error')
+          // @ts-expect-error we are adding the property, you don't get a say typescript
+          error.code = 'ENOENT'
+          cb(error)
+        },
       },
     }))
     const { default: validate } = await import(
@@ -93,15 +103,18 @@ const TEST_SUBJECT = describe('validate', () => {
   test('Input for for fs.stat() should be the result of path.resolve()', async () => {
     const mockResolve = jest.fn()
     mockResolve.mockReturnValue(PATH_RESOLVE)
-    jest.mock('path', () => ({
-      resolve: mockResolve,
+    jest.unstable_mockModule('path', () => ({
+      default: {
+        resolve: mockResolve,
+      },
     }))
-    const mockStat = jest.fn()
-    mockStat.mockImplementation((path: string, cb: () => void) => {
+    const mockStat = jest.fn((path: string, cb: () => void) => {
       cb()
     })
-    jest.mock('fs', () => ({
-      stat: mockStat,
+    jest.unstable_mockModule('fs', () => ({
+      default: {
+        stat: mockStat,
+      },
     }))
 
     const { default: validate } = await import(

@@ -1,3 +1,5 @@
+import { describe, expect, test, jest } from '@jest/globals'
+
 describe('variables', () => {
   const CWD = 'current working directory'
   const blinkmrc = {
@@ -19,20 +21,24 @@ describe('variables', () => {
   })
 
   test('read() should handle an uninitialized config file', async () => {
-    jest.mock('api/utils/project-meta', () => ({
-      read: async () => undefined,
+    jest.unstable_mockModule('api/utils/project-meta', () => ({
+      default: {
+        read: async () => undefined,
+      },
     }))
-    const { default: variables } = await import('../../src/api/variables')
+    const { default: variables } = await import('../../src/api/variables.js')
     const envVars = await variables.read(CWD, 'dev')
     expect(envVars).toEqual({})
   })
 
   test('read() should return the correct values for the scoped variables', async () => {
     const referencedValue = 'referenced value'
-    jest.mock('api/utils/project-meta', () => ({
-      read: async () => blinkmrc,
+    jest.unstable_mockModule('api/utils/project-meta', () => ({
+      default: {
+        read: async () => blinkmrc,
+      },
     }))
-    const { default: variables } = await import('../../src/api/variables')
+    const { default: variables } = await import('../../src/api/variables.js')
     process.env.MY_REFERENCE = referencedValue
 
     const devVars = await variables.read(CWD, 'dev')
@@ -58,16 +64,18 @@ describe('variables', () => {
   })
 
   test('read() should reject if there is a variable with an unsupported type value', async () => {
-    jest.mock('api/utils/project-meta', () => ({
-      read: async () => ({
-        server: {
-          variables: {
-            UNSUPPORTED_TYPE: 123,
+    jest.unstable_mockModule('api/utils/project-meta', () => ({
+      default: {
+        read: async () => ({
+          server: {
+            variables: {
+              UNSUPPORTED_TYPE: 123,
+            },
           },
-        },
-      }),
+        }),
+      },
     }))
-    const { default: variables } = await import('../../src/api/variables')
+    const { default: variables } = await import('../../src/api/variables.js')
 
     const promise = variables.read(CWD, 'dev')
     await expect(promise).rejects.toThrow(
@@ -76,18 +84,20 @@ describe('variables', () => {
   })
 
   test('read() should reject if there is a scoped variable with an unsupported type value', async () => {
-    jest.mock('api/utils/project-meta', () => ({
-      read: async () => ({
-        server: {
-          variables: {
-            UNSUPPORTED_TYPE: {
-              dev: true,
+    jest.unstable_mockModule('api/utils/project-meta', () => ({
+      default: {
+        read: async () => ({
+          server: {
+            variables: {
+              UNSUPPORTED_TYPE: {
+                dev: true,
+              },
             },
           },
-        },
-      }),
+        }),
+      },
     }))
-    const { default: variables } = await import('../../src/api/variables')
+    const { default: variables } = await import('../../src/api/variables.js')
 
     const promise = variables.read(CWD, 'dev')
     await expect(promise).rejects.toThrow(
@@ -96,21 +106,25 @@ describe('variables', () => {
   })
 
   test('display() should not log anything if there are no variables to display', async () => {
-    jest.mock('api/utils/project-meta', () => ({
-      read: async () => undefined,
+    jest.unstable_mockModule('api/utils/project-meta', () => ({
+      default: {
+        read: async () => undefined,
+      },
     }))
     const spy = jest.spyOn(console, 'log')
-    const { default: variables } = await import('../../src/api/variables')
+    const { default: variables } = await import('../../src/api/variables.js')
     await variables.display(console, CWD, 'dev')
     expect(spy).not.toHaveBeenCalled()
   })
 
   test('display() should log once', async () => {
-    jest.mock('api/utils/project-meta', () => ({
-      read: async () => blinkmrc,
+    jest.unstable_mockModule('api/utils/project-meta', () => ({
+      default: {
+        read: async () => blinkmrc,
+      },
     }))
     const spy = jest.spyOn(console, 'log')
-    const { default: variables } = await import('../../src/api/variables')
+    const { default: variables } = await import('../../src/api/variables.js')
     await variables.display(console, CWD, 'dev')
     expect(spy).toHaveBeenCalledTimes(1)
   })

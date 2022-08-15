@@ -1,12 +1,12 @@
-import type { CLIFlags, CLIOptions } from '../../api/types'
+import type { CLIFlags, CLIOptions } from '../../api/types.js'
 
 import os from 'os'
 
-import displayCors from '../../api/cors/display'
-import displayRoutes from '../../api/routes/display'
-import scope from '../../api/scope'
-import variables from '../../api/variables'
-import network from '../../api/network'
+import displayCors from '../../api/cors/display.js'
+import displayRoutes from '../../api/routes/display.js'
+import scope from '../../api/scope.js'
+import variables from '../../api/variables.js'
+import network from '../../api/network.js'
 
 export default async function (
   tenant: Tenant,

@@ -1,13 +1,13 @@
-import type { RouteConfiguration } from './types'
+import type { RouteConfiguration } from './types.js'
 
 import uniloc from 'uniloc'
 
-import BmResponse from './bm-response'
+import BmResponse from './bm-response.js'
 import {
   OneBlinkAPIHostingHandler,
   OneBlinkAPIHostingRequest,
   OneBlinkAPIHostingResponse,
-} from '../..'
+} from '../../index.js'
 
 export const ENTRY_FUNCTION = 'handler'
 

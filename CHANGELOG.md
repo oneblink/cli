@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- [ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) support to API Hosting projects by adding `.mjs` to file extensions or adding `{ "type": "module" }` to your `package.json` file.
+
+### Changed
+
+- source to [ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) from CommonJS
+
 ## [1.0.0] - 2022-07-04
 
 ### Changed

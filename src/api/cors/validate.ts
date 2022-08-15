@@ -5,7 +5,7 @@ import validUrl from 'valid-url'
 const HELP = ', see documentation for information on how to configure cors.'
 
 function validateCors(
-  cors: APITypes.APIEnvironmentCorsConfiguration,
+  cors: APITypes.APIEnvironmentCorsConfiguration | undefined,
 ): Promise<APITypes.APIEnvironmentCorsConfiguration> {
   if (!cors) {
     return Promise.reject(new Error('Must specify cors configuration' + HELP))

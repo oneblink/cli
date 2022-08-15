@@ -1,4 +1,6 @@
-import { TENANTS } from '../../../src/config'
+import { describe, expect, test, jest } from '@jest/globals'
+
+import { TENANTS } from '../../../src/config.js'
 
 describe('logout', () => {
   const JWT = 'valid jwt'
@@ -9,21 +11,24 @@ describe('logout', () => {
   })
 
   test('logout() should reject if a request returns an error', async () => {
-    jest.mock('node-fetch', () => async () => {
-      throw new Error('Test error message')
-    })
+    jest.unstable_mockModule('node-fetch', () => ({
+      default: async () => {
+        throw new Error('Test error message')
+      },
+    }))
 
     const { default: logout } = await import(
-      '../../../src/identity/common/logout'
+      '../../../src/identity/common/logout.js'
     )
     const promise = logout(TENANTS.ONEBLINK)
     await expect(promise).rejects.toThrow('Test error message')
   })
 
   test('logout() should call userConfigStore.update() to update and remove access token', async () => {
-    jest.mock('node-fetch', () => async () => undefined)
-    const mockUpdate = jest.fn()
-    mockUpdate.mockResolvedValue({})
+    jest.unstable_mockModule('node-fetch', () => ({
+      default: async () => undefined,
+    }))
+    const mockUpdate = jest.fn(async () => ({}))
     jest.mock('@blinkmobile/blinkmrc', () => ({
       userConfig: () => ({
         load: async () => ({
@@ -34,7 +39,7 @@ describe('logout', () => {
     }))
 
     const { default: logout } = await import(
-      '../../../src/identity/common/logout'
+      '../../../src/identity/common/logout.js'
     )
 
     await logout(TENANTS.ONEBLINK)

@@ -1,4 +1,4 @@
-import userConfig from './user-config'
+import userConfig from './user-config.js'
 
 export default function getRefreshToken(): Promise<string | void> {
   return userConfig

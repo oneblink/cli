@@ -1,6 +1,6 @@
-import type { RouteConfiguration } from '../types'
+import type { RouteConfiguration } from '../types.js'
 
-import readRoutes from './read'
+import readRoutes from './read.js'
 
 function getRouteConfig(
   cwd: string,

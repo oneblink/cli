@@ -1,13 +1,13 @@
 import os from 'os'
 
 import chalk from 'chalk'
-import execa from 'execa'
+import { execa } from 'execa'
 import minimist from 'minimist'
 import updateNotifier from 'update-notifier'
 import packageEnginesNotifier from 'package-engines-notifier'
 
-import OneBlinkAPIClient from './oneblink-api-client'
-import pkg from './package'
+import OneBlinkAPIClient from './oneblink-api-client.js'
+import pkg from './package.js'
 
 export type CLICommand = (
   tenant: Tenant,
@@ -29,18 +29,18 @@ async function getCLICommand(
 ): Promise<{ default: CLICommand | undefined }> {
   switch (input) {
     case 'login': {
-      return await import('./identity/commands/login')
+      return await import('./identity/commands/login.js')
     }
     case 'api':
     case 'server': {
-      return await import('./api/commands')
+      return await import('./api/commands/index.js')
     }
     case 'cdn':
     case 'client': {
-      return await import('./cdn/commands')
+      return await import('./cdn/commands/index.js')
     }
     case 'logout': {
-      return await import('./identity/commands/logout')
+      return await import('./identity/commands/logout.js')
     }
     default: {
       return {

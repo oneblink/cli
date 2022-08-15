@@ -1,8 +1,11 @@
-import type OneBlinkAPIClient from '../oneblink-api-client'
+import type OneBlinkAPIClient from '../oneblink-api-client.js'
 
-import type { BlinkMRCServer } from './types'
+import type { BlinkMRCServer } from './types.js'
 import type { APITypes } from '@oneblink/types'
-import { OneBlinkAPIHostingRequest, OneBlinkAPIHostingResponse } from '../..'
+import {
+  OneBlinkAPIHostingRequest,
+  OneBlinkAPIHostingResponse,
+} from '../../index.js'
 
 import http from 'http'
 
@@ -12,10 +15,10 @@ import cors from 'cors'
 import express from 'express'
 import morgan from 'morgan'
 
-import apis from './apis'
-import handlers from './handlers'
-import variables from './variables'
-import awsRoles from './assume-aws-roles'
+import apis from './apis.js'
+import handlers from './handlers.js'
+import variables from './variables.js'
+import awsRoles from './assume-aws-roles.js'
 
 async function startServer(
   logger: typeof console,

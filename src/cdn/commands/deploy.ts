@@ -3,13 +3,13 @@ import path from 'path'
 import ora from 'ora'
 import awsS3 from '@blinkmobile/aws-s3'
 
-import confirm from '../utils/confirm'
-import bucketParams from '../s3-bucket-params'
-import provisionEnvironment from '../provision-environment'
-import getAwsCredentials from '../aws-credentials'
-import s3Factory from '../s3-bucket-factory'
-import read from '../read'
-import OneBlinkAPIClient from '../../oneblink-api-client'
+import confirm from '../utils/confirm.js'
+import bucketParams from '../s3-bucket-params.js'
+import provisionEnvironment from '../provision-environment.js'
+import getAwsCredentials from '../aws-credentials.js'
+import s3Factory from '../s3-bucket-factory.js'
+import read from '../read.js'
+import OneBlinkAPIClient from '../../oneblink-api-client.js'
 
 export default async function (
   input: Array<string>,

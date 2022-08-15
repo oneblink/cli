@@ -1,6 +1,6 @@
 import fetch from 'node-fetch'
 
-import userConfig from '../utils/user-config'
+import userConfig from '../utils/user-config.js'
 
 export default async function logout(tenant: Tenant): Promise<void> {
   await fetch(`${tenant.loginUrl}/logout?client_id=${tenant.loginClientId}`)

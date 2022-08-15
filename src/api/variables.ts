@@ -2,7 +2,7 @@ import { APITypes } from '@oneblink/types'
 import chalk from 'chalk'
 import Table from 'cli-table3'
 
-import projectMeta from './utils/project-meta'
+import projectMeta from './utils/project-meta.js'
 
 function read(
   cwd: string,

@@ -1,8 +1,12 @@
+import { describe, expect, test } from '@jest/globals'
 import path from 'path'
+import url from 'url'
 
-import lib from '../../src/api/handlers'
-import BmResponse from '../../src/api/bm-response'
-import { OneBlinkAPIHostingRequest } from '../..'
+import lib from '../../src/api/handlers.js'
+import BmResponse from '../../src/api/bm-response.js'
+import { OneBlinkAPIHostingRequest } from '../../index.js'
+
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
 
 describe('handlers', () => {
   const EXAMPLE_DIR = path.join(

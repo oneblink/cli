@@ -1,4 +1,4 @@
-import { OneBlinkAPIHostingResponse } from '../..'
+import { OneBlinkAPIHostingResponse } from '../../index.js'
 
 class BmResponseImplementation<T> implements OneBlinkAPIHostingResponse<T> {
   private _headers: OneBlinkAPIHostingResponse<T>['headers']

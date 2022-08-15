@@ -4,8 +4,7 @@ describe('validate', () => {
   const HELP = ', see documentation for information on how to configure cors.'
 
   test('Should reject if cors is not truthy', async () => {
-    // @ts-expect-error we are internationally passing undefined here
-    const promise = validate()
+    const promise = validate(undefined)
     await expect(promise).rejects.toThrow(
       'Must specify cors configuration' + HELP,
     )

@@ -1,8 +1,12 @@
+import { expect, test } from '@jest/globals'
 import path from 'path'
+import url from 'url'
 
-import read from '../../src/cdn/read'
-import show from '../../src/cdn/show'
-import write from '../../src/cdn/write'
+import read from '../../src/cdn/read.js'
+import show from '../../src/cdn/show.js'
+import write from '../../src/cdn/write.js'
+
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
 
 const EXISTING_PROJECT_PATH = path.join(
   __dirname,

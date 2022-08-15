@@ -1,8 +1,8 @@
 import Table from 'cli-table3'
 import chalk from 'chalk'
 
-import readCors from './read'
-import validateCors from './validate'
+import readCors from './read.js'
+import validateCors from './validate.js'
 
 function displayCors(logger: typeof console, cwd: string): Promise<void> {
   return readCors(cwd).then((cors) => {

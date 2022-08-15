@@ -1,3 +1,5 @@
+import { describe, expect, test, jest } from '@jest/globals'
+
 describe('s3-bucket-params', () => {
   afterEach(() => {
     jest.resetModules()
@@ -23,9 +25,11 @@ describe('s3-bucket-params', () => {
       service: {},
     }
 
-    jest.mock('cdn/utils/config-helper', () => ({
-      read: () => Promise.resolve(config),
-      write: () => new Error('should not be executed'),
+    jest.unstable_mockModule('cdn/utils/config-helper', () => ({
+      default: {
+        read: () => Promise.resolve(config),
+        write: () => new Error('should not be executed'),
+      },
     }))
 
     const { default: read } = await import('../../src/cdn/read')
@@ -39,23 +43,25 @@ describe('s3-bucket-params', () => {
       service: {},
     }
 
-    jest.mock('cdn/utils/config-helper', () => ({
-      read: () =>
-        Promise.resolve({
-          cdn: {
-            scope: 'a',
-          },
-        }),
-      write: () =>
-        Promise.resolve({
-          cdn: {
-            scope: 'a',
-            objectParams: {
-              Expires: 60,
-              ACL: 'public-read',
+    jest.unstable_mockModule('cdn/utils/config-helper', () => ({
+      default: {
+        read: () =>
+          Promise.resolve({
+            cdn: {
+              scope: 'a',
             },
-          },
-        }),
+          }),
+        write: () =>
+          Promise.resolve({
+            cdn: {
+              scope: 'a',
+              objectParams: {
+                Expires: 60,
+                ACL: 'public-read',
+              },
+            },
+          }),
+      },
     }))
 
     const { default: read } = await import('../../src/cdn/read')

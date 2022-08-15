@@ -1,3 +1,4 @@
+import { describe, expect, test, jest } from '@jest/globals'
 import { APITypes } from '@oneblink/types'
 
 describe('cors display', () => {
@@ -14,22 +15,22 @@ describe('cors display', () => {
   }
 
   beforeEach(() => {
-    jest.mock('api/cors/read', () => {
-      return () => Promise.resolve(CORS)
-    })
-    jest.mock('api/cors/validate', () => {
-      return () => Promise.resolve(CORS)
-    })
+    jest.unstable_mockModule('api/cors/read', () => ({
+      default: () => Promise.resolve(CORS),
+    }))
+    jest.unstable_mockModule('api/cors/validate', () => ({
+      default: () => Promise.resolve(CORS),
+    }))
   })
 
   test('Should call read() with correct input', async () => {
     expect.assertions(1)
-    jest.mock('api/cors/read', () => {
-      return async (cwd: string) => {
+    jest.unstable_mockModule('api/cors/read', () => ({
+      default: async (cwd: string) => {
         expect(cwd).toBe(CWD)
         return CORS
-      }
-    })
+      },
+    }))
 
     const { default: display } = await import('../../../src/api/cors/display')
     return display(console, CWD)
@@ -37,15 +38,18 @@ describe('cors display', () => {
 
   test('Should not log or validate if read() does not return cors', async () => {
     expect.assertions(1)
-    jest.mock('api/cors/read', () => {
-      return async () => {
-        return
+    jest.unstable_mockModule('api/cors/read', () => {
+      return {
+        default: async () => {
+          return
+        },
       }
     })
-    jest.mock('api/cors/validate', () => {
-      return async () => {
-        fail('Should not validate')
-        return CORS
+    jest.unstable_mockModule('api/cors/validate', () => {
+      return {
+        default: async () => {
+          fail('Should not validate')
+        },
       }
     })
     const spy = jest.spyOn(console, 'log')
@@ -57,10 +61,12 @@ describe('cors display', () => {
   })
 
   test('Should call validate() with correct input', async () => {
-    jest.mock('api/cors/validate', () => {
-      return async (cors: APITypes.APIEnvironmentCorsConfiguration) => {
-        expect(cors).toEqual(CORS)
-        return cors
+    jest.unstable_mockModule('api/cors/validate', () => {
+      return {
+        default: async (cors: APITypes.APIEnvironmentCorsConfiguration) => {
+          expect(cors).toEqual(CORS)
+          return cors
+        },
       }
     })
 
@@ -69,9 +75,11 @@ describe('cors display', () => {
   })
 
   test('Should not log the cors and reject if no routes are found', async () => {
-    jest.mock('api/cors/validate', () => {
-      return async () => {
-        throw new Error('test error message')
+    jest.unstable_mockModule('api/cors/validate', () => {
+      return {
+        default: async () => {
+          throw new Error('test error message')
+        },
       }
     })
 

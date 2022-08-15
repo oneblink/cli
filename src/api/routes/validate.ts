@@ -1,4 +1,4 @@
-import type { RouteConfiguration } from '../types'
+import type { RouteConfiguration } from '../types.js'
 
 import util from 'util'
 import path from 'path'

@@ -1,11 +1,11 @@
-import type { BlinkMRCServer } from './types'
+import type { BlinkMRCServer } from './types.js'
 
 import chalk from 'chalk'
 import Table from 'cli-table3'
 import objectMerge from 'object-merge'
 
-import projectMeta from './utils/project-meta'
-import values from './values'
+import projectMeta from './utils/project-meta.js'
+import values from './values.js'
 
 function read(cwd: string): Promise<BlinkMRCServer> {
   return projectMeta

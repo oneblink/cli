@@ -1,10 +1,10 @@
-import type OneBlinkAPIClient from '../oneblink-api-client'
+import type OneBlinkAPIClient from '../oneblink-api-client.js'
 
 import type {
   BlinkMRCServer,
   DeploymentCredentials,
   ServeCredentials,
-} from './types'
+} from './types.js'
 
 async function assumeAWSRole<T>(
   oneBlinkAPIClient: OneBlinkAPIClient,

@@ -1,9 +1,9 @@
-import type { HandlerConfiguration, RouteConfiguration } from './types'
+import type { HandlerConfiguration, RouteConfiguration } from './types.js'
 
 import path from 'path'
 
-import handlers from './handlers'
-import readRoutes from './routes/read'
+import handlers from './handlers.js'
+import readRoutes from './routes/read.js'
 
 function getHandlerConfig<In = undefined, Out = undefined>(
   routeConfig: RouteConfiguration,

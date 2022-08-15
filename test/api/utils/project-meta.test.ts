@@ -1,6 +1,11 @@
+import { describe, expect, test, jest } from '@jest/globals'
 import path from 'path'
+import url from 'url'
+import { BlinkMRC } from '../../../src/api/types'
 
 import pkg from '../../../src/package'
+
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
 
 describe('project-meta', () => {
   const CWD = path.join(__dirname, '..', 'fixtures', 'project-meta')
@@ -15,7 +20,6 @@ describe('project-meta', () => {
       '../../../src/api/utils/project-meta'
     )
 
-    console.log('CWD', CWD)
     const meta = await projectMeta.read(CWD)
     expect(meta).toEqual({
       'project-meta': 'test',
@@ -31,7 +35,7 @@ describe('project-meta', () => {
       '../../../src/api/utils/project-meta'
     )
 
-    await projectMeta.projectConfig(CWD)
+    projectMeta.projectConfig(CWD)
     expect(mockProjectConfig).toBeCalledWith({
       name: pkg.name,
       cwd: CWD,
@@ -67,7 +71,7 @@ describe('project-meta', () => {
       '../../../src/api/utils/project-meta'
     )
     const mockUpdate = jest.fn()
-    await projectMeta.write(CWD, mockUpdate)
+    await projectMeta.write(CWD, mockUpdate as (config: BlinkMRC) => BlinkMRC)
     expect(mockUpdate).toBeCalled()
   })
 })

@@ -1,7 +1,7 @@
-import type { CLIFlags, CLIOptions } from '../../api/types'
+import type { CLIFlags, CLIOptions } from '../../api/types.js'
 
-import { teardown, confirm } from '../../api/teardown'
-import scope from '../../api/scope'
+import { teardown, confirm } from '../../api/teardown.js'
+import scope from '../../api/scope.js'
 
 export default async function (
   tenant: Tenant,

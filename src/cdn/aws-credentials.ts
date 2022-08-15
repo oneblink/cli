@@ -1,6 +1,6 @@
 import ora from 'ora'
 
-import OneBlinkAPIClient from '../oneblink-api-client'
+import OneBlinkAPIClient from '../oneblink-api-client.js'
 
 type AWSCredentials = {
   AccessKeyId: string

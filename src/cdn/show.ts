@@ -1,4 +1,4 @@
-import read from './read'
+import read from './read.js'
 export default async (cwd: string): Promise<void> => {
   const cfg = await read(cwd)
   cfg.scope

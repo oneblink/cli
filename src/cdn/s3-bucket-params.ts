@@ -1,6 +1,6 @@
 import objectMerge from 'object-merge'
 
-import configHelper from './utils/config-helper'
+import configHelper from './utils/config-helper.js'
 const DEFAULTS = {
   Expires: 60,
   ACL: 'public-read',

@@ -1,4 +1,4 @@
-import type { Headers, MapObject, Protocol } from './types'
+import type { Headers, MapObject, Protocol } from './types.js'
 
 function keysToLowerCase(object: MapObject): MapObject {
   return Object.keys(object).reduce<MapObject>((result, key) => {

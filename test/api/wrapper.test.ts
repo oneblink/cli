@@ -1,4 +1,5 @@
-import lib from '../../src/api/wrapper'
+import { expect, test } from '@jest/globals'
+import lib from '../../src/api/wrapper.js'
 
 test('keysToLowerCase()', () => {
   const input = { Hello: 'World!' }

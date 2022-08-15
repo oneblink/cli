@@ -1,7 +1,7 @@
-import type { BlinkMRC, ProjectConfig } from '../types'
+import type { BlinkMRC, ProjectConfig } from '../types.js'
 
 import configLoader from '@blinkmobile/blinkmrc'
-import pkg from '../../package'
+import pkg from '../../package.js'
 
 function projectConfig(cwd: string): ProjectConfig {
   return configLoader.projectConfig({

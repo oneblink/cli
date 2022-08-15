@@ -1,4 +1,6 @@
-import s3Factory from '../../src/cdn/s3-bucket-factory'
+import { expect, test } from '@jest/globals'
+
+import s3Factory from '../../src/cdn/s3-bucket-factory.js'
 
 test('it should have the bucket name pre-configured', async () => {
   const params = {

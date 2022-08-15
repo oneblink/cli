@@ -1,4 +1,6 @@
-import { TENANTS } from '../../../src/config'
+import { expect, test, jest } from '@jest/globals'
+
+import { TENANTS } from '../../../src/config.js'
 
 test('storeJWT() should store jwt', async () => {
   jest.mock('@blinkmobile/blinkmrc', () => ({
@@ -9,7 +11,7 @@ test('storeJWT() should store jwt', async () => {
   }))
 
   const { default: LoginProviderBase } = await import(
-    '../../../src/identity/login-providers/login-provider-base'
+    '../../../src/identity/login-providers/login-provider-base.js'
   )
   const loginProviderBase = new LoginProviderBase(TENANTS.ONEBLINK)
 
