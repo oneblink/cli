@@ -30,4 +30,4 @@
 
     - See: [aws-sdk](https://github.com/aws/aws-sdk-js), [dropbox](https://github.com/dropbox/dropbox-sdk-js/), [googleapis](https://github.com/google/google-api-nodejs-client)
 
-- Customers with firewalls will be able to use CIDR whitelists as in BMP
+- Customers with firewalls will be able to use CIDR whitelists
