@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2022-08-16
+
 ### Added
 
 - [ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) support to API Hosting projects by adding `.mjs` to file extensions or adding `{ "type": "module" }` to your `package.json` file.
@@ -14,6 +16,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - source to [ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) from CommonJS
+
+### Dependencies
+
+- update [@hapi/boom](https://www.npmjs.com/package/@hapi/boom) to [10.0.0](https://github.com/hapijs/boom/releases/tag/v10.0.0) (from 9.1.4)
+
+- update [archiver](https://www.npmjs.com/package/archiver) to [5.3.1](https://github.com/archiverjs/node-archiver/releases/tag/5.3.1) (from [5.3.0](https://github.com/archiverjs/node-archiver/releases/tag/5.3.0))
+
+- update [aws-sdk](https://www.npmjs.com/package/aws-sdk) to [2.1194.0](https://github.com/aws/aws-sdk-js/releases/tag/v2.1194.0) (from [2.1002.0](https://github.com/aws/aws-sdk-js/releases/tag/v2.1002.0))
+
+- update [chalk](https://www.npmjs.com/package/chalk) to [5.0.1](https://github.com/chalk/chalk/releases/tag/v5.0.1) (from [4.1.2](https://github.com/chalk/chalk/releases/tag/v4.1.2))
+
+- update [cli-table3](https://www.npmjs.com/package/cli-table3) to [0.6.2](https://github.com/cli-table/cli-table3/releases/tag/v0.6.2) (from [0.6.0](https://github.com/cli-table/cli-table3/releases/tag/v0.6.0))
+
+- update [execa](https://www.npmjs.com/package/execa) to [6.1.0](https://github.com/sindresorhus/execa/releases/tag/v6.1.0) (from [5.1.1](https://github.com/sindresorhus/execa/releases/tag/v5.1.1))
+
+- update [express](https://www.npmjs.com/package/express) to [4.18.1](https://github.com/expressjs/express/releases/tag/4.18.1) (from [4.17.1](https://github.com/expressjs/express/releases/tag/4.17.1))
+
+- update [glob](https://www.npmjs.com/package/glob) to 8.0.3 (from 7.2.0)
+
+- update [inquirer](https://www.npmjs.com/package/inquirer) to 9.1.0 (from 8.2.0)
+
+- update [meow](https://www.npmjs.com/package/meow) to [10.1.3](https://github.com/sindresorhus/meow/releases/tag/v10.1.3) (from [9.0.0](https://github.com/sindresorhus/meow/releases/tag/v9.0.0))
+
+- update [minimist](https://www.npmjs.com/package/minimist) to 1.2.6 (from 1.2.5)
+
+- update [node-fetch](https://www.npmjs.com/package/node-fetch) to [3.2.10](https://github.com/node-fetch/node-fetch/releases/tag/v3.2.10) (from [2.6.7](https://github.com/node-fetch/node-fetch/releases/tag/v2.6.7))
+
+- update [open](https://www.npmjs.com/package/open) to [8.4.0](https://github.com/sindresorhus/open/releases/tag/v8.4.0) (from [8.2.1](https://github.com/sindresorhus/open/releases/tag/v8.2.1))
+
+- update [ora](https://www.npmjs.com/package/ora) to [6.1.2](https://github.com/sindresorhus/ora/releases/tag/v6.1.2) (from [5.4.1](https://github.com/sindresorhus/ora/releases/tag/v5.4.1))
+
+- update [recursive-copy](https://www.npmjs.com/package/recursive-copy) to 2.0.14 (from 2.0.13)
+
+- update [update-notifier](https://www.npmjs.com/package/update-notifier) to [6.0.2](https://github.com/yeoman/update-notifier/releases/tag/v6.0.2) (from [5.1.0](https://github.com/yeoman/update-notifier/releases/tag/v5.1.0))
+
+- update [write-json-file](https://www.npmjs.com/package/write-json-file) to [5.0.0](https://github.com/sindresorhus/write-json-file/releases/tag/v5.0.0) (from [4.3.0](https://github.com/sindresorhus/write-json-file/releases/tag/v4.3.0))
 
 ## [1.0.0] - 2022-07-04
 
