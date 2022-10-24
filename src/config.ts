@@ -2,7 +2,7 @@ const environment = (
   process.env.ONEBLINK_CLI_ENVIRONMENT || 'prod'
 ).toLowerCase()
 
-const subdomainSuffix = environment === 'prod' ? '' : `-${environment}`
+const subdomainSuffix = environment === 'prod' ? '' : `.${environment}`
 
 function getOneBlinkLoginClientId() {
   switch (environment) {
