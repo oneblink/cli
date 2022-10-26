@@ -45,7 +45,7 @@
     "write-json-file": "^5.0.0"
   },
   "devDependencies": {
-    "@oneblink/release-cli": "^1.0.0",
+    "@oneblink/release-cli": "^1.2.0",
     "@oneblink/types": "github:oneblink/types",
     "@rollup/plugin-commonjs": "^22.0.2",
     "@rollup/plugin-node-resolve": "^13.3.0",
