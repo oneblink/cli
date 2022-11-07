@@ -7,10 +7,10 @@ const subdomainSuffix = environment === 'prod' ? '' : `.${environment}`
 function getOneBlinkLoginClientId() {
   switch (environment) {
     case 'test': {
-      return '4qnhooo6baoptdd5mbcfu6a2o9'
+      return '6j4233pg53dmghgtg4vj6urk12'
     }
     default: {
-      return '2f4qdgp88bemgp3r6cilo18af'
+      return '25nh56b7kr3duh09tma1egsnvl'
     }
   }
 }
@@ -18,10 +18,10 @@ function getOneBlinkLoginClientId() {
 function getCivicPlusLoginClientId() {
   switch (environment) {
     case 'test': {
-      return '24anvbrtp395r5f38g7kg8r0pq'
+      return 'lut6qaoang54idbtrv3kbti4q'
     }
     default: {
-      return '1c7lusg15jm51l7gjn8e7ce0ti'
+      return '5uad43ujc7h35l5t5ri6anaeos'
     }
   }
 }
