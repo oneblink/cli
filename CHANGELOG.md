@@ -7,7 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- [Single-page application support](./docs/cdn/overview.md#single-page-applications) to CDN Hosting
+
 ## [1.2.0] - 2022-11-13
+
+### Changed
+
+- login configuration
 
 ## [1.1.1] - 2022-10-26
 
