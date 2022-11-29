@@ -80,7 +80,7 @@ See [.blinkmignore](https://github.com/oneblink/aws-s3.js#blinkmignore)
 
 ## Single-page Applications
 
-[SPA (Single-page application)](https://developer.mozilla.org/en-US/docs/Glossary/SPA) require that all URL paths return the `index.html` file and a 200 HTTP status response code. This is not the default configuration for a CDN Hosting environment. However, it simple to turn on. In your `.blinkmrc.json` file, simple add a `isSinglePageApplication` with a value of `true` under the `cdn` property.
+[SPA (Single-page application)](https://developer.mozilla.org/en-US/docs/Glossary/SPA) require that all URL paths return the `index.html` file and a 200 HTTP status response code. This is not the default configuration for a CDN Hosting environment. However, it simple to turn on. In your `.blinkmrc.json` file, simply add an `isSinglePageApplication` with a value of `true` under the `cdn` property.
 
 ### Example
 
