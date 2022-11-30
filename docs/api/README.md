@@ -1,5 +1,17 @@
 # OneBlink API CLI
 
+## Getting Started
+
+1. [What you must do BEFORE you begin!](./beginning.md)
+
+2. [Creating the API](./creating-api.md)
+
+3. [Logging into the OneBlink CLI](./logging-in.md)
+
+4. [Running the API Locally](./api-locally.md)
+
+5. [Hosting your API with OneBlink](./hosting-api.md)
+
 ## Documentation
 
 1.  [Overview](./overview.md)
@@ -26,7 +38,7 @@
 
 12. [Memory Constraints](./memory-constraints.md)
 
-13.  [ES Modules](./upgrading-to-es-modules.md)
+13. [ES Modules](./upgrading-to-es-modules.md)
 
 ## More Information...
 
@@ -45,3 +57,5 @@
 - [Dynamic Form Element Options](../../examples/api/dynamic-form-element-options)
 
 - [Lookup data or elements on remote API](../../examples/api/lookup)
+
+- [Populating Form based on Form Elements](../examples/transferring-data-pages.md)

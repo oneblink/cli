@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- More developer docs for getting started with OneBlink APIs
+
 ## [1.2.0] - 2022-11-13
 
 ## [1.1.1] - 2022-10-26
