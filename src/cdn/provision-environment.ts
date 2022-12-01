@@ -14,9 +14,11 @@ async function provisionEnvironment(
   }).start()
   try {
     const body = await oneBlinkAPIClient.postRequest<
-      undefined,
+      { isSinglePageApplication?: boolean },
       { brandedUrl: string }
-    >(`/webApps/${cfg.scope}/environments/${env}/deployments`)
+    >(`/webApps/${cfg.scope}/environments/${env}/deployments`, {
+      isSinglePageApplication: cfg.isSinglePageApplication,
+    })
     spinner.succeed(
       'Deployment complete - Origin: ' + chalk.bold(body.brandedUrl),
     )
