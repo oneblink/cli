@@ -12,7 +12,7 @@ If you are not, you can open the terminal the same way you have previously.
 
 After you have opened the terminal, you can login by typing:
 
-`Oneblink login`
+`oneblink login`
 
 You will have your default browser open where you can login. After logging in, you will be given a code that you can copy and paste into your terminal.
 
