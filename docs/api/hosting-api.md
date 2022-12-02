@@ -12,6 +12,6 @@ Now we can run the command
 
 After running this, you will get text in your terminal if it is okay to deploy to that environment, most likely named 'dev'. If that is fine, you can hit `y` and enter, then you're good to go. Go check the OneBlink Hosted API page and give it a refresh if required. You should see your brand new shiny API!
 
-<img src="../pics/ShinyNewAPI.png" alt="An image of the OneBlink Console showing a hosted API" height="300">
+![An image of the OneBlink Console showing a hosted API](../pics/ShinyNewAPI.png)
 
 Now, you have learnt the steps required to writing your own code and hosting your own API! Feel free to view some of the examples for code that you can use on your own Form!

@@ -26,6 +26,6 @@ Now that we are in the right folder, we can now test the code. We can test the c
 
 Now, using Postman in this example, we can test this endpoint. In Postman, I set the type of method to `GET` and I write in the url of `localhost:3000/positions`. Now upon hitting submit:
 
-<img src="../pics/APILocalPostman.png" height="640" alt="A picture showing the API running locally and returning the data successfully in Postman" />
+![A picture showing the API running locally and returning the data successfully in Postman](../pics/APILocalPostman.png)
 
 Success! We can see our code has worked perfectly, it has returned our option set we are going to use! Now, we can deploy it!

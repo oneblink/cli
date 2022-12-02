@@ -4,11 +4,11 @@
 
 Firstly, we will need to make sure we have something to deploy to when we are ready. Let us go onto the [OneBlink Console](console.oneblink.io). Once we are in our account, go to the "API Hosting" side tab under the Advanced heading. Once here, let us click the plus button in the bottom right hand corner.
 
-<img src="../pics/APIHostingPointingArrow.png" height="640" alt="An image showing the API Hosting Page highlighting the button that needs to be clicked">
+![An image showing the API Hosting Page highlighting the button that needs to be clicked"](../pics/APIHostingPointingArrow.png)
 
 It's time to fill out some information. We only need to fill in the API subdomain, so call the subdomain what you would like. In my example, I will call it "example".
 
-<img src="../pics/APIHostingSavingExample.png" height="640" alt="An image showing the API Hosting Page with the create an API modal">
+![An image showing the API Hosting Page with the create an API modal](../pics/APIHostingSavingExample.png)
 
 Now you should see it featured with no environments as shown below. Now, we can get onto the fun part!
 
