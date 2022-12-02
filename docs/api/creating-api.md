@@ -14,7 +14,7 @@ Now you should see it featured with no environments as shown below. Now, we can 
 
 ## Create a Folder and call it whatever you want
 
-This folder will be the central spot for all of your API work. In this folder, we are going to create a few important files to start off with. The first file will we will create is the `.blinkmrc.json` file. This stores all the important information regarding your routes, api name, AWS Lambda configuration and much more. We won't overload you with all the different choices you have in it yet, but first we will create this file and you can copy this template over!
+This folder will be the central spot for all of your API work. In this folder, we are going to create a few important files to start off with. The first file we will create is the `.blinkmrc.json` file. This stores all the important information regarding your routes, api name, AWS Lambda configuration and much more. We won't overload you with all the different choices you have in it yet, but first we will create this file and you can copy this template over!
 
 ```json
 {
