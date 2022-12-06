@@ -52,9 +52,11 @@ describe('apis', () => {
       CONFIGURATION_DIR,
       '/books/123/chapters/1',
     )
+    const absoluteModule = path.resolve(CONFIGURATION_DIR, './api/chapter.js')
+    const fileUrl = url.pathToFileURL(absoluteModule)
     expect(routeConfig).toEqual({
       route: '/books/{id}/chapters/{chapterNo}',
-      module: path.resolve(CONFIGURATION_DIR, './api/chapter.js'),
+      module: fileUrl.href,
       timeout: 15,
       params: {
         id: '123',
