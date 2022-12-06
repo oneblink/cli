@@ -1,6 +1,7 @@
 import type { HandlerConfiguration, RouteConfiguration } from './types.js'
 
 import path from 'path'
+import url from 'url'
 
 import handlers from './handlers.js'
 import readRoutes from './routes/read.js'
@@ -24,7 +25,9 @@ function getRouteConfig(
   return readRoutes(cwd)
     .then((routeConfigs) => handlers.findRouteConfig(route, routeConfigs))
     .then((routeConfig) => {
-      routeConfig.module = path.resolve(cwd, routeConfig.module)
+      const absoluteModule = path.resolve(cwd, routeConfig.module)
+      const fileUrl = url.pathToFileURL(absoluteModule)
+      routeConfig.module = fileUrl.href
       return routeConfig
     })
 }
