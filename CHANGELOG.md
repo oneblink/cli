@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- `api serve` command not resolving module paths on Windows operating systems
+
 ### Added
 
 - [Single-page application support](./docs/cdn/overview.md#single-page-applications) to CDN Hosting
