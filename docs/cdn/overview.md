@@ -107,7 +107,7 @@ By default, a set of security headers will be present on all responses from the 
 }
 ```
 
-These headers can be disabled by setting the `disableSecurityResponseHeaders` property to `true` in your In your `.blinkmrc.json` file, like so:
+These headers can be disabled by setting the `disableSecurityResponseHeaders` property to `true` in your  `.blinkmrc.json` file, like so:
 
 ### Example
 
