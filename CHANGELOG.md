@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - [Single-page application support](./docs/cdn/overview.md#single-page-applications) to CDN Hosting
+- [Disable security response headers support](./docs/cdn/overview.md#security-response-headers) to CDN Hosting
 
 ## [1.2.0] - 2022-11-13
 

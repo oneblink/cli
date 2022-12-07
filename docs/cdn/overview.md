@@ -92,3 +92,30 @@ See [.blinkmignore](https://github.com/oneblink/aws-s3.js#blinkmignore)
   }
 }
 ```
+
+## Security Response Headers
+
+By default, a set of security headers will be present on all responses from the web server hosting your CDN project. These headers are:
+
+```json
+{
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+  "Strict-Transport-Security": "max-age=31536000",
+  "X-Content-Type-Options": "nosniff",
+  "X-Frame-Options": "SAMEORIGIN",
+  "X-XSS-Protection": "1; mode=block"
+}
+```
+
+These headers can be disabled by setting the `disableSecurityResponseHeaders` property to `true` in your In your `.blinkmrc.json` file, like so:
+
+### Example
+
+```json
+{
+  "cdn": {
+    "scope": "customer-project.cdn.oneblink.io",
+    "disableSecurityResponseHeaders": true,
+  }
+}
+```
