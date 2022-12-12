@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2022-12-12
+
 ### Fixed
 
 - `api serve` command not resolving module paths on Windows operating systems
