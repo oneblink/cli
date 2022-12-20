@@ -2,11 +2,13 @@
 
 ## Creating the API on the OneBlink Console
 
-Firstly, we will need to make sure we have something to deploy to when we are ready. Let us go onto the [OneBlink Console](console.oneblink.io). Once we are in our account, go to the "API Hosting" side tab under the Advanced heading. Once here, let us click the plus button in the bottom right hand corner.
+Firstly, we will need to make sure we have something to deploy to when we are ready. Let us go onto the [OneBlink Console](https://console.oneblink.io) or if you are a Civicplus customer, [Civic Optimize](https://console.transform.civicplus.com). All screenshots will be taken on the OneBlink Console but, only the colour scheme will be different if you are a Civic Optimize user. All Terminal commands will remain the same but replace "oneblink" with "civicplus". 
+
+Once we are in our account, go to the "API Hosting" side tab under the Advanced heading. Once here, let us click the plus button in the bottom right hand corner.
 
 ![An image showing the API Hosting Page highlighting the button that needs to be clicked"](../pics/APIHostingPointingArrow.png)
 
-It's time to fill out some information. We only need to fill in the API subdomain, so call the subdomain what you would like. In my example, I will call it "example".
+It's time to fill out some information. We only need to fill in the API subdomain, so call the subdomain what you would like. In my example, I will call it "audits".
 
 ![An image showing the API Hosting Page with the create an API modal](../pics/APIHostingSavingExample.png)
 
@@ -31,19 +33,28 @@ This folder will be the central spot for all of your API work. In this folder, w
 }
 ```
 
-This will be updated later on in the guide. But for now, please change the project name to what you made your api name in the OneBlink Console.
+This will be updated later on in the guide. But for now, please change the project name to what you made your api name in the OneBlink Console or Civic Optimize.
 
 Next, in the folder, create another folder called "src" then, create a folder within "src" called "routes". Shown below:
 
-Now, if we are using VSCode, open a terminal with <code>crtl+shift+`</code>. If not, you will need to open your terminal and manually direct it to the root of the folder you have just created. Now you need to write
+Now, if we are using VSCode with windows, you can open a terminal with <code>crtl+shift+\`</code>. 
+If you're using a Mac with VSCode, you can open a terminal with <code>command+shift+\`</code>
+
+If not, you will need to open your terminal and manually direct it to the root of the folder you have just created.
+
+If you are a OneBlink Console user, you will write:
 
 ```bash
   oneblink api scope accountName-apiSubDomain.api.oneblink.io
 ```
 
-You will need to replace accountName with your accountName and replace the apiSubDomain with the Sub Domain you wrote. In this case, mine would be `josh-example.api.oneblink.io`.
+If you are using Civic Optimize, you will write: 
 
-After this, we can start writing some code, we are free to either write in `JavaScript` or `TypeScript`. We will be writing all of our tutorials in JavaScript as JavaScript does not require anything to be installed through npm.
+```bash
+  civicplus api scope accountName-apiSubDomain.api.transform.civicplus.com
+```
+
+You will need to replace accountName with your accountName and replace the apiSubDomain with the Sub Domain you wrote. In this case, mine would be `josh-audits.api.oneblink.io`.
 
 ## An Example Option Set
 
@@ -93,7 +104,7 @@ Replace the route we copied over before with:
 }
 ```
 
-For example, the link for me would become: `josh-example.api.oneblink.io/position`.
+For example, the link for me would become: `josh-audits.api.oneblink.io/position`.
 
 Now, your whole `.blinkmrc.json` file should look like this:
 
@@ -112,4 +123,4 @@ Now, your whole `.blinkmrc.json` file should look like this:
 }
 ```
 
-Now that we have replaced this, we can login to OneBlink via the CLI!
+Now that we have replaced this, we can login via the CLI!

@@ -12,6 +12,8 @@
 
 5. [Hosting your API with OneBlink](./hosting-api.md)
 
+6. [Securing Your API](./securing-api.md)
+
 ## Documentation
 
 1.  [Overview](./overview.md)

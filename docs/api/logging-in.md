@@ -1,5 +1,25 @@
 # Logging In with the OneBlink CLI
 
+## Enabling the right permissios on the Console
+
+In order to utilise the CLI to its fullest extent, you will need to ensure that you have the right permissions set on the Console/Civic Optimize. 
+
+You can find the related permissions in roles on the side tab under Administration. You can choose to edit an existing role or you can add a new one. After the modal has opened, if you are to scroll down, you can find 'API Hosting' under the 'Advanced' heading. This is shown below: 
+
+![An image of the role modal, highlighting API Hosting under the Advanced heading.](../pics/APIHostingPermissions.png)
+
+You can see there are 4 options. You can read what each permission will let you do by hovering over it and reading the tooltip, but we can give an extended understanding here. So:
+
+- Manager
+    - Selecting this option will let you to create and delete hosted APIs on the Console. You will also be able to deploy environments and code changes to the API through the OneBlink CLI. 
+- Developer
+    - Selecting this option will let you deploy environments and code changes to the API through the OneBlink CLI. You will be able to view the APIs on the Console. 
+- Read Only
+    - The name might give it away but, you are only able to view the APIs on the Console with this permission. 
+- Off
+    - Another obvious one but, you have no permissions in regards to API Hosting. 
+
+That explains each of the permissions! Make sure you sent the right one if you want to deal with deploying API changes!
 ## Logging in
 
 Before we can do anything with the OneBlink CLI, we have to log in first. So, let us get our terminal opened first!

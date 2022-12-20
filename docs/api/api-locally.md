@@ -6,18 +6,6 @@ In order to test our code locally, we have a few options. We can use in-built we
 
 To run your API locally, we must now get our terminal to be in the same folder as our root folder for our API. If you opened your terminal via VS Code, you can skip this next step and get straight to running some commands!
 
-## Getting your Terminal to the right directory
-
-This can be an annoying task to undertake but luckily, we have an easy way to complete it!
-
-On a Windows computer, you can open the folder in Windows Explorer. In the top left, you can hit `File` and hover open `Open Windows Powershell` to open the terminal in that folder. 
-
-![An image of Windows Explorer showing the 'Open Powershell' button](../pics/APILocalWindowsRunPowershell.png)
-
-On a Mac computer, you can right click on the folder, which will open a context menu that has the option `Services`. If you go down and hover over, you can hit `New Terminal at Folder` which will open the terminal in that folder. 
-
-![An image of Mac showing the 'New Terminal at Folder' in the context menu](../pics/APILocalMacTerminalOpen.png)
-
 ## Testing your Code Locally
 
 Now that we are in the right folder, we can now test the code. We can test the code by running `oneblink api serve`. After running this, you should get a confirmation similar to this:
