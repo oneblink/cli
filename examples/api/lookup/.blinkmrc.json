@@ -10,6 +10,14 @@
       {
         "route": "/company-assets",
         "module": "./src/company-assets.js"
+      },
+      {
+        "route": "/data-transfer",
+        "module": "./src/routes/dataTransfer.js"
+      },
+      {
+        "route": "/data-from-external-api",
+        "module": "./src/fillDataFromAPI.js"
       }
     ]
   }
