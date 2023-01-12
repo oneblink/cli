@@ -48,7 +48,7 @@ We have called the function `post` and given it the parmameters of `req` and `re
 
 You can read what is included in the `Request` and `Response` objects [in our article featured here](../api/handlers.md), under the `Request` and `Response` headings.
 
-Please keep in mind, that there is another way of writing these functions involving ES Modules, you can see how to update the function to use that method [here](./upgrading-to-es-modules.md)
+Please keep in mind, that there is another way of writing these functions involving ES Modules, you can see how to update the function to use that method [here](../api/upgrading-to-es-modules.md)
 
 Now we can start to fill this function with some code!
 
