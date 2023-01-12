@@ -1,50 +1,49 @@
-import fetch from 'node-fetch'
+const fetch = require('node-fetch')
 
-export default async function (req, res) {
-  if (!req.body || !req.body.submission || !req.body.submission.Full_Name) {
+module.exports.post = async function (req, res) {
+  if (!req.body || !req.body.submission || !req.body.submission.Activity_Type) {
     return res.setStatusCode(400).setPayload({
       message: 'Error, you did not select any names',
     })
   }
 
-  const name = req.body.submission.Full_Name
+  console.log(req)
+
+  const activityType = req.body.submission.Activity_Type
 
   const response = await fetch(
-    `https://mockyard.herokuapp.com/users/name/${name}`,
+    `https://www.boredapi.com/api/activity?type=${activityType}`,
     {
       method: 'GET',
     },
   )
 
-  //Returns an array of objects, we will grab the first.
-  const person = (await response.json())[0]
-  console.log('Person before', person)
+  //Returns a json object.
+  const activityReturned = await response.json()
+  console.log('Activity returned', activityReturned)
   /*json object that is returned from above
   {
-    id: number,
-    name: string,
-    email: string,
-    gender: string,
-    image: string,
-    phone: stirng,
-    country: string,
-    city: string, 
-    age: number
+    activity: string,
+    type: string,
+    participants: number,
+    price: number,
+    link: string,
+    key: string,
+    accessibility: number,
   }
   */
-  if (!person) {
+  if (!activityReturned) {
     return res.setStatusCode(400).setPayload({
-      message: 'Error, nothing returned from the API',
+      message: 'Error, nothing returned from the API.',
     })
   }
-  console.log('Person returned', person)
+
   return res.setStatusCode(200).setPayload({
-    id: person.id,
-    email: person.email,
-    gender: person.gender,
-    phone: person.phone,
-    country: person.country,
-    city: person.city,
-    age: +person.age,
+    activity: activityReturned.activity,
+    participants: +activityReturned.participants,
+    price: +activityReturned.price,
+    link: activityReturned.link,
+    key: activityReturned.key,
+    accessibility: +activityReturned.accessibility,
   })
 }
