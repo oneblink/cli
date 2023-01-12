@@ -89,7 +89,7 @@ From top to bottom again, you can see the API link with its environment in the t
 
 Here you can filter on a search parameter, a start time, and end time and a refresh button to search with those parameters. The search parameter will let you search your API logs for those parameters and it will return any that matches. The start date time and end date time will allow you to configure the time range that you would like to investigate logs for. 
 
-Below that, we have the area where logs show, in the screenshot above, you can see that it has a sad face with a message indicating that there were no logs found. You can change your time period to see if you can locate any logs. If you have been following long, you should have some from the call made earlier, so hit the start date and change it to yesterday, then hit refresh!
+Below that, we have the area where logs are shown, in the screenshot above, you can see that it has a sad face with a message indicating that there were no logs found. You can change your time period to see if you can locate any other logs. If you have been following along, you should have some from the calls made earlier, so hit the start date and change it to yesterday, then hit refresh!
 
 Now you will hopefully see something like this: 
 
