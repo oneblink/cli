@@ -1,4 +1,5 @@
 const fetch = require('node-fetch')
+const formsApp = require('@oneblink/sdk/tenants/oneblink')
 
 module.exports.post = async function (req, res) {
   if (!req.body || !req.body.submission || !req.body.submission.Activity_Type) {
@@ -40,10 +41,10 @@ module.exports.post = async function (req, res) {
 
   return res.setStatusCode(200).setPayload({
     activity: activityReturned.activity,
-    participants: +activityReturned.participants,
-    price: +activityReturned.price,
+    participants: activityReturned.participants,
+    price: activityReturned.price,
     link: activityReturned.link,
     key: activityReturned.key,
-    accessibility: +activityReturned.accessibility,
+    accessibility: activityReturned.accessibility,
   })
 }
