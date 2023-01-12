@@ -14,9 +14,15 @@ async function provisionEnvironment(
   }).start()
   try {
     const body = await oneBlinkAPIClient.postRequest<
-      undefined,
+      {
+        isSinglePageApplication?: boolean
+        disableSecurityResponseHeaders?: boolean
+      },
       { brandedUrl: string }
-    >(`/webApps/${cfg.scope}/environments/${env}/deployments`)
+    >(`/webApps/${cfg.scope}/environments/${env}/deployments`, {
+      isSinglePageApplication: cfg.isSinglePageApplication,
+      disableSecurityResponseHeaders: cfg.disableSecurityResponseHeaders,
+    })
     spinner.succeed(
       'Deployment complete - Origin: ' + chalk.bold(body.brandedUrl),
     )

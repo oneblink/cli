@@ -77,3 +77,45 @@ oneblink cdn deploy <path-to-files> --env <environment> --cwd <path-to-project> 
 Skip ignored files and directories during upload.
 
 See [.blinkmignore](https://github.com/oneblink/aws-s3.js#blinkmignore)
+
+## Single-page Applications
+
+[SPA (Single-page application)](https://developer.mozilla.org/en-US/docs/Glossary/SPA) require that all URL paths return the `index.html` file and a 200 HTTP status response code. This is not the default configuration for a CDN Hosting environment. However, it simple to turn on. In your `.blinkmrc.json` file, simply add an `isSinglePageApplication` with a value of `true` under the `cdn` property.
+
+### Example
+
+```json
+{
+  "cdn": {
+    "scope": "customer-project.cdn.oneblink.io",
+    "isSinglePageApplication": true,
+  }
+}
+```
+
+## Security Response Headers
+
+By default, a set of security headers will be present on all responses from the web server hosting your CDN project. These headers are:
+
+```json
+{
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+  "Strict-Transport-Security": "max-age=31536000",
+  "X-Content-Type-Options": "nosniff",
+  "X-Frame-Options": "SAMEORIGIN",
+  "X-XSS-Protection": "1; mode=block"
+}
+```
+
+These headers can be disabled by setting the `disableSecurityResponseHeaders` property to `true` in your  `.blinkmrc.json` file, like so:
+
+### Example
+
+```json
+{
+  "cdn": {
+    "scope": "customer-project.cdn.oneblink.io",
+    "disableSecurityResponseHeaders": true,
+  }
+}
+```

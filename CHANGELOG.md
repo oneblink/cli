@@ -11,7 +11,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - More developer docs for getting started with OneBlink APIs
 
+## [1.3.0] - 2022-12-12
+
+### Fixed
+
+- `api serve` command not resolving module paths on Windows operating systems
+
+### Added
+
+- [Single-page application support](./docs/cdn/overview.md#single-page-applications) to CDN Hosting
+- [Disable security response headers support](./docs/cdn/overview.md#security-response-headers) to CDN Hosting
+
 ## [1.2.0] - 2022-11-13
+
+### Changed
+
+- login configuration
 
 ## [1.1.1] - 2022-10-26
 
