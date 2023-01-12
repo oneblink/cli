@@ -45,7 +45,7 @@ Please make sure that your element names match here, as you will need to have th
 
 ## Writing The API Code
 
-You are able to grab the code that is about to be written [by clicking here](../../examples/api/lookup-data-transfer)
+You are able to grab the code that is about to be written [by clicking here](../../examples/api/lookup/src/data-transfer.js)
 
 The path we will take writing this code includes: 
 
@@ -198,11 +198,11 @@ We have the data we require, we need to now return it for the user. We can do th
 ```js
 return res.setStatusCode(200).setPayload({
   activity: activityReturned.activity,
-  participants: +activityReturned.participants,
-  price: +activityReturned.price,
+  participants: activityReturned.participants,
+  price: activityReturned.price,
   link: activityReturned.link,
   key: activityReturned.key,
-  accessibility: +activityReturned.accessibility,
+  accessibility: activityReturned.accessibility,
 });
 ```
 
