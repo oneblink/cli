@@ -18,7 +18,7 @@ After running this, you will get text in your terminal if it is okay to deploy t
 
 ![An image of the OneBlink Console showing a hosted API](../pics/ShinyNewAPI.png)
 
-Now, you have learnt the steps required to writing your own code and hosting your own API! 
+Now, you have learnt the steps required to write your own code and host your own API! 
 
 Now that the API is hosted, we still need to setup our Option Set we wrote onto a form, so let us do that!
 
