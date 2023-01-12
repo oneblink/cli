@@ -95,5 +95,5 @@ Now you will hopefully see something like this:
 
 ![An image showing a Hosted API's logs screen](../pics/APIHostingLogsShown.png)
 
-When logs do appear, they are in a box and show the date they occurred up the top. There will be a box for each respective day. Looking at a row, you can see the time this occurred, the request id, and what occurred at that time. The logs will provide information regarding any information you have written to the Console via your code (through methods such as ```Console.log()```, ```Console.error()``` or anything equivalent.)
+When logs do appear, they are in a box and show the date they occurred up the top. There will be a box for each respective day. Looking at a row, you can see the time this occurred, the request id, and what occurred at that time. The logs will provide information regarding any information you have written to the Console via your code (through methods such as ```console.log()```, ```console.error()``` or anything equivalent.)
 

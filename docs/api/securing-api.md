@@ -9,7 +9,7 @@ If you are using VS Code, you can open the terminal by pressing <code>crtl+shift
 With the open terminal in our API folder, we can run:
 
 ```bash
-npm install @oneblink/sdk
+npm install --save @oneblink/sdk
 ```
 
 This will install the OneBlink SDK to that project. If this is your first package install, it will create a folder named `node_modules` and create 2 files named `package.json` and `package-lock.json`. 
