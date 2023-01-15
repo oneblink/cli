@@ -24,7 +24,7 @@ Now that the API is hosted, we still need to setup our Option Set we wrote onto 
 
 ## Setting up the Option Set
 
-We have the code on the OneBlink Console so now we have to setup our option set. On the left tab, we will need to hit "Option Sets" under the "Advanced" heading. After this, you will need to hit the orange "+" button at the bottom right of the screen.
+We have the code on the OneBlink Console so now we have to setup our option set. On the left tab, we will need to hit "Option Sets" under the "Developer" heading. After this, you will need to hit the orange "+" button at the bottom right of the screen.
 
 This will open up a modal as shown below:
 
