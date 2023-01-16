@@ -236,7 +236,7 @@ Now that we have written all of this code, we can now deploy it to the Console. 
 
 Now that the API has been hosted, we can go onto the Console and create a lookup for this data. 
 
-Firstly, let us click on 'Lookups' on the side bar. On the new screen, hit the plus button on the bottom right.
+Firstly, let us click on "Lookups" on the side bar under the "Developer Tools" options. On the new screen, hit the plus button on the bottom right.
 
 You will want to click "Hosted API" on the right, enter any label you want, choose the Hosted API you updated and select the endpoint we just wrote. It should look similar to this screenshot below: 
 

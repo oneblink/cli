@@ -166,7 +166,7 @@ Now we are going back to the Console to finalise our work!
 
 Now we have deployed our API, we have our form, it's time to make the lookup.
 
-Firstly, let us click on 'Lookups' on the side bar. On the new screen, hit the plus button on the bottom right.
+Firstly, let us click on 'Lookups' on the side bar under "Developers Tools" options. On the new screen, hit the plus button on the bottom right.
 
 You will want to click 'Hosted API' on the right, enter any label you want, choose the Hosted API you updated and select the endpoint. It should look similar to this screenshot below: 
 
