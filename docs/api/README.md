@@ -61,3 +61,5 @@
 - [Lookup data or elements on remote API](../../examples/api/lookup)
 
 - [Populating Form based on Form Elements](../examples/transferring-data-pages.md)
+
+- [Populating Form with External API call](../examples/calling-external-api-lookup.md)

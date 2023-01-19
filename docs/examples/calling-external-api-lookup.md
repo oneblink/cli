@@ -45,7 +45,7 @@ Please make sure that your element names match here, as you will need to have th
 
 ## Writing The API Code
 
-You are able to grab the code that is about to be written [by clicking here](../../examples/api/lookup/src/data-transfer.js)
+You are able to grab the code that is about to be written [by clicking here](https://github.com/oneblink/cli/blob/master/examples/api/lookup/src/data-transfer.js)
 
 The path we will take writing this code includes: 
 
