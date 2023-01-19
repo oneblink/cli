@@ -21,7 +21,7 @@ Now that we have the form setup, we can get onto writing the API Code we will ne
 
 ## Writing the API Code
 
-You are able to grab the code that is about to be written [by clicking here.](../../examples/api/lookup-data-transfer)
+You are able to grab the code that is about to be written [by clicking here.](https://github.com/oneblink/cli/blob/master/examples/api/lookup/src/fill-data-from-api.js)
 
 The path we will take writing this code includes:
 
