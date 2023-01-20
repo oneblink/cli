@@ -72,7 +72,7 @@ A keen eye would have seen in an earlier screenshot that these buttons existed o
 
 You can see what the metrics screen looks like below:
 
-![An image showing the API Hosting metrics screen](../pics/ApiMetricsScreen.png)
+![An image showing the API Hosting metrics screen](../pics/APIMetricsScreen.png)
 
 On this page, from top to bottom, you can see the named API and its environment in the top left of the page. You have 5 buttons on the right, reading 60 minutes, 6 hours, 24 hours, 7 days and 30 days from left to right for time periods you can select to view the metrics of.
 
