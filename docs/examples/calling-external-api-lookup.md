@@ -39,7 +39,7 @@ In this example, I will make all of these elements read only too so we know only
 
 Your form should now look something like this: 
 
-![A gif showing the form layout for the example](../../docs/pics/ExternalAPIForm.gif)
+![A gif showing the form layout for the example](../pics/ExternalAPIForm.gif)
 
 Please make sure that your element names match here, as you will need to have the correct elements for the API code! With the form out of the way, we can now write the API Code!
 

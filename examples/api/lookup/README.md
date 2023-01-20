@@ -8,6 +8,6 @@
 
 - [`POST /dataTransfer`](./src/data-transfer.js) Example of receiving form input via post body and pre-filling form elements on separate pages
 
-- [`POST /getNumberFacts`](./src/fill-data-from-api.js) Example of receiving form input via post body and calling an external api to fill form elements
+- [`POST /callExternalAPI`](./src/fill-data-from-api.js) Example of receiving form input via post body and calling an external api to fill form elements
 
 For further details, please see OneBlink's [product documentation](https://support.oneblink.io/support/solutions/articles/42000057234-lookup)
