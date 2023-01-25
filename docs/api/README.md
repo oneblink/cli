@@ -4,15 +4,16 @@
 
 1. [What you must do BEFORE you begin!](./beginning.md)
 
-2. [Creating the API](./creating-api.md)
+2. [Configuring your API Codebase](./creating-api.md)
 
-3. [Logging into the OneBlink CLI](./logging-in.md)
+3. [Add A Route](./add-a-route.md)
 
-4. [Running the API Locally](./api-locally.md)
+4. [Logging into the OneBlink CLI](./logging-in.md)
 
-5. [Hosting your API with OneBlink](./hosting-api.md)
+5. [Running the API Locally](./api-locally.md)
 
-6. [Securing Your API](./securing-api.md)
+6. [Hosting your API with OneBlink](./hosting-api.md)
+
 
 ## Documentation
 
@@ -48,7 +49,13 @@
 
 - [Execution Environment](./environment.md)
 
+- [Integrating API Routes](./integrating-api-routes.md)
+
+- [Securing Your API](./securing-api.md)
+
 - [Suggestions](./suggestions.md)
+
+- [Viewing Logs and Viewing Metrics](./viewing-logs-and-metrics.md)
 
 ## Examples
 
@@ -60,6 +67,6 @@
 
 - [Lookup data or elements on remote API](../../examples/api/lookup)
 
-- [Populating Form based on Form Elements](../examples/transferring-data-pages.md)
+- [Using the form submission in a lookup](../examples/transferring-data-pages.md)
 
 - [Populating Form with External API call](../examples/calling-external-api-lookup.md)

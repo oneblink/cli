@@ -1,5 +1,9 @@
 # Securing your API
 
+- [Installing the OneBlink SDK in our code](#installing-the-oneblink-sdk-in-our-code)
+- [Obtaining Developer Keys](#obtaining-developer-keys)
+- [Updating your Code](#updating-your-code)
+
 ## Installing the OneBlink SDK in our code
 
 Securing code is something that's important to do. It will ensure that we are protecting our API Routes and allowing only correct users to run the end points we are writing. We can do this through the [OneBlink SDK](https://oneblink.github.io/sdk-node-js/). This means we are going to utilise Node to get the OneBlink SDK in our project. 
@@ -32,14 +36,14 @@ After generating this key, you should see something like this:
 
 ![An example of what a developer key looks like after generation on the OneBlink Console](../pics/DeveloperKeyExample.png)
 
-I've blacked out my keys obviously but you should have 3 rows of data, 1 visible but the other 2 are hidden with dots. Now that we have the key, let us jump back into the code. 
+I've hidden my keys obviously but you should have 2 rows of data, 1 visible but the other is hidden with dots. Now that we have the key, let us jump back into the code. 
 
 ## Updating your Code
 
 Now we need to go into our code and create some checks to ensure that the user is valid. The steps we will go through to achieve this are:
 
-- Create a new FormsApp Object
-- Use the VerifyJWT function from it
+- [Create a new FormsApp Object](#create-a-new-formsapp-object)
+- [Use the VerifyJWT function from FormsApp](#use-the-verifyjwt-function-from-formsapp)
 
 Now let us go down the list!
 
@@ -68,7 +72,11 @@ Here we will write:
     secretKey: YOUR_SECRET_KEY,
   })
 ```
-replacing the values with the respective values from the Console. You can place this inside, or outside of your function. After this, in your function at the very beginning, you can use this code:
+replacing the values with the respective values from the Console. You can place this inside, or outside of your function.
+
+### Use the VerifyJWT function from FormsApp
+
+After this, in your function at the very beginning, you can use this code:
 
 ```js
     const authenticationHeader = req.headers.authorization
