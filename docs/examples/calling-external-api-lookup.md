@@ -2,6 +2,10 @@
 
 Let's say you have an existing API setup that stores data. You want to grab specific data based on a form element value from an end user and want to call that API so you can grab data to return to the user to input on the form. This is something that sounds... arguably tedious but it will be very straight forward to do with this tutorial! So, let's get started with the example!
 
+- [Setting Up The Form](#setting-up-the-form)
+- [Writing the API Code](#writing-the-api-code)
+- [Using the new Code on the Console](#using-the-new-code-on-the-console)
+
 ## Setting Up The Form
 
 For this form, we can stick to a one page form. 
@@ -45,16 +49,16 @@ Please make sure that your element names match here, as you will need to have th
 
 ## Writing The API Code
 
-You are able to grab the code that is about to be written [by clicking here](https://github.com/oneblink/cli/blob/master/examples/api/lookup/src/data-transfer.js)
+You are able to grab the code that is about to be written [by clicking here](https://github.com/oneblink/cli/blob/master/examples/api/lookup/src/fill-data-from-api.js)
 
 The path we will take writing this code includes: 
 
-- Make the file and write the function
-- Learn more about NPM and how to install packages
-- Validate the Submission data we want to use
-- Call the external API for the data we need
-- Format and return that data from the lookup
-- Update the `.blinkmrc.json`
+- [Make the file and write the function](#make-the-file-and-write-the-function)
+- [Learn more about NPM and how to install packages](#learn-more-about-npm-and-how-to-install-packages)
+- [Validate the Submission data we want to use](#validate-the-submission-data-we-want-to-use)
+- [Call the external API for the data we need](#call-the-external-api-for-the-data-we-need)
+- [Return the external API's data to the form](#return-the-external-apis-data-to-the-form)
+- [Update the `.blinkmrc.json`](#update-the-blinkmrcjson)
 
 We will approach this step by step. 
 
@@ -94,8 +98,6 @@ npm install node-fetch@2
 ```bash
 npm install node-fetch
 ```
-
-Now in your folder, you should see a `package.json` and a `package-lock.json` file. After running this, these files will make their new home in your folder. `package.json` can hold a variety of information regarding the node packages you have installed, the scripts you have to run the code and other data regarding the project itself. `package-lock.json` holds more information regarding what packages have been installed, including their meta data and the packages they require in order to work correctly. You can learn about `package.json` and `package-lock.json` [at the website here](https://docs.npmjs.com/cli/v9/configuring-npm/package-json)
 
 Now we have learnt to install packages, we have everything we need to continue writing the function!
 
@@ -192,7 +194,7 @@ This will ensure that if there is no data returned from the API, we will not fac
 
 Now that we have covered that, let us write the last part of the lookup!
 
-### Format and return that data from the lookup
+### Return the external API's data to the form
 
 We have the data we require, we need to now return it for the user. We can do this by writing this following code:
 ```js
@@ -206,7 +208,9 @@ return res.setStatusCode(200).setPayload({
 });
 ```
 
-Now, we are returning the specific data in the payload for the user. We are returning the data in the specific spots we want them on the form, hence we are matching up what we grabbed from the API Object and placing as the value for specific form elements. Now we get to update the `.blinkmrc.json` file to complete this process. 
+Now, we are returning the specific data in the payload for the user. We are returning the data in the specific spots we want them on the form, hence we are matching up what we grabbed from the API Object and placing as the value for specific form elements. 
+
+Now we have our full function! Make sure to add this route to your api's `.blinkmrc.json` config file! 
 
 ### Update the `.blinkmrc.json`
 
@@ -220,15 +224,7 @@ You can copy below but we are going to add this:
 }
 ```
 
-In this case, I stored my code in the folder path mentioned above. It's folder scheme would look something like this from the root folder of the API:
-
-```
-|-- project-root
-|   |-- .blinkmrc.json
-|   |-- src
-|   |   |-- routes
-|   |   |   |-- fill-data-from-api.js
-```
+If you want to know more about the `.blinkmrc.json` file, you can learn more [here!](../api/rc-configuration.md)
 
 ## Using the new Code on the Console
 
