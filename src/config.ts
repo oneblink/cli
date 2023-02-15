@@ -18,7 +18,7 @@ function getOneBlinkLoginClientId() {
 function getCivicPlusLoginClientId() {
   switch (environment) {
     case 'test': {
-      return '2nvltf5eqedd4hjpdst7eijf2r'
+      return '79jeq6j5gbi3ug1p5o13b3chbh'
     }
     default: {
       return '68cf2gnp6ckjiha3hf1pqe70os'
