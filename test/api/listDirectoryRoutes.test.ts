@@ -17,23 +17,8 @@ test('listDirectoryRoutes()', () => {
   )
   const expected = [
     {
-      route: '/response',
-      module: './response/index.js',
-      timeout: values.DEFAULT_TIMEOUT_SECONDS,
-    },
-    {
-      route: '/request',
-      module: './request/index.js',
-      timeout: values.DEFAULT_TIMEOUT_SECONDS,
-    },
-    {
-      route: '/promise',
-      module: './promise/index.js',
-      timeout: values.DEFAULT_TIMEOUT_SECONDS,
-    },
-    {
-      route: '/methods',
-      module: './methods/index.js',
+      route: '/boom',
+      module: './boom/index.js',
       timeout: values.DEFAULT_TIMEOUT_SECONDS,
     },
     {
@@ -42,8 +27,23 @@ test('listDirectoryRoutes()', () => {
       timeout: values.DEFAULT_TIMEOUT_SECONDS,
     },
     {
-      route: '/boom',
-      module: './boom/index.js',
+      route: '/methods',
+      module: './methods/index.js',
+      timeout: values.DEFAULT_TIMEOUT_SECONDS,
+    },
+    {
+      route: '/promise',
+      module: './promise/index.js',
+      timeout: values.DEFAULT_TIMEOUT_SECONDS,
+    },
+    {
+      route: '/request',
+      module: './request/index.js',
+      timeout: values.DEFAULT_TIMEOUT_SECONDS,
+    },
+    {
+      route: '/response',
+      module: './response/index.js',
       timeout: values.DEFAULT_TIMEOUT_SECONDS,
     },
   ]
