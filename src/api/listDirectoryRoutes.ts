@@ -11,9 +11,9 @@ export default async function listRoutes(
   const matches = await glob('./*/index.js', { cwd })
   return matches
     .map((match) => {
-      const module = `./${match}`
+      const module = `./${match.replaceAll(path.sep, '/')}`
       return {
-        route: `/${module.split(path.sep)[1]}`,
+        route: `/${module.split('/')[1]}`,
         module,
         timeout: values.DEFAULT_TIMEOUT_SECONDS,
       }
