@@ -1,4 +1,4 @@
-import { decode } from 'jsonwebtoken'
+import jsonwebtoken from 'jsonwebtoken'
 
 function isExpired(date: Date): boolean {
   if (!date) {
@@ -9,16 +9,12 @@ function isExpired(date: Date): boolean {
 
 export default async function verifyJWT(jwt: string | void): Promise<string> {
   if (!jwt) {
-    return Promise.reject(
-      new Error('Unauthenticated, please login before using this service.'),
-    )
+    throw new Error('Unauthenticated, please login before using this service.')
   }
 
-  const decoded = decode(jwt)
+  const decoded = jsonwebtoken.decode(jwt)
   if (!decoded || typeof decoded === 'string' || !decoded.exp) {
-    return Promise.reject(
-      new Error('Malformed access token. Please login again.'),
-    )
+    throw new Error('Malformed access token. Please login again.')
   }
 
   // The 0 here is the key, which sets the date to the epoch
@@ -27,12 +23,10 @@ export default async function verifyJWT(jwt: string | void): Promise<string> {
 
   // If token has not yet expired we can continue
   if (isExpired(expiryDate)) {
-    return Promise.reject(
-      new Error(
-        'Unauthorised, your access token has expired. Please login again.',
-      ),
+    throw new Error(
+      'Unauthorised, your access token has expired. Please login again.',
     )
   }
 
-  return Promise.resolve(jwt)
+  return jwt
 }

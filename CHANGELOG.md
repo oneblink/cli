@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **[BREAKING]** runtime version from Node.js 16 to [Node.js 18](https://nodejs.org/en/blog/announcements/
+
 ## [1.3.2] - 2023-04-20
 
 ### Added
