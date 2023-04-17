@@ -3,7 +3,12 @@
     "es6": true,
     "node": true
   },
-  "extends": ["plugin:@microsoft/eslint-plugin-sdl/recommended", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@microsoft/eslint-plugin-sdl/recommended",
+    "prettier"
+  ],
   "parser": "@typescript-eslint/parser",
   "plugins": ["prettier"],
   "globals": {
