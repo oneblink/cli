@@ -10,7 +10,7 @@ jobs:
 
     strategy:
       matrix:
-        node: ['18', '19']
+        node: ['18', '20']
         os: [macos-latest, ubuntu-latest, windows-latest]
 
     steps:
