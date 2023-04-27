@@ -8,23 +8,22 @@ jobs:
     name: Github Release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: docker://antonyurchenko/git-release:v3
+      - uses: actions/checkout@v3
+      - uses: docker://antonyurchenko/git-release:v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DRAFT_RELEASE: 'false'
           PRE_RELEASE: 'false'
           CHANGELOG_FILE: 'CHANGELOG.md'
           ALLOW_EMPTY_CHANGELOG: 'false'
-          ALLOW_TAG_PREFIX: 'true'
   publish:
     name: NPM Publish
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'
       - run: npm install --global npm@8
       - run: npm ci
       - uses: JS-DevTools/npm-publish@v1
