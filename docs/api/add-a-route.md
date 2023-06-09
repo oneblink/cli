@@ -8,7 +8,7 @@ This will cover these points
 
 Next, create a folder called `routes`.
 
-Now, in the `routes` folder, let us create a JavaScript file called `helloworld.js`. This will be an example option set that we will create.
+Now, in the `routes` folder, let us create a JavaScript file called `helloworld.js`. This will be an example list that we will create.
 
 Place the code below into the newly created file.
 

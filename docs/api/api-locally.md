@@ -16,4 +16,4 @@ Now, using Postman in this example, we can test this endpoint. In Postman, I set
 
 ![A picture showing the API running locally and returning the data successfully in Postman](../pics/APILocalPostman.png)
 
-Success! We can see our code has worked perfectly, it has returned our option set we are going to use! Now, we can deploy it!
+Success! We can see our code has worked perfectly, it has returned our list we are going to use! Now, we can deploy it!
