@@ -3,8 +3,8 @@ import os from 'os'
 import chalk from 'chalk'
 import Table from 'cli-table3'
 
-import { readScheduledFunctions } from './readScheduledFunctions.js'
-import validateRoute from '../routes/validate.js'
+import readScheduledFunctions from './read.js'
+import validateScheduledFunctions from './validate.js'
 
 function displayScheduledFunctions(
   logger: typeof console,
@@ -33,20 +33,22 @@ function displayScheduledFunctions(
     let totalErrors = 0
     return Promise.all(
       scheduledFunctionsConfig.map((scheduledFunctionsConfig) => {
-        return validateRoute(cwd, scheduledFunctionsConfig).then((errors) => {
-          const tableRow = [
-            scheduledFunctionsConfig.name,
-            scheduledFunctionsConfig.label,
-            scheduledFunctionsConfig.module,
-          ]
-          if (errors && errors.length) {
-            totalErrors++
-            tableRow.push(chalk.red(errors.join(os.EOL)))
-          } else {
-            tableRow.push(chalk.green('OK'))
-          }
-          table.push(tableRow)
-        })
+        return validateScheduledFunctions(cwd, scheduledFunctionsConfig).then(
+          (errors) => {
+            const tableRow = [
+              scheduledFunctionsConfig.name,
+              scheduledFunctionsConfig.label,
+              scheduledFunctionsConfig.module,
+            ]
+            if (errors && errors.length) {
+              totalErrors++
+              tableRow.push(chalk.red(errors.join(os.EOL)))
+            } else {
+              tableRow.push(chalk.green('OK'))
+            }
+            table.push(tableRow)
+          },
+        )
       }),
     ).then(() => {
       logger.log(table.toString())
