@@ -11,6 +11,11 @@ function validateScheduledFunctions(
   config: ScheduledFunctionConfiguration,
 ): Promise<Array<string>> {
   const errors: string[] = []
+  //Regex to make sure that only lowercase letters and dashes are allowed
+  if (!config.name.match(/^[a-z-]*$/)) {
+    errors.push('Name can only include lowercase letters and dashes')
+  }
+
   // Serverless does not allow for a timeout more than 5 minutes
   if (
     typeof config.timeout === 'number' &&
