@@ -11,11 +11,9 @@ describe('validate', () => {
         resolve: () => PATH_RESOLVE,
       },
     }))
-    jest.unstable_mockModule('fs', () => ({
+    jest.unstable_mockModule('fs/promises', () => ({
       default: {
-        stat: (path: string, cb: () => void) => {
-          cb()
-        },
+        stat: async (path: string) => undefined,
       },
     }))
   })
@@ -34,9 +32,11 @@ describe('validate', () => {
       name: 'TEST',
       label: 'test',
       module: 'test',
+      export: 'run',
+      timeout: 1,
     })
     expect(errors).toEqual([
-      'Name can only include lowercase letters and dashes',
+      '"name" can only include lowercase letters and dashes',
     ])
   })
 
@@ -46,19 +46,44 @@ describe('validate', () => {
     )
     const tests = [
       {
-        args: { name: 'test', label: 'test', module: 'test', timeout: 0 },
-        expected: ['Timeout must be between 1 and 900 (inclusive)'],
+        args: {
+          name: 'test',
+          label: 'test',
+          module: 'test',
+          timeout: 0,
+          export: 'run',
+        },
+        expected: ['"timeout" must be between 1 and 900 (inclusive)'],
       },
       {
-        args: { name: 'test', label: 'test', module: 'test', timeout: 901 },
-        expected: ['Timeout must be between 1 and 900 (inclusive)'],
+        args: {
+          name: 'test',
+          label: 'test',
+          module: 'test',
+          timeout: 901,
+          export: 'run',
+          handler: 'test.run',
+        },
+        expected: ['"timeout" must be between 1 and 900 (inclusive)'],
       },
       {
-        args: { name: 'test', label: 'test', module: 'test', timeout: 1 },
+        args: {
+          name: 'test',
+          label: 'test',
+          module: 'test',
+          timeout: 1,
+          export: 'run',
+        },
         expected: [],
       },
       {
-        args: { name: 'test', label: 'test', module: 'test', timeout: 900 },
+        args: {
+          name: 'test',
+          label: 'test',
+          module: 'test',
+          timeout: 900,
+          export: 'run',
+        },
         expected: [],
       },
     ]
@@ -71,10 +96,10 @@ describe('validate', () => {
 
   test('Should contain error message if module can not be found', async () => {
     const errorMessage = 'This is an error'
-    jest.unstable_mockModule('fs', () => ({
+    jest.unstable_mockModule('fs/promises', () => ({
       default: {
-        stat: (path: string, cb: (error: Error | undefined) => void) => {
-          cb(new Error(errorMessage))
+        stat: async (path: string) => {
+          throw new Error(errorMessage)
         },
       },
     }))
@@ -85,18 +110,20 @@ describe('validate', () => {
       name: 'test',
       label: 'test',
       module: 'test',
+      export: 'run',
+      timeout: 1,
     })
     expect(result).toEqual([errorMessage])
   })
 
   test('Should contain different error message if module can not be found with ENOENT code', async () => {
-    jest.unstable_mockModule('fs', () => ({
+    jest.unstable_mockModule('fs/promises', () => ({
       default: {
-        stat: (path: string, cb: (error: Error | undefined) => void) => {
+        stat: async (path: string) => {
           const error = new Error('This is an error')
           // @ts-expect-error we are adding the property, you don't get a say typescript
           error.code = 'ENOENT'
-          cb(error)
+          throw error
         },
       },
     }))
@@ -107,6 +134,8 @@ describe('validate', () => {
       name: 'test',
       label: 'test',
       module: MODULE,
+      export: 'run',
+      timeout: 1,
     })
     expect(errors).toEqual([`Could not find module: ${MODULE}`])
   })
@@ -119,10 +148,8 @@ describe('validate', () => {
         resolve: mockResolve,
       },
     }))
-    const mockStat = jest.fn((path: string, cb: () => void) => {
-      cb()
-    })
-    jest.unstable_mockModule('fs', () => ({
+    const mockStat = jest.fn(async (path: string) => undefined)
+    jest.unstable_mockModule('fs/promises', () => ({
       default: {
         stat: mockStat,
       },
@@ -136,6 +163,8 @@ describe('validate', () => {
       name: 'test',
       label: 'test',
       module: MODULE,
+      export: 'run',
+      timeout: 1,
     })
 
     expect(mockResolve).toBeCalledWith(CWD, MODULE)

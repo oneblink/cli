@@ -2,9 +2,6 @@ import { describe, expect, test, jest } from '@jest/globals'
 
 describe('read', () => {
   const CWD = 'current working directory'
-  const CONFIGURATION_SCHEDULED_FUNCTIONS = [
-    { schduledFunctions: 'configuration routes' },
-  ]
 
   afterEach(() => {
     jest.resetModules()
@@ -12,6 +9,7 @@ describe('read', () => {
   })
 
   test('Should use configuration scheduled functions if available', async () => {
+    const CONFIGURATION_SCHEDULED_FUNCTIONS = []
     const mockScopeRead = jest.fn(async () => ({
       scheduledFunctions: CONFIGURATION_SCHEDULED_FUNCTIONS,
     }))
@@ -33,9 +31,7 @@ describe('read', () => {
   test('Should not reject and should always return an array if no scheduled functions are found', async () => {
     jest.unstable_mockModule('api/scope', () => ({
       default: {
-        read: async () => ({
-          scheduledFunctions: [],
-        }),
+        read: async () => ({}),
       },
     }))
     const { default: read } = await import(

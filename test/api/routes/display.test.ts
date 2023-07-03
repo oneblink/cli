@@ -35,8 +35,11 @@ describe('display', () => {
     expect(spy).toBeCalled()
   })
 
-  test('Should log the routes and reject if no routes are found', async () => {
+  test('Should log the routes and reject if no routes and scheduled functions are found', async () => {
     const spy = jest.spyOn(console, 'log')
+    jest.unstable_mockModule('api/scheduledFunctions/read', () => ({
+      default: async () => [],
+    }))
     jest.unstable_mockModule('api/routes/read', () => ({
       default: async () => [],
     }))
@@ -44,7 +47,7 @@ describe('display', () => {
     const { default: display } = await import('../../../src/api/routes/display')
     const promise = display(console, CWD)
     await expect(promise).rejects.toThrow(
-      'No routes found, see documentation for information on how to create routes.',
+      'You cannot deploy without defining at least one route or scheduled function.',
     )
     expect(spy).not.toHaveBeenCalled()
   })

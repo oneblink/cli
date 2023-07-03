@@ -15,12 +15,14 @@ import temp from 'temp'
 import ora from 'ora'
 
 import awsRoles from './assume-aws-roles.js'
+import values from './values.js'
 
 temp.track()
 
 const EXT = 'zip'
 
-const getProjectPath = (target: string) => path.join(target, 'project')
+const getProjectPath = (target: string) =>
+  path.join(target, values.PROJECT_DIRECTORY)
 
 async function authenticate(
   oneBlinkAPIClient: OneBlinkAPIClient,
@@ -161,7 +163,7 @@ async function zip(target: string): Promise<fs.PathLike> {
       cwd: target,
       nodir: true,
       dot: true,
-      ignore: ['project/.git/**'],
+      ignore: [`${values.PROJECT_DIRECTORY}/.git/**`],
     })
     archive.finalize()
     const zipFilePath = await new Promise<string | Buffer>(
