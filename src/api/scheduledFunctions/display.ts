@@ -14,7 +14,7 @@ function displayScheduledFunctions(
     if (!scheduledFunctionsConfig || !scheduledFunctionsConfig.length) {
       return Promise.reject(
         new Error(
-          'No scheduled functions found, see documentation on how to create scheduled functions',
+          'No scheduled functions found, see documentation for information on how to create scheduled functions.',
         ),
       )
     }
@@ -55,7 +55,7 @@ function displayScheduledFunctions(
       if (totalErrors) {
         return Promise.reject(
           new Error(
-            `${totalErrors} of ${scheduledFunctionsConfig.length} route configurations are invalid.`,
+            `${totalErrors} of ${scheduledFunctionsConfig.length} scheduled functions configurations are invalid.`,
           ),
         )
       }
