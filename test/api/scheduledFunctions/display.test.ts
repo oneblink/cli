@@ -42,7 +42,7 @@ describe('display', () => {
     expect(spy).toBeCalled()
   })
 
-  test('Should log the scheduledFunctions and reject if no scheduledFunctions are found', async () => {
+  test('Should not log the scheduledFunctions and not reject if no scheduledFunctions are found', async () => {
     const spy = jest.spyOn(console, 'log')
     jest.unstable_mockModule('api/scheduledFunctions/read', () => ({
       default: async () => [],
@@ -52,9 +52,7 @@ describe('display', () => {
       '../../../src/api/scheduledFunctions/display'
     )
     const promise = display(console, CWD)
-    await expect(promise).rejects.toThrow(
-      'No scheduled functions found, see documentation for information on how to create scheduled functions.',
-    )
+    await expect(promise).resolves.toBeUndefined()
     expect(spy).not.toHaveBeenCalled()
   })
 

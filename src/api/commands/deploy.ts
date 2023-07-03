@@ -21,6 +21,7 @@ import { ENTRY_FUNCTION } from '../handlers.js'
 import copyRecursive from '../utils/copy-recursive.js'
 import values from '../values.js'
 import variables from '../variables.js'
+import readScheduledFunctions from '../scheduledFunctions/read.js'
 
 export default async function (
   tenant: Tenant,
@@ -88,12 +89,14 @@ async function copy(
     // Copy configuration file required by handler
     const configPath = path.join(target, 'bm-server.json')
 
-    const [cors, routes, networkConfig, envVars] = await Promise.all([
-      readCors(cwd),
-      readRoutes(cwd),
-      network.readNetwork(cwd, env),
-      variables.read(cwd, env),
-    ])
+    const [cors, routes, networkConfig, envVars, scheduledFunctions] =
+      await Promise.all([
+        readCors(cwd),
+        readRoutes(cwd),
+        network.readNetwork(cwd, env),
+        variables.read(cwd, env),
+        readScheduledFunctions(cwd),
+      ])
 
     const apiDeploymentPayload: APITypes.APIDeploymentPayload = {
       s3: deploymentCredentials.s3,
@@ -101,7 +104,10 @@ async function copy(
       cors: cors ? await validateCors(cors) : false,
       handler: `${HANDLER}.${ENTRY_FUNCTION}`,
       routes: routes.map((routeConfig) => {
-        routeConfig.module = path.posix.join('project', routeConfig.module)
+        routeConfig.module = path.posix.join(
+          values.PROJECT_DIRECTORY,
+          routeConfig.module,
+        )
         return routeConfig
       }),
       scope,
@@ -110,6 +116,23 @@ async function copy(
       runtime: values.AWS_LAMBDA_RUNTIME,
       variables: envVars,
       memorySize: config.memorySize,
+      scheduledFunctions: scheduledFunctions.map((scheduledFunction) => {
+        const handlerFilePath = path.join(
+          values.PROJECT_DIRECTORY,
+          scheduledFunction.module,
+        )
+        const { name, dir } = path.parse(handlerFilePath)
+        const handlerPath = path.join(dir, name)
+        const handler = `${handlerPath}.${scheduledFunction.export}`
+        return {
+          ...scheduledFunction,
+          timeout:
+            scheduledFunction.timeout ||
+            config.timeout ||
+            values.DEFAULT_TIMEOUT_SECONDS,
+          handler,
+        }
+      }),
     }
 
     await writeJsonFile(configPath, apiDeploymentPayload)

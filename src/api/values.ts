@@ -38,4 +38,5 @@ export default {
   },
   DEFAULT_TIMEOUT_SECONDS,
   METHODS,
+  PROJECT_DIRECTORY: 'project',
 }

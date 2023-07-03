@@ -25,7 +25,7 @@ export type BlinkMRCServer = {
   network?: {
     [environment: string]: APITypes.APIEnvironmentNetworkConfiguration
   }
-  scheduledFunctions?: Array<APITypes.APIDeploymentPayloadScheduledFunction>
+  scheduledFunctions?: Array<ScheduledFunctionConfiguration>
   memorySize?: number
 }
 
@@ -89,10 +89,10 @@ export type RouteConfiguration = APITypes.APIEnvironmentRoute & {
   params?: { [id: string]: string }
 }
 
-export type ScheduledFunctionConfiguration =
-  APITypes.APIDeploymentPayloadScheduledFunction & {
-    timeout?: number
-  }
+export type ScheduledFunctionConfiguration = Omit<
+  APITypes.APIDeploymentPayloadScheduledFunction,
+  'handler'
+>
 
 export type ServeCredentials = {
   accessKeyId: string
