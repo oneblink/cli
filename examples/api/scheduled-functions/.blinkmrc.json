@@ -1,0 +1,14 @@
+{
+  "server": {
+    "project": "customer-project.api.oneblink.io",
+    "scheduledFunctions": [
+      {
+        "label": "Are you alive?",
+        "name": "alive",
+        "module": "./src/alive.js",
+        "export": "run",
+        "timeout": 5
+      }
+    ]
+  }
+}
