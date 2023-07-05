@@ -1,4 +1,4 @@
-# Lookup Examples
+# Scheduled Function Examples
 
 ## Functions
 
