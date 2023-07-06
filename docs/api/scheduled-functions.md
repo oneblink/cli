@@ -86,7 +86,7 @@ The name of the exported function in the `module` to execute the function.
 
 #### `retryOnFail (required)
 
-If set to true the function will automatically retry if the function fails
+If set to `true`, the function will automatically retry twice if it fails.
 
 #### `timeout` (optional)
 
