@@ -21,15 +21,15 @@ async function displayRoutes(
     }
     return
   }
+  const headings = ['Route', 'Module', 'Info']
   const table = new Table()
   table.push([
     {
       content: chalk.bold('Route Configuration'),
       hAlign: 'center',
-      colSpan: 3,
+      colSpan: headings.length,
     },
   ])
-  const headings = ['Route', 'Module', 'Info']
   table.push(headings.map((heading) => chalk.grey(heading)))
   let totalErrors = 0
   for (const routeConfig of routeConfigs) {

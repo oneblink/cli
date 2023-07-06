@@ -14,14 +14,6 @@ async function displayScheduledFunctions(
   if (!scheduledFunctionsConfig || !scheduledFunctionsConfig.length) {
     return
   }
-  const table = new Table()
-  table.push([
-    {
-      content: chalk.bold('Scheduled Functions Configuration'),
-      hAlign: 'center',
-      colSpan: 4,
-    },
-  ])
   const headings = [
     'Name',
     'Label',
@@ -31,6 +23,15 @@ async function displayScheduledFunctions(
     'Retry On Fail',
     'Info',
   ]
+  const table = new Table()
+  table.push([
+    {
+      content: chalk.bold('Scheduled Functions Configuration'),
+      hAlign: 'center',
+      colSpan: headings.length,
+    },
+  ])
+
   table.push(headings.map((heading) => chalk.grey(heading)))
   let totalErrors = 0
   for (const scheduledFunctionConfig of scheduledFunctionsConfig) {
