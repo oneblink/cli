@@ -1,5 +1,5 @@
 import { describe, expect, test, jest } from '@jest/globals'
-import values from '../../../src/api/values'
+import values from '../../../src/api/values.js'
 
 describe('read', () => {
   const CWD = 'current working directory'
@@ -20,7 +20,7 @@ describe('read', () => {
         update: async () => ({}),
       }),
     }))
-    const { default: read } = await import('../../../src/api/cors/read')
+    const { default: read } = await import('../../../src/api/cors/read.js')
 
     const cors = await read(CWD)
     expect(cors).toEqual({
@@ -41,7 +41,7 @@ describe('read', () => {
         update: async () => ({}),
       }),
     }))
-    const { default: read } = await import('../../../src/api/cors/read')
+    const { default: read } = await import('../../../src/api/cors/read.js')
 
     const cors = await read(CWD)
     expect(cors).toBe(false)
@@ -61,7 +61,7 @@ describe('read', () => {
         update: async () => ({}),
       }),
     }))
-    const { default: read } = await import('../../../src/api/cors/read')
+    const { default: read } = await import('../../../src/api/cors/read.js')
 
     const cors = await read(CWD)
     expect(cors).toEqual({
@@ -82,7 +82,7 @@ describe('read', () => {
         update: async () => ({}),
       }),
     }))
-    const { default: read } = await import('../../../src/api/cors/read')
+    const { default: read } = await import('../../../src/api/cors/read.js')
 
     const cors = await read(CWD)
     expect(cors).toBe(false)

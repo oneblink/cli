@@ -25,7 +25,7 @@ describe('validate', () => {
 
   test('Should contain error if name does not consist of lowercase letters and dashes', async () => {
     const { default: validate } = await import(
-      '../../../src/api/scheduledFunctions/validate'
+      '../../../src/api/scheduledFunctions/validate.js'
     )
 
     const errors = await validate(CWD, {
@@ -34,6 +34,7 @@ describe('validate', () => {
       module: 'test',
       export: 'run',
       timeout: 1,
+      retryOnFail: true,
     })
     expect(errors).toEqual([
       '"name" can only include lowercase letters and dashes',
@@ -42,7 +43,7 @@ describe('validate', () => {
 
   test('Should contain error if timeout is invalid', async () => {
     const { default: validate } = await import(
-      '../../../src/api/scheduledFunctions/validate'
+      '../../../src/api/scheduledFunctions/validate.js'
     )
     const tests = [
       {
@@ -52,6 +53,7 @@ describe('validate', () => {
           module: 'test',
           timeout: 0,
           export: 'run',
+          retryOnFail: true,
         },
         expected: ['"timeout" must be between 1 and 900 (inclusive)'],
       },
@@ -63,6 +65,7 @@ describe('validate', () => {
           timeout: 901,
           export: 'run',
           handler: 'test.run',
+          retryOnFail: false,
         },
         expected: ['"timeout" must be between 1 and 900 (inclusive)'],
       },
@@ -73,6 +76,7 @@ describe('validate', () => {
           module: 'test',
           timeout: 1,
           export: 'run',
+          retryOnFail: true,
         },
         expected: [],
       },
@@ -83,6 +87,7 @@ describe('validate', () => {
           module: 'test',
           timeout: 900,
           export: 'run',
+          retryOnFail: false,
         },
         expected: [],
       },
@@ -104,7 +109,7 @@ describe('validate', () => {
       },
     }))
     const { default: validate } = await import(
-      '../../../src/api/scheduledFunctions/validate'
+      '../../../src/api/scheduledFunctions/validate.js'
     )
     const result = await validate(CWD, {
       name: 'test',
@@ -112,8 +117,25 @@ describe('validate', () => {
       module: 'test',
       export: 'run',
       timeout: 1,
+      retryOnFail: false,
     })
     expect(result).toEqual([errorMessage])
+  })
+
+  test('Should contain error message if retryOnFail not a boolean', async () => {
+    const { default: validate } = await import(
+      '../../../src/api/scheduledFunctions/validate.js'
+    )
+    const result = await validate(CWD, {
+      name: 'test',
+      label: 'test',
+      module: 'test',
+      export: 'run',
+      timeout: 1,
+      //@ts-expect-error deliberately wrong
+      retryOnFail: 'false',
+    })
+    expect(result).toEqual(['"retryOnFail" must be either true or false'])
   })
 
   test('Should contain different error message if module can not be found with ENOENT code', async () => {
@@ -128,7 +150,7 @@ describe('validate', () => {
       },
     }))
     const { default: validate } = await import(
-      '../../../src/api/scheduledFunctions/validate'
+      '../../../src/api/scheduledFunctions/validate.js'
     )
     const errors = await validate(CWD, {
       name: 'test',
@@ -136,6 +158,7 @@ describe('validate', () => {
       module: MODULE,
       export: 'run',
       timeout: 1,
+      retryOnFail: true,
     })
     expect(errors).toEqual([`Could not find module: ${MODULE}`])
   })
@@ -156,7 +179,7 @@ describe('validate', () => {
     }))
 
     const { default: validate } = await import(
-      '../../../src/api/scheduledFunctions/validate'
+      '../../../src/api/scheduledFunctions/validate.js'
     )
 
     await validate(CWD, {
@@ -165,6 +188,7 @@ describe('validate', () => {
       module: MODULE,
       export: 'run',
       timeout: 1,
+      retryOnFail: true,
     })
 
     expect(mockResolve).toBeCalledWith(CWD, MODULE)

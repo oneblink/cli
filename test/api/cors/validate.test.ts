@@ -1,4 +1,5 @@
-import validate from '../../../src/api/cors/validate'
+/* eslint-disable @microsoft/sdl/no-insecure-url */
+import validate from '../../../src/api/cors/validate.js'
 
 describe('validate', () => {
   const HELP = ', see documentation for information on how to configure cors.'

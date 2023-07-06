@@ -22,7 +22,15 @@ async function displayScheduledFunctions(
       colSpan: 4,
     },
   ])
-  const headings = ['Name', 'Label', 'Module', 'Export', 'Info']
+  const headings = [
+    'Name',
+    'Label',
+    'Module',
+    'Export',
+    'Timeout',
+    'Retry On Fail',
+    'Info',
+  ]
   table.push(headings.map((heading) => chalk.grey(heading)))
   let totalErrors = 0
   for (const scheduledFunctionConfig of scheduledFunctionsConfig) {
@@ -35,6 +43,8 @@ async function displayScheduledFunctions(
       scheduledFunctionConfig.label,
       scheduledFunctionConfig.module,
       scheduledFunctionConfig.export,
+      scheduledFunctionConfig.timeout,
+      scheduledFunctionConfig.retryOnFail,
     ]
     if (errors && errors.length) {
       totalErrors++

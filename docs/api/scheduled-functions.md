@@ -20,14 +20,16 @@ Functions are defined in your `.blinkmrc.json` file similar to routes. The follo
         "name": "world",
         "module": "./src/hello.js",
         "export": "sayHelloWorld",
-        "timeout": 10
+        "timeout": 10,
+        "retryOnFail": true
       },
       {
         "label": "Hello Galaxy",
         "name": "galaxy",
         "module": "./src/hello.js",
         "export": "sayHelloGalaxy",
-        "timeout": 5
+        "timeout": 5,
+        "retryOnFail": false
       }
     ]
   }
@@ -82,6 +84,12 @@ The relative path to the file to execute the function.
 
 The name of the exported function in the `module` to execute the function.
 
+#### `retryOnFail (required)
+
+If set to `true`, the function will automatically retry twice if it fails.
+
 #### `timeout` (optional)
 
 The time in seconds allowed for the function to finish executing.
+
+
