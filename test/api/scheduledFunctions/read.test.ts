@@ -1,4 +1,5 @@
 import { describe, expect, test, jest } from '@jest/globals'
+import { ScheduledFunctionConfiguration } from '../../../src/api/types.js'
 
 describe('read', () => {
   const CWD = 'current working directory'
@@ -9,7 +10,8 @@ describe('read', () => {
   })
 
   test('Should use configuration scheduled functions if available', async () => {
-    const CONFIGURATION_SCHEDULED_FUNCTIONS = []
+    const CONFIGURATION_SCHEDULED_FUNCTIONS: ScheduledFunctionConfiguration[] =
+      []
     const mockScopeRead = jest.fn(async () => ({
       scheduledFunctions: CONFIGURATION_SCHEDULED_FUNCTIONS,
     }))
@@ -20,7 +22,7 @@ describe('read', () => {
     }))
 
     const { default: read } = await import(
-      '../../../src/api/scheduledFunctions/read'
+      '../../../src/api/scheduledFunctions/read.js'
     )
 
     const scheduledFunctions = await read(CWD)
@@ -35,7 +37,7 @@ describe('read', () => {
       },
     }))
     const { default: read } = await import(
-      '../../../src/api/scheduledFunctions/read'
+      '../../../src/api/scheduledFunctions/read.js'
     )
 
     const scheduledFunctions = await read(CWD)
@@ -60,7 +62,7 @@ describe('read', () => {
       },
     }))
     const { default: read } = await import(
-      '../../../src/api/scheduledFunctions/read'
+      '../../../src/api/scheduledFunctions/read.js'
     )
 
     const scheduledFunctions = await read(CWD)

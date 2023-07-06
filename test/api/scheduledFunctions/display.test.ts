@@ -35,7 +35,7 @@ describe('display', () => {
       default: async () => [],
     }))
     const { default: display } = await import(
-      '../../../src/api/scheduledFunctions/display'
+      '../../../src/api/scheduledFunctions/display.js'
     )
     await display(console, CWD)
     expect(mockRead).toBeCalledWith(CWD)
@@ -49,7 +49,7 @@ describe('display', () => {
     }))
 
     const { default: display } = await import(
-      '../../../src/api/scheduledFunctions/display'
+      '../../../src/api/scheduledFunctions/display.js'
     )
     const promise = display(console, CWD)
     await expect(promise).resolves.toBeUndefined()
@@ -65,7 +65,7 @@ describe('display', () => {
       default: mockValidate,
     }))
     const { default: display } = await import(
-      '../../../src/api/scheduledFunctions/display'
+      '../../../src/api/scheduledFunctions/display.js'
     )
     await display(console, CWD)
     expect(mockValidate).toBeCalledTimes(SCHEDULEDFUNCTIONS.length)
@@ -81,7 +81,7 @@ describe('display', () => {
     }))
 
     const { default: display } = await import(
-      '../../../src/api/scheduledFunctions/display'
+      '../../../src/api/scheduledFunctions/display.js'
     )
     const promise = display(console, CWD)
     await expect(promise).rejects.toThrow(

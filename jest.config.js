@@ -12,6 +12,7 @@ const config = {
       {
         useESM: true,
         isolatedModules: true,
+        tsconfig: './test/tsconfig.json',
       },
     ],
   },
