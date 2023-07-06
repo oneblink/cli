@@ -24,7 +24,11 @@ export default async function validateScheduledFunction(
     errors.push('"label" must be a string')
   }
 
-  // Serverless does not allow for a timeout more than 5 minutes
+  if (typeof config.timeout != null && typeof config.timeout !== 'number') {
+    errors.push('"timeout" must be a number')
+  }
+
+  // Serverless does not allow for a timeout more than 15 minutes
   if (
     typeof config.timeout === 'number' &&
     (config.timeout < 1 || config.timeout > 900)
@@ -32,6 +36,9 @@ export default async function validateScheduledFunction(
     errors.push('"timeout" must be between 1 and 900 (inclusive)')
   }
 
+  if (typeof config.retryOnFail !== 'boolean') {
+    errors.push('"retryOnFail" must be either true or false')
+  }
   // Ensure module property is a relative path from cwd and exists
   try {
     await fs.stat(path.resolve(cwd, config.module))
