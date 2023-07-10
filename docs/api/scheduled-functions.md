@@ -84,7 +84,7 @@ The relative path to the file to execute the function.
 
 The name of the exported function in the `module` to execute the function.
 
-#### `retryOnFail (required)
+#### `retryOnFail` (required)
 
 If set to `true`, the function will automatically retry twice if it fails.
 
