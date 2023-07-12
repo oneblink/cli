@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.0] - 2023-07-12
+
 ### Added
 
 - scheduled functions to API deployments
@@ -14,6 +16,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - options sets now referred to as lists
+
+### Dependencies
+
+- update [aws-sdk](https://www.npmjs.com/package/aws-sdk) to [2.1411.0](https://github.com/aws/aws-sdk-js/releases/tag/v2.1411.0) (from [2.1357.0](https://github.com/aws/aws-sdk-js/releases/tag/v2.1357.0))
+
+- update [chalk](https://www.npmjs.com/package/chalk) to [5.3.0](https://github.com/chalk/chalk/releases/tag/v5.3.0) (from [5.2.0](https://github.com/chalk/chalk/releases/tag/v5.2.0))
+
+- update [glob](https://www.npmjs.com/package/glob) to 10.3.1 (from 10.0.0)
+
+- update [inquirer](https://www.npmjs.com/package/inquirer) to 9.2.7 (from 9.1.5)
+
+- update [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) to [9.0.1](https://github.com/auth0/node-jsonwebtoken/blob/master/CHANGELOG.md) (from [9.0.0](https://github.com/auth0/node-jsonwebtoken/blob/master/CHANGELOG.md))
+
+- update [meow](https://www.npmjs.com/package/meow) to [12.0.1](https://github.com/sindresorhus/meow/releases/tag/v12.0.1) (from [11.0.0](https://github.com/sindresorhus/meow/releases/tag/v11.0.0))
+
+- update [ora](https://www.npmjs.com/package/ora) to [6.3.1](https://github.com/sindresorhus/ora/releases/tag/v6.3.1) (from [6.3.0](https://github.com/sindresorhus/ora/releases/tag/v6.3.0))
 
 ## [2.0.0] - 2023-05-02
 
