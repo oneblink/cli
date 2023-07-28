@@ -63,6 +63,9 @@ async function getCLICommand(input: string) {
     case 'deploy': {
       return (await import('./deploy.js')).default
     }
+    case 'teardown': {
+      return (await import('./teardown.js')).default
+    }
   }
 }
 
