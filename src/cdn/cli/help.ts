@@ -27,9 +27,6 @@ ${chalk.blue('deploy')} ${chalk.grey('..............')} Deploy the project
   )} Remove files that do not exist locally but do exist in the ${
     tenant.label
   } CDN
-  ${chalk.blue('--no-skip')} ${chalk.grey(
-    '.........',
-  )} Upload all files, including files that have not changed
   ${chalk.blue('--cwd')} ${chalk.grey(
     '.............',
   )} Optionally set the project path, defaults to the current working directory
@@ -51,6 +48,6 @@ ${chalk.bold('Examples')}
 
   ${chalk.blue(`${tenant.command} cdn scope project.cdn.oneblink.io`)}
   ${chalk.blue(
-    `${tenant.command} cdn deploy ./path/to/assets --env dev --force --prune --no-skip`,
+    `${tenant.command} cdn deploy ./path/to/assets --env dev --force --prune`,
   )}
   ${chalk.blue(`${tenant.command} cdn teardown --env dev --force`)}`

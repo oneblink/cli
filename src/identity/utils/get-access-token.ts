@@ -1,8 +1,6 @@
 import userConfig from './user-config.js'
 
-export default function getAccessToken(): Promise<string | void> {
-  return userConfig
-    .getStore()
-    .load()
-    .then((config) => config.access_token)
+export default async function getAccessToken(): Promise<string | undefined> {
+  const config = await userConfig.getStore().load<{ access_token?: string }>()
+  return config.access_token
 }

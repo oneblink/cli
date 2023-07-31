@@ -204,36 +204,28 @@ describe('deploy', () => {
 
   test('upload() should log correct updates and return bundle key after upload', async () => {
     const mockUpload = jest.fn()
-    mockUpload.mockReturnValue({
-      on: () => undefined,
-      send: (fn: (error: null, result: { Key: string }) => void) =>
-        fn(null, { Key: deploymentCredentials.s3.key }),
-    })
-    jest.mock('aws-sdk', () => ({
-      S3: class {
-        upload = mockUpload
+    jest.mock('@aws-sdk/lib-storage', () => ({
+      Upload: class {
+        done = mockUpload
+        on() {
+          return undefined
+        }
       },
     }))
     const { default: deploy } = await import('../../src/api/deploy.js')
 
     await deploy.upload(UPLOAD_PATH, deploymentCredentials)
-    expect(mockUpload).toBeCalledWith(
-      expect.objectContaining({
-        Bucket: deploymentCredentials.s3.bucket,
-        Key: deploymentCredentials.s3.key,
-      }),
-    )
+    expect(mockUpload).toBeCalledTimes(1)
   })
 
   test('upload() should log correct updates and reject if upload returns an error', async () => {
-    jest.mock('aws-sdk', () => ({
-      S3: class {
-        upload() {
-          return {
-            on: () => undefined,
-            send: (fn: (error: Error) => void) =>
-              fn(new Error('test upload error')),
-          }
+    jest.mock('@aws-sdk/lib-storage', () => ({
+      Upload: class {
+        async done() {
+          throw new Error('test upload error')
+        }
+        on() {
+          return undefined
         }
       },
     }))
