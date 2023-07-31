@@ -15,7 +15,7 @@ export default async function awsCredentials(
       {
         Credentials: AWSTypes.AWSCredentials
       }
-    >(`/webApps/${cfg.scope}/environments/${env}/credentials`)
+    >(`/v2/webApps/${cfg.scope}/environments/${env}/credentials`)
     spinner.succeed('Authentication complete!')
     return body.Credentials
   } catch (error) {
