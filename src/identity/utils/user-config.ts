@@ -1,14 +1,9 @@
 import pkg from '../../package.js'
-import blinkmrc from '@blinkmobile/blinkmrc'
+import blinkmrc, { ConfigStore } from '@blinkmobile/blinkmrc'
 
-export type UserConfigStore = {
-  load: () => Promise<any>
-  update: (config: any) => Promise<any>
-}
+let userConfigStore: ConfigStore
 
-let userConfigStore: any
-
-function getStore(): UserConfigStore {
+function getStore() {
   if (!userConfigStore) {
     userConfigStore = blinkmrc.userConfig({ name: pkg.name })
   }

@@ -1,19 +1,18 @@
-import type OneBlinkAPIClient from '../oneblink-api-client.js'
-
-import type { BlinkMRCServer, DeploymentCredentials } from './types.js'
-import type { APITypes } from '@oneblink/types'
-
 import fs from 'fs'
 import path from 'path'
 
+import type { APITypes } from '@oneblink/types'
+import { Upload } from '@aws-sdk/lib-storage'
+import { S3Client } from '@aws-sdk/client-s3'
 import archiver from 'archiver'
-import AWS from 'aws-sdk'
 import chalk from 'chalk'
 import { execa } from 'execa'
 import inquirer from 'inquirer'
 import temp from 'temp'
 import ora from 'ora'
 
+import OneBlinkAPIClient from '../oneblink-api-client.js'
+import type { BlinkMRCServer, DeploymentCredentials } from './types.js'
 import awsRoles from './assume-aws-roles.js'
 import values from './values.js'
 
@@ -118,18 +117,25 @@ async function upload(
 
   try {
     const src = fs.createReadStream(zipFilePath)
-    const s3 = new AWS.S3(deploymentCredentials.credentials)
-    const params = {
-      Bucket: deploymentCredentials.s3.bucket,
-      Key: deploymentCredentials.s3.key,
-      Body: src,
-    }
 
-    const manager = s3.upload(params)
-    manager.on('httpUploadProgress', (uploadProgress) => {
-      // Note that total may be undefined until the payload size is known.
-      // http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3/ManagedUpload.html
-      if (uploadProgress.total) {
+    const parallelUpload = new Upload({
+      client: new S3Client({
+        credentials: deploymentCredentials.credentials,
+        region: deploymentCredentials.s3.region,
+      }),
+      params: {
+        Bucket: deploymentCredentials.s3.bucket,
+        Key: deploymentCredentials.s3.key,
+        Body: src,
+      },
+    })
+
+    parallelUpload.on('httpUploadProgress', (uploadProgress) => {
+      // Note that loaded and total may be undefined until the payload size is known.
+      if (
+        typeof uploadProgress.loaded === 'number' &&
+        typeof uploadProgress.total === 'number'
+      ) {
         progress = Math.floor(
           (uploadProgress.loaded / uploadProgress.total) * 100,
         )
@@ -137,15 +143,8 @@ async function upload(
       }
     })
 
-    await new Promise((resolve, reject) => {
-      manager.send((err) => {
-        if (err) {
-          reject(err)
-          return
-        }
-        resolve(undefined)
-      })
-    })
+    await parallelUpload.done()
+
     spinner.succeed('Transfer complete!')
   } catch (error) {
     spinner.fail(`Transfer failed: ${progress}%`)

@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `cdn teardown` command to delete a single CDN hosting environment
 
+### Removed
+
+- **[BREAKING]** `.blinkmignore` support for `cdn deploy` command
+- **[BREAKING]** `--no-skip` flag for `cdn deploy` command, files that have not changed are not uploaded
+
 ## [2.1.0] - 2023-07-12
 
 ### Added
