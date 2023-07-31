@@ -1,6 +1,7 @@
 import objectMerge from 'object-merge'
 
 import configHelper from './utils/config-helper.js'
+import chalk from 'chalk'
 const DEFAULTS = {
   Expires: 60,
   ACL: 'public-read',
@@ -17,7 +18,10 @@ function toS3(cfg: any, region: string) {
 function read(cwd: string, region: string): Promise<any> {
   return configHelper
     .read(cwd)
-    .then((cfg) => (cfg.cdn.objectParams ? cfg : write(cwd, DEFAULTS)))
+    .then((cfg) => {if(cfg.cdn.objectParams){
+      console.log(`${chalk.blue('"objectParams" in the ".blinkmrc.json" file are obsolete. You can safely remove them.')}`)
+      return cfg
+    } return write(cwd, DEFAULTS)})
     .then((cfg) => toS3(cfg, region))
 }
 
