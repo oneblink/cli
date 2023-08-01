@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.0] - 2023-08-01
+
 ### Added
 
 - `cdn teardown` command to delete a single CDN hosting environment
@@ -15,6 +17,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **[BREAKING]** `.blinkmignore` support for `cdn deploy` command
 - **[BREAKING]** `--no-skip` flag for `cdn deploy` command, files that have not changed are not uploaded
+
+### Dependencies
+
+- no longer depend upon [@blinkmobile/aws-s3](https://www.npmjs.com/package/@blinkmobile/aws-s3)
+
+- no longer depend upon [aws-sdk](https://www.npmjs.com/package/aws-sdk)
+
+- depend upon [@aws-sdk/client-s3](https://www.npmjs.com/package/@aws-sdk/client-s3) [3.379.1](https://github.com/aws/aws-sdk-js-v3/releases/tag/v3.379.1)
+
+- depend upon [@aws-sdk/lib-storage](https://www.npmjs.com/package/@aws-sdk/lib-storage) [3.379.1](https://github.com/aws/aws-sdk-js-v3/releases/tag/v3.379.1)
+
+- depend upon [mime-types](https://www.npmjs.com/package/mime-types) [2.1.35](https://github.com/jshttp/mime-types/releases/tag/2.1.35)
+
+- depend upon [s3-sync-client](https://www.npmjs.com/package/s3-sync-client) [4.3.1](https://github.com/jeanbmar/s3-sync-client/blob/master/CHANGELOG.md)
 
 ## [2.1.0] - 2023-07-12
 
