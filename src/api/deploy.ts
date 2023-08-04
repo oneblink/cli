@@ -93,7 +93,7 @@ async function deploy(
     spinner.succeed(
       'Deployment complete - Origin: ' + chalk.bold(deployData.brandedUrl),
     )
-    if (deployData.scheduledFunctions) {
+    if (deployData.scheduledFunctions.length) {
       displayScheduledFunctionsPostDeploy(logger, deployData.scheduledFunctions)
     }
   } catch (error) {
