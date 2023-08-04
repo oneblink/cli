@@ -38,6 +38,7 @@ describe('deploy', () => {
     variables: {},
     routes: [],
     network: undefined,
+    scheduledFunctions: [],
   }
 
   afterEach(() => {
@@ -238,12 +239,13 @@ describe('deploy', () => {
   test('deploy() should log correct updates', async () => {
     const mockPostRequest = jest.fn(async () => ({
       credentials: {},
+      scheduledFunctions: [],
     }))
     const oneBlinkAPIClient = new OneBlinkAPIClient(TENANTS.ONEBLINK)
     oneBlinkAPIClient.postRequest =
       mockPostRequest as OneBlinkAPIClient['postRequest']
     const { default: deploy } = await import('../../src/api/deploy.js')
-    await deploy.deploy(oneBlinkAPIClient, apiDeploymentPayload, ENV)
+    await deploy.deploy(oneBlinkAPIClient, apiDeploymentPayload, ENV, console)
     expect(mockPostRequest).toHaveBeenCalledWith(
       `/apis/${apiDeploymentPayload.scope}/environments/${ENV}/deployments`,
       apiDeploymentPayload,
@@ -256,7 +258,12 @@ describe('deploy', () => {
       throw new Error('test error')
     }
     const { default: deploy } = await import('../../src/api/deploy.js')
-    const promise = deploy.deploy(oneBlinkAPIClient, apiDeploymentPayload, ENV)
+    const promise = deploy.deploy(
+      oneBlinkAPIClient,
+      apiDeploymentPayload,
+      ENV,
+      console,
+    )
     expect(promise).rejects.toThrow('test error')
   })
 })

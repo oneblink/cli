@@ -15,6 +15,7 @@ import OneBlinkAPIClient from '../oneblink-api-client.js'
 import type { BlinkMRCServer, DeploymentCredentials } from './types.js'
 import awsRoles from './assume-aws-roles.js'
 import values from './values.js'
+import { displayScheduledFunctionsPostDeploy } from './scheduledFunctions/display.js'
 
 temp.track()
 
@@ -74,12 +75,16 @@ async function deploy(
   oneblinkAPIClient: OneBlinkAPIClient,
   apiDeploymentPayload: APITypes.APIDeploymentPayload,
   env: string,
+  logger: typeof console,
 ): Promise<void> {
   const spinner = ora(`Provisioning environment "${env}"...`).start()
   try {
     const deployData = await oneblinkAPIClient.postRequest<
       APITypes.APIDeploymentPayload,
-      { brandedUrl: string }
+      {
+        brandedUrl: string
+        scheduledFunctions: APITypes.APIEnvironmentScheduledFunction[]
+      }
     >(
       `/apis/${apiDeploymentPayload.scope}/environments/${env}/deployments`,
       apiDeploymentPayload,
@@ -88,6 +93,9 @@ async function deploy(
     spinner.succeed(
       'Deployment complete - Origin: ' + chalk.bold(deployData.brandedUrl),
     )
+    if (deployData.scheduledFunctions.length) {
+      displayScheduledFunctionsPostDeploy(logger, deployData.scheduledFunctions)
+    }
   } catch (error) {
     spinner.fail(`Provisioning environment "${env}" failed!`)
     throw error

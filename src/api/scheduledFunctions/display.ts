@@ -6,6 +6,8 @@ import Table from 'cli-table3'
 import readScheduledFunctions from './read.js'
 import validateScheduledFunctions from './validate.js'
 
+import { APITypes } from '@oneblink/types'
+
 async function displayScheduledFunctions(
   logger: typeof console,
   cwd: string,
@@ -61,6 +63,34 @@ async function displayScheduledFunctions(
       `${totalErrors} of ${scheduledFunctionsConfig.length} scheduled functions configurations are invalid.`,
     )
   }
+}
+
+export async function displayScheduledFunctionsPostDeploy(
+  logger: typeof console,
+  scheduledFunctions: APITypes.APIEnvironmentScheduledFunction[],
+) {
+  const headings = ['Label', 'Has Schedule Been Setup', 'Enabled?']
+  const table = new Table()
+  table.push([
+    {
+      content: chalk.bold('Scheduled Functions Setup'),
+      hAlign: 'center',
+      colSpan: headings.length,
+    },
+  ])
+
+  table.push(headings.map((heading) => chalk.grey(heading)))
+  for (const scheduledFunction of scheduledFunctions) {
+    const tableRow = [
+      scheduledFunction.label,
+      scheduledFunction.schedule ? 'Yes' : 'No',
+      scheduledFunction.schedule && !scheduledFunction.schedule.isDisabled
+        ? 'Yes'
+        : 'No',
+    ]
+    table.push(tableRow)
+  }
+  logger.log(table.toString())
 }
 
 export default displayScheduledFunctions
