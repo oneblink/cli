@@ -2,6 +2,7 @@ import os from 'os'
 
 import chalk from 'chalk'
 import Table from 'cli-table3'
+import logSymbols from 'log-symbols'
 
 import readScheduledFunctions from './read.js'
 import validateScheduledFunctions from './validate.js'
@@ -65,11 +66,13 @@ async function displayScheduledFunctions(
   }
 }
 
-export async function displayScheduledFunctionsPostDeploy(
+export function displayScheduledFunctionsPostDeploy(
   logger: typeof console,
   scheduledFunctions: APITypes.APIEnvironmentScheduledFunction[],
+  api: APITypes.API,
+  tenant: Tenant,
 ) {
-  const headings = ['Label', 'Has Schedule Been Setup', 'Enabled']
+  const headings = ['Function', 'Schedule', 'Status']
   const table = new Table()
   table.push([
     {
@@ -83,14 +86,29 @@ export async function displayScheduledFunctionsPostDeploy(
   for (const scheduledFunction of scheduledFunctions) {
     const tableRow = [
       scheduledFunction.label,
-      scheduledFunction.schedule ? 'Yes' : 'No',
-      scheduledFunction.schedule && !scheduledFunction.schedule.isDisabled
-        ? 'Yes'
-        : 'No',
+      scheduledFunction.schedule
+        ? logSymbols.success + ' Complete'
+        : logSymbols.warning + ' Incomplete',
+      !scheduledFunction.schedule
+        ? ''
+        : scheduledFunction.schedule.isDisabled
+        ? chalk.grey('Disabled')
+        : 'Enabled',
     ]
     table.push(tableRow)
   }
   logger.log(table.toString())
+  const incomplete = scheduledFunctions.filter(
+    (scheduledFunction) => !scheduledFunction.schedule,
+  )
+  if (incomplete.length) {
+    console.log(
+      logSymbols.warning,
+      `${incomplete.length} of ${scheduledFunctions.length} function(s) do not have a schedule configured yet.
+You can complete the schedule setup in the ${tenant.productLongName}:
+${tenant.consoleOrigin}/accounts/${api.links.organisations}/apis`,
+    )
+  }
 }
 
 export default displayScheduledFunctions

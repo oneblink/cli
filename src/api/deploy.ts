@@ -72,6 +72,7 @@ Please check configuration before continuing
 }
 
 async function deploy(
+  tenant: Tenant,
   oneblinkAPIClient: OneBlinkAPIClient,
   apiDeploymentPayload: APITypes.APIDeploymentPayload,
   env: string,
@@ -82,6 +83,7 @@ async function deploy(
     const deployData = await oneblinkAPIClient.postRequest<
       APITypes.APIDeploymentPayload,
       {
+        api: APITypes.API
         brandedUrl: string
         scheduledFunctions: APITypes.APIEnvironmentScheduledFunction[]
       }
@@ -91,10 +93,19 @@ async function deploy(
     )
 
     spinner.succeed(
-      'Deployment complete - Origin: ' + chalk.bold(deployData.brandedUrl),
+      `Deployment complete${
+        apiDeploymentPayload.routes.length
+          ? ` - Origin: ${chalk.bold(deployData.brandedUrl)}`
+          : '!'
+      }`,
     )
     if (deployData.scheduledFunctions.length) {
-      displayScheduledFunctionsPostDeploy(logger, deployData.scheduledFunctions)
+      displayScheduledFunctionsPostDeploy(
+        logger,
+        deployData.scheduledFunctions,
+        deployData.api,
+        tenant,
+      )
     }
   } catch (error) {
     spinner.fail(`Provisioning environment "${env}" failed!`)
