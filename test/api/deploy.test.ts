@@ -245,7 +245,13 @@ describe('deploy', () => {
     oneBlinkAPIClient.postRequest =
       mockPostRequest as OneBlinkAPIClient['postRequest']
     const { default: deploy } = await import('../../src/api/deploy.js')
-    await deploy.deploy(oneBlinkAPIClient, apiDeploymentPayload, ENV, console)
+    await deploy.deploy(
+      TENANTS.ONEBLINK,
+      oneBlinkAPIClient,
+      apiDeploymentPayload,
+      ENV,
+      console,
+    )
     expect(mockPostRequest).toHaveBeenCalledWith(
       `/apis/${apiDeploymentPayload.scope}/environments/${ENV}/deployments`,
       apiDeploymentPayload,
@@ -259,6 +265,7 @@ describe('deploy', () => {
     }
     const { default: deploy } = await import('../../src/api/deploy.js')
     const promise = deploy.deploy(
+      TENANTS.ONEBLINK,
       oneBlinkAPIClient,
       apiDeploymentPayload,
       ENV,

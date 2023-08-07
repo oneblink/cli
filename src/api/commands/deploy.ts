@@ -57,7 +57,13 @@ export default async function (
   await deploy.pruneDevDependencies(out)
   const zipFilePath = await deploy.zip(out)
   await deploy.upload(zipFilePath, deploymentCredentials)
-  await deploy.deploy(oneblinkAPIClient, apiDeploymentPayload, env, logger)
+  await deploy.deploy(
+    tenant,
+    oneblinkAPIClient,
+    apiDeploymentPayload,
+    env,
+    logger,
+  )
 }
 
 async function copy(
