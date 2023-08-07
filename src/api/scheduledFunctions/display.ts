@@ -69,7 +69,7 @@ export async function displayScheduledFunctionsPostDeploy(
   logger: typeof console,
   scheduledFunctions: APITypes.APIEnvironmentScheduledFunction[],
 ) {
-  const headings = ['Label', 'Has Schedule Been Setup', 'Enabled?']
+  const headings = ['Label', 'Has Schedule Been Setup', 'Enabled']
   const table = new Table()
   table.push([
     {
