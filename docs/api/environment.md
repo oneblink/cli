@@ -2,7 +2,7 @@
 
 ## Execution Environment
 
-- Code executes within a Linux environment with [Node.js 16](https://nodejs.org/dist/latest-v16.x/docs/api/)
+- Code executes within a Linux environment with [Node.js 18](https://nodejs.org/dist/latest-v18.x/docs/api/)
 
   - If you use features not available in this version of Node.js, transpile before deployment. NPM packages using native binaries can be installed using docker:
 
