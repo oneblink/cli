@@ -7,7 +7,7 @@
   - If you use features not available in this version of Node.js, transpile before deployment. NPM packages using native binaries can be installed using docker:
 
   ```
-  docker run -it --rm -v ${PWD}:/app -w /app node:16 npm install
+  docker run -it --rm -v ${PWD}:/app -w /app node:18 npm install
   ```
 
 * The environment your code executes in is arbitrarily destroyed between requests
