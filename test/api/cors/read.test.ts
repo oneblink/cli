@@ -10,7 +10,7 @@ describe('read', () => {
   })
 
   test('Should return the defaults if cors is true', async () => {
-    jest.mock('@blinkmobile/blinkmrc', () => ({
+    jest.unstable_mockModule('../../../src/blinkmrc.js', () => ({
       projectConfig: () => ({
         load: async () => ({
           server: {
@@ -33,7 +33,7 @@ describe('read', () => {
   })
 
   test('Should return false for uninitialized config file', async () => {
-    jest.mock('@blinkmobile/blinkmrc', () => ({
+    jest.unstable_mockModule('../../../src/blinkmrc.js', () => ({
       projectConfig: () => ({
         load: async () => ({
           test: 123,
@@ -48,7 +48,7 @@ describe('read', () => {
   })
 
   test('Should return the currently set cors merged with defaults', async () => {
-    jest.mock('@blinkmobile/blinkmrc', () => ({
+    jest.unstable_mockModule('../../../src/blinkmrc.js', () => ({
       projectConfig: () => ({
         load: async () => ({
           server: {
@@ -74,7 +74,7 @@ describe('read', () => {
   })
 
   test('Should return cors as false when config throws an error', async () => {
-    jest.mock('@blinkmobile/blinkmrc', () => ({
+    jest.unstable_mockModule('../../../src/blinkmrc.js', () => ({
       projectConfig: () => ({
         load: async () => {
           throw new Error('test')

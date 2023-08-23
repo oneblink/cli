@@ -77,11 +77,6 @@ export type LambdaEvent =
 
 export type MapObject = Record<string, any>
 
-export type ProjectConfig = {
-  load: () => Promise<BlinkMRC>
-  update: (fn: (config: BlinkMRC) => BlinkMRC) => Promise<BlinkMRC>
-}
-
 export type Protocol = OneBlinkAPIHostingRequest['url']['protocol']
 
 export type RouteConfiguration = APITypes.APIEnvironmentRoute & {

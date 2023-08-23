@@ -1,19 +1,19 @@
-import type { BlinkMRC, ProjectConfig } from '../types.js'
+import type { BlinkMRC } from '../types.js'
 
-import configLoader from '@blinkmobile/blinkmrc'
-import pkg from '../../package.js'
+import * as configLoader from '../../blinkmrc.js'
 
-function projectConfig(cwd: string): ProjectConfig {
-  return configLoader.projectConfig({
-    name: pkg.name,
-    cwd: cwd,
+function projectConfig(cwd: string) {
+  return configLoader.projectConfig<BlinkMRC>({
+    cwd,
   })
 }
 
-function read(cwd: string): Promise<BlinkMRC> {
-  return projectConfig(cwd)
-    .load()
-    .catch(() => ({}))
+async function read(cwd: string): Promise<BlinkMRC> {
+  try {
+    return await projectConfig(cwd).load()
+  } catch {
+    return {}
+  }
 }
 
 async function write(

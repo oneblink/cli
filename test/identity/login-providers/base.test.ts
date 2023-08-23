@@ -3,7 +3,7 @@ import { expect, test, jest } from '@jest/globals'
 import { TENANTS } from '../../../src/config.js'
 
 test('storeJWT() should store jwt', async () => {
-  jest.mock('@blinkmobile/blinkmrc', () => ({
+  jest.unstable_mockModule('../../../src/blinkmrc.js', () => ({
     userConfig: () => ({
       load: async () => ({}),
       update: async () => ({}),
