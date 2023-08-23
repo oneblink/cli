@@ -20,7 +20,7 @@ export default class LoginProviderBase {
     access_token: string
     refresh_token: string
   }): Promise<void> {
-    await userConfig.getStore().update((config: any) => {
+    await userConfig.getStore().update((config) => {
       // Setting accessToken as well as id_token to be backward compatible
       config.accessToken = body.id_token
       config.id_token = body.id_token
