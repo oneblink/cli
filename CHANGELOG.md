@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.2.0] - 2023-08-28
+
+### Dependencies
+
+- no longer depend upon [@blinkmobile/blinkmrc](https://www.npmjs.com/package/@blinkmobile/blinkmrc)
+
+- depend upon [appdirectory](https://www.npmjs.com/package/appdirectory) 0.1.0
+
+- depend upon [load-json-file](https://www.npmjs.com/package/load-json-file) [7.0.1](https://github.com/sindresorhus/load-json-file/releases/tag/v7.0.1)
+
 ## [3.1.0] - 2023-08-10
 
 ### Added
