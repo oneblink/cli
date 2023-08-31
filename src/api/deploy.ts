@@ -147,6 +147,9 @@ async function upload(
         Key: deploymentCredentials.s3.key,
         Body: src,
       },
+      // Setting `leavePartsOnError` forces the upload to fail if a single part fails
+      // https://github.com/aws/aws-sdk-js-v3/issues/2311
+      leavePartsOnError: true,
     })
 
     parallelUpload.on('httpUploadProgress', (uploadProgress) => {
