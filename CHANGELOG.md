@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.2.1] - 2023-09-07
+
 ### Fixed
 
 - API deployment project zip files being corrupted after upload if a single part fails in the multi-part upload process
