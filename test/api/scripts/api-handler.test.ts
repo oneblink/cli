@@ -1,7 +1,7 @@
 import { describe, expect, test, jest } from '@jest/globals'
 import url from 'url'
 import path from 'path'
-import { LambdaEvent } from '../../../src/api/types'
+import { LambdaEvent } from '../../../src/api/types.js'
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
 
@@ -51,7 +51,7 @@ describe('api-handler', () => {
   })
 
   test('normaliseLambdaRequest()', async () => {
-    const lib = await import('../../../src/api/scripts/api-handler')
+    const lib = await import('../../../src/api/scripts/api-handler.js')
     const request = lib.normaliseLambdaRequest(EVENT)
 
     expect(request).toEqual({
@@ -76,7 +76,7 @@ describe('api-handler', () => {
   test('handler() should return correct response', async () => {
     const event = Object.assign({}, EVENT, { path: '/response' })
 
-    const lib = await import('../../../src/api/scripts/api-handler')
+    const lib = await import('../../../src/api/scripts/api-handler.js')
     const result = await lib.handler(event, {})
     expect(result).toEqual({
       body: JSON.stringify({ handler: 123 }),
@@ -91,7 +91,7 @@ describe('api-handler', () => {
   test('handler() should return correct boom response', async () => {
     const event = Object.assign({}, EVENT, { path: '/boom' })
 
-    const lib = await import('../../../src/api/scripts/api-handler')
+    const lib = await import('../../../src/api/scripts/api-handler.js')
     const result = await lib.handler(event, {})
     expect(result).toEqual({
       body: JSON.stringify({
@@ -110,7 +110,7 @@ describe('api-handler', () => {
     const route = '/missing'
     const event = Object.assign({}, EVENT, { path: route })
 
-    const lib = await import('../../../src/api/scripts/api-handler')
+    const lib = await import('../../../src/api/scripts/api-handler.js')
     const result = await lib.handler(event, {})
     expect(result).toEqual({
       body: JSON.stringify({
@@ -131,7 +131,7 @@ describe('api-handler', () => {
       path: '/response',
     })
 
-    const lib = await import('../../../src/api/scripts/api-handler')
+    const lib = await import('../../../src/api/scripts/api-handler.js')
     const result = await lib.handler(event, {})
     expect(result).toEqual({
       body: JSON.stringify({
@@ -156,7 +156,7 @@ describe('api-handler', () => {
       },
     })
 
-    const lib = await import('../../../src/api/scripts/api-handler')
+    const lib = await import('../../../src/api/scripts/api-handler.js')
     const result = await lib.handler(event, {})
     expect(result).toEqual({
       body: JSON.stringify({
@@ -191,7 +191,7 @@ describe('api-handler', () => {
       path: '/response',
     })
 
-    const lib = await import('../../../src/api/scripts/api-handler')
+    const lib = await import('../../../src/api/scripts/api-handler.js')
     const result = await lib.handler(event, {})
     expect(result).toEqual({
       headers: {
@@ -227,7 +227,7 @@ describe('api-handler', () => {
       path: '/response',
     })
 
-    const lib = await import('../../../src/api/scripts/api-handler')
+    const lib = await import('../../../src/api/scripts/api-handler.js')
     const result = await lib.handler(event, {})
     expect(result).toEqual({
       headers: {
@@ -247,9 +247,9 @@ describe('api-handler', () => {
       },
     }))
 
-    const { default: handlers } = await import('../../../src/api/handlers')
+    const { default: handlers } = await import('../../../src/api/handlers.js')
     const spy = jest.spyOn(handlers, 'getHandler')
-    const lib = await import('../../../src/api/scripts/api-handler')
+    const lib = await import('../../../src/api/scripts/api-handler.js')
     const result = await lib.handler(
       {
         httpMethod: 'GET',

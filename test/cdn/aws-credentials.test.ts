@@ -1,7 +1,7 @@
 import { describe, expect, test } from '@jest/globals'
 
 import getAwsCredentials from '../../src/cdn/aws-credentials.js'
-import OneBlinkAPIClient from '../../src/oneblink-api-client.js'
+import type OneBlinkAPIClient from '../../src/oneblink-api-client.js'
 
 describe('aws credentials', () => {
   const CFG = {
@@ -31,9 +31,7 @@ describe('aws credentials', () => {
     }
 
     const credentials = await getAwsCredentials(CFG, 'dev', oneBlinkAPIClient)
-    expect(credentials.accessKeyId).toBe(Credentials.AccessKeyId)
-    expect(credentials.secretAccessKey).toBe(Credentials.SecretAccessKey)
-    expect(credentials.sessionToken).toBe(Credentials.SessionToken)
+    expect(credentials).toEqual(Credentials)
   })
 
   test('it should reject and stop the spinner if request for aws credentials fails', async () => {

@@ -29,22 +29,29 @@ describe('display', () => {
     jest.unstable_mockModule('api/routes/validate', () => ({
       default: async () => [],
     }))
-    const { default: display } = await import('../../../src/api/routes/display')
+    const { default: display } = await import(
+      '../../../src/api/routes/display.js'
+    )
     await display(console, CWD)
     expect(mockRead).toBeCalledWith(CWD)
     expect(spy).toBeCalled()
   })
 
-  test('Should log the routes and reject if no routes are found', async () => {
+  test('Should log the routes and reject if no routes and scheduled functions are found', async () => {
     const spy = jest.spyOn(console, 'log')
+    jest.unstable_mockModule('api/scheduledFunctions/read', () => ({
+      default: async () => [],
+    }))
     jest.unstable_mockModule('api/routes/read', () => ({
       default: async () => [],
     }))
 
-    const { default: display } = await import('../../../src/api/routes/display')
+    const { default: display } = await import(
+      '../../../src/api/routes/display.js'
+    )
     const promise = display(console, CWD)
     await expect(promise).rejects.toThrow(
-      'No routes found, see documentation for information on how to create routes.',
+      'You cannot deploy without defining at least one route or scheduled function.',
     )
     expect(spy).not.toHaveBeenCalled()
   })
@@ -57,7 +64,9 @@ describe('display', () => {
     jest.unstable_mockModule('api/routes/validate', () => ({
       default: mockValidate,
     }))
-    const { default: display } = await import('../../../src/api/routes/display')
+    const { default: display } = await import(
+      '../../../src/api/routes/display.js'
+    )
     await display(console, CWD)
     expect(mockValidate).toBeCalledTimes(ROUTES.length)
   })
@@ -71,7 +80,9 @@ describe('display', () => {
       default: async () => ['error1', 'error2'],
     }))
 
-    const { default: display } = await import('../../../src/api/routes/display')
+    const { default: display } = await import(
+      '../../../src/api/routes/display.js'
+    )
     const promise = display(console, CWD)
     await expect(promise).rejects.toThrow(
       '3 of 3 route configurations are invalid.',

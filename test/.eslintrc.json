@@ -5,5 +5,9 @@
   },
   "rules": {
     "@typescript-eslint/no-explicit-any": "off"
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "project": "./test/tsconfig.json"
   }
 }

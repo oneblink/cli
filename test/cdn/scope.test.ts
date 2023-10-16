@@ -35,8 +35,9 @@ test('it should log the currently set scope', async () => {
 })
 
 test('it should handle an uninitialized config file', async () => {
-  const s = await read(UNINITIALIZED_PROJECT_PATH)
-  expect(s.scope).toBeUndefined()
+  await expect(read(UNINITIALIZED_PROJECT_PATH)).rejects.toThrow(
+    'Scope has not been set yet, see --help for information on how to set scope.',
+  )
 })
 
 test('it should reject if no scope is set', async () => {

@@ -13,8 +13,10 @@ describe('verify-jwt', () => {
 
   test('verifyJWT() should return a jwt and call decode', async () => {
     const mockDecode = jest.fn().mockReturnValue(DECODED)
-    jest.mock('jsonwebtoken', () => ({
-      decode: mockDecode,
+    jest.unstable_mockModule('jsonwebtoken', () => ({
+      default: {
+        decode: mockDecode,
+      },
     }))
 
     const { default: verifyJWT } = await import(
@@ -37,8 +39,10 @@ describe('verify-jwt', () => {
   })
 
   test('verifyJWT() should reject if decode() does not return an object with an exp property', async () => {
-    jest.mock('jsonwebtoken', () => ({
-      decode: () => null,
+    jest.unstable_mockModule('jsonwebtoken', () => ({
+      default: {
+        decode: () => null,
+      },
     }))
     const { default: verifyJWT } = await import(
       '../../../src/identity/utils/verify-jwt.js'
@@ -50,10 +54,12 @@ describe('verify-jwt', () => {
   })
 
   test('verifyJWT() should reject if jwt is expired', async () => {
-    jest.mock('jsonwebtoken', () => ({
-      decode: () => ({
-        exp: Date.now() / 1000 - 10, // 10 seconds before test is run (expired)
-      }),
+    jest.unstable_mockModule('jsonwebtoken', () => ({
+      default: {
+        decode: () => ({
+          exp: Date.now() / 1000 - 10, // 10 seconds before test is run (expired)
+        }),
+      },
     }))
 
     const { default: verifyJWT } = await import(

@@ -7,6 +7,127 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.2.1] - 2023-09-07
+
+### Fixed
+
+- API deployment project zip files being corrupted after upload if a single part fails in the multi-part upload process
+
+## [3.2.0] - 2023-08-28
+
+### Dependencies
+
+- no longer depend upon [@blinkmobile/blinkmrc](https://www.npmjs.com/package/@blinkmobile/blinkmrc)
+
+- depend upon [appdirectory](https://www.npmjs.com/package/appdirectory) 0.1.0
+
+- depend upon [load-json-file](https://www.npmjs.com/package/load-json-file) [7.0.1](https://github.com/sindresorhus/load-json-file/releases/tag/v7.0.1)
+
+## [3.1.0] - 2023-08-10
+
+### Added
+
+- scheduled functions schedule output after deployment
+
+### Dependencies
+
+- depend upon [log-symbols](https://www.npmjs.com/package/log-symbols) [5.1.0](https://github.com/sindresorhus/log-symbols/releases/tag/v5.1.0)
+
+## [3.0.0] - 2023-08-01
+
+### Added
+
+- `cdn teardown` command to delete a single CDN hosting environment
+
+### Removed
+
+- **[BREAKING]** `.blinkmignore` support for `cdn deploy` command
+- **[BREAKING]** `--no-skip` flag for `cdn deploy` command, files that have not changed are not uploaded
+
+### Dependencies
+
+- no longer depend upon [@blinkmobile/aws-s3](https://www.npmjs.com/package/@blinkmobile/aws-s3)
+
+- no longer depend upon [aws-sdk](https://www.npmjs.com/package/aws-sdk)
+
+- depend upon [@aws-sdk/client-s3](https://www.npmjs.com/package/@aws-sdk/client-s3) [3.379.1](https://github.com/aws/aws-sdk-js-v3/releases/tag/v3.379.1)
+
+- depend upon [@aws-sdk/lib-storage](https://www.npmjs.com/package/@aws-sdk/lib-storage) [3.379.1](https://github.com/aws/aws-sdk-js-v3/releases/tag/v3.379.1)
+
+- depend upon [mime-types](https://www.npmjs.com/package/mime-types) [2.1.35](https://github.com/jshttp/mime-types/releases/tag/2.1.35)
+
+- depend upon [s3-sync-client](https://www.npmjs.com/package/s3-sync-client) [4.3.1](https://github.com/jeanbmar/s3-sync-client/blob/master/CHANGELOG.md)
+
+## [2.1.0] - 2023-07-12
+
+### Added
+
+- scheduled functions to API deployments
+
+### Changed
+
+- options sets now referred to as lists
+
+### Dependencies
+
+- update [aws-sdk](https://www.npmjs.com/package/aws-sdk) to [2.1411.0](https://github.com/aws/aws-sdk-js/releases/tag/v2.1411.0) (from [2.1357.0](https://github.com/aws/aws-sdk-js/releases/tag/v2.1357.0))
+
+- update [chalk](https://www.npmjs.com/package/chalk) to [5.3.0](https://github.com/chalk/chalk/releases/tag/v5.3.0) (from [5.2.0](https://github.com/chalk/chalk/releases/tag/v5.2.0))
+
+- update [glob](https://www.npmjs.com/package/glob) to 10.3.1 (from 10.0.0)
+
+- update [inquirer](https://www.npmjs.com/package/inquirer) to 9.2.7 (from 9.1.5)
+
+- update [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) to [9.0.1](https://github.com/auth0/node-jsonwebtoken/blob/master/CHANGELOG.md) (from [9.0.0](https://github.com/auth0/node-jsonwebtoken/blob/master/CHANGELOG.md))
+
+- update [meow](https://www.npmjs.com/package/meow) to [12.0.1](https://github.com/sindresorhus/meow/releases/tag/v12.0.1) (from [11.0.0](https://github.com/sindresorhus/meow/releases/tag/v11.0.0))
+
+- update [ora](https://www.npmjs.com/package/ora) to [6.3.1](https://github.com/sindresorhus/ora/releases/tag/v6.3.1) (from [6.3.0](https://github.com/sindresorhus/ora/releases/tag/v6.3.0))
+
+## [2.0.0] - 2023-05-02
+
+### Changed
+
+- **[BREAKING]** runtime version from Node.js 16 to [Node.js 18](https://nodejs.org/en/blog/announcements/v18-release-announce)
+
+### Dependencies
+
+- update [@hapi/boom](https://www.npmjs.com/package/@hapi/boom) to 10.0.1 (from [10.0.0](https://github.com/hapijs/boom/releases/tag/v10.0.0))
+
+- update [aws-sdk](https://www.npmjs.com/package/aws-sdk) to [2.1357.0](https://github.com/aws/aws-sdk-js/releases/tag/v2.1357.0) (from [2.1194.0](https://github.com/aws/aws-sdk-js/releases/tag/v2.1194.0))
+
+- update [chalk](https://www.npmjs.com/package/chalk) to [5.2.0](https://github.com/chalk/chalk/releases/tag/v5.2.0) (from [5.0.1](https://github.com/chalk/chalk/releases/tag/v5.0.1))
+
+- update [cli-table3](https://www.npmjs.com/package/cli-table3) to [0.6.3](https://github.com/cli-table/cli-table3/releases/tag/v0.6.3) (from [0.6.2](https://github.com/cli-table/cli-table3/releases/tag/v0.6.2))
+
+- update [execa](https://www.npmjs.com/package/execa) to [7.1.1](https://github.com/sindresorhus/execa/releases/tag/v7.1.1) (from [6.1.0](https://github.com/sindresorhus/execa/releases/tag/v6.1.0))
+
+- update [express](https://www.npmjs.com/package/express) to [4.18.2](https://github.com/expressjs/express/releases/tag/4.18.2) (from [4.18.1](https://github.com/expressjs/express/releases/tag/4.18.1))
+
+- update [glob](https://www.npmjs.com/package/glob) to 10.0.0 (from 8.0.3)
+
+- update [inquirer](https://www.npmjs.com/package/inquirer) to 9.1.5 (from 9.1.0)
+
+- update [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) to [9.0.0](https://github.com/auth0/node-jsonwebtoken/blob/master/CHANGELOG.md) (from [8.5.1](https://github.com/auth0/node-jsonwebtoken/blob/master/CHANGELOG.md))
+
+- update [meow](https://www.npmjs.com/package/meow) to [11.0.0](https://github.com/sindresorhus/meow/releases/tag/v11.0.0) (from [10.1.3](https://github.com/sindresorhus/meow/releases/tag/v10.1.3))
+
+- update [minimist](https://www.npmjs.com/package/minimist) to [1.2.8](https://github.com/minimistjs/minimist/blob/master/CHANGELOG.md) (from [1.2.6](https://github.com/minimistjs/minimist/blob/master/CHANGELOG.md))
+
+- update [node-fetch](https://www.npmjs.com/package/node-fetch) to [3.3.1](https://github.com/node-fetch/node-fetch/releases/tag/v3.3.1) (from [3.2.10](https://github.com/node-fetch/node-fetch/releases/tag/v3.2.10))
+
+- update [open](https://www.npmjs.com/package/open) to [9.1.0](https://github.com/sindresorhus/open/releases/tag/v9.1.0) (from [8.4.0](https://github.com/sindresorhus/open/releases/tag/v8.4.0))
+
+- update [ora](https://www.npmjs.com/package/ora) to [6.3.0](https://github.com/sindresorhus/ora/releases/tag/v6.3.0) (from [6.1.2](https://github.com/sindresorhus/ora/releases/tag/v6.1.2))
+
+## [1.3.2] - 2023-04-20
+
+### Added
+
+- `@microsoft/eslint-plugin-sdl` eslint plugin
+
+## [1.3.1] - 2023-02-16
+
 ### Added
 
 - More developer docs for getting started with OneBlink APIs

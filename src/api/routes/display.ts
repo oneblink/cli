@@ -5,53 +5,51 @@ import chalk from 'chalk'
 
 import readRoutes from './read.js'
 import validateRoute from './validate.js'
+import readScheduledFunctions from '../scheduledFunctions/read.js'
 
-function displayRoutes(logger: typeof console, cwd: string): Promise<void> {
-  return readRoutes(cwd).then((routeConfigs) => {
-    if (!routeConfigs || !routeConfigs.length) {
-      return Promise.reject(
-        new Error(
-          'No routes found, see documentation for information on how to create routes.',
-        ),
+async function displayRoutes(
+  logger: typeof console,
+  cwd: string,
+): Promise<void> {
+  const routeConfigs = await readRoutes(cwd)
+  if (!routeConfigs.length) {
+    const scheduledFunctionsConfig = await readScheduledFunctions(cwd)
+    if (!scheduledFunctionsConfig.length) {
+      throw new Error(
+        'You cannot deploy without defining at least one route or scheduled function.',
       )
     }
+    return
+  }
+  const headings = ['Route', 'Module', 'Info']
+  const table = new Table()
+  table.push([
+    {
+      content: chalk.bold('Route Configuration'),
+      hAlign: 'center',
+      colSpan: headings.length,
+    },
+  ])
+  table.push(headings.map((heading) => chalk.grey(heading)))
+  let totalErrors = 0
+  for (const routeConfig of routeConfigs) {
+    const errors = await validateRoute(cwd, routeConfig)
+    const tableRow = [routeConfig.route, routeConfig.module]
+    if (errors && errors.length) {
+      totalErrors++
+      tableRow.push(chalk.red(errors.join(os.EOL)))
+    } else {
+      tableRow.push(chalk.green('OK'))
+    }
+    table.push(tableRow)
+  }
 
-    const table = new Table()
-    table.push([
-      {
-        content: chalk.bold('Route Configuration'),
-        hAlign: 'center',
-        colSpan: 3,
-      },
-    ])
-    const headings = ['Route', 'Module', 'Info']
-    table.push(headings.map((heading) => chalk.grey(heading)))
-
-    let totalErrors = 0
-    return Promise.all(
-      routeConfigs.map((routeConfig) => {
-        return validateRoute(cwd, routeConfig).then((errors) => {
-          const tableRow = [routeConfig.route, routeConfig.module]
-          if (errors && errors.length) {
-            totalErrors++
-            tableRow.push(chalk.red(errors.join(os.EOL)))
-          } else {
-            tableRow.push(chalk.green('OK'))
-          }
-          table.push(tableRow)
-        })
-      }),
-    ).then(() => {
-      logger.log(table.toString())
-      if (totalErrors) {
-        return Promise.reject(
-          new Error(
-            `${totalErrors} of ${routeConfigs.length} route configurations are invalid.`,
-          ),
-        )
-      }
-    })
-  })
+  logger.log(table.toString())
+  if (totalErrors) {
+    throw new Error(
+      `${totalErrors} of ${routeConfigs.length} route configurations are invalid.`,
+    )
+  }
 }
 
 export default displayRoutes

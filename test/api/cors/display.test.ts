@@ -9,6 +9,7 @@ describe('cors display', () => {
 
   const CWD = 'current working directory'
   const CORS: APITypes.APIEnvironmentCorsConfiguration = {
+    // eslint-disable-next-line @microsoft/sdl/no-insecure-url
     origins: ['http://test'],
     headers: ['Accept', 'Content-Type'],
     exposedHeaders: ['Accept', 'Content-Type'],
@@ -32,7 +33,7 @@ describe('cors display', () => {
       },
     }))
 
-    const { default: display } = await import('../../../src/api/cors/display')
+    const { default: display } = await import('../../../src/api/cors/display.js')
     return display(console, CWD)
   })
 
@@ -54,7 +55,7 @@ describe('cors display', () => {
     })
     const spy = jest.spyOn(console, 'log')
 
-    const { default: display } = await import('../../../src/api/cors/display')
+    const { default: display } = await import('../../../src/api/cors/display.js')
     await display(console, CWD)
 
     expect(spy).not.toHaveBeenCalled()
@@ -70,7 +71,7 @@ describe('cors display', () => {
       }
     })
 
-    const { default: display } = await import('../../../src/api/cors/display')
+    const { default: display } = await import('../../../src/api/cors/display.js')
     return display(console, CWD)
   })
 
@@ -85,7 +86,7 @@ describe('cors display', () => {
 
     const spy = jest.spyOn(console, 'log')
 
-    const { default: display } = await import('../../../src/api/cors/display')
+    const { default: display } = await import('../../../src/api/cors/display.js')
     const promise = display(console, CWD)
 
     await expect(promise).rejects.toHaveProperty(
@@ -99,7 +100,7 @@ describe('cors display', () => {
   test('Should log the cors', async () => {
     const spy = jest.spyOn(console, 'log')
 
-    const { default: display } = await import('../../../src/api/cors/display')
+    const { default: display } = await import('../../../src/api/cors/display.js')
     await display(console, CWD)
 
     expect(spy).toHaveBeenCalled()

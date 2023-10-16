@@ -23,7 +23,7 @@ describe('', () => {
   })
 
   beforeEach(() => {
-    jest.mock('open', () => () => undefined)
+    jest.unstable_mockModule('open', () => ({ default: () => undefined }))
     jest.unstable_mockModule('inquirer', () => ({
       default: {
         prompt: async () => ({
@@ -38,7 +38,7 @@ describe('', () => {
       encode: () => VERIFIER_CHALLENGE,
     }))
     const mockOpen = jest.fn()
-    jest.mock('open', () => mockOpen)
+    jest.unstable_mockModule('open', () => ({ default: mockOpen }))
     const mockPrompt = jest.fn(async () => ({
       code: CODE,
     }))

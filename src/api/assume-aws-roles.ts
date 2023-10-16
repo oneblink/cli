@@ -18,7 +18,14 @@ async function assumeAWSRoleToDeploy(
   config: BlinkMRCServer,
   env: string,
 ): Promise<DeploymentCredentials> {
-  const { credentials, s3 } = await assumeAWSRole(
+  const { credentials, s3 } = await assumeAWSRole<{
+    s3: DeploymentCredentials['s3']
+    credentials: {
+      AccessKeyId: string
+      SecretAccessKey: string
+      SessionToken: string
+    }
+  }>(
     oneBlinkAPIClient,
     `/v3/apis/${config.project || ''}/environments/${env}/credentials/deploy`,
   )
@@ -38,7 +45,13 @@ async function assumeAWSRoleToServeLocally(
   config: BlinkMRCServer,
   env: string,
 ): Promise<ServeCredentials> {
-  const { Credentials } = await assumeAWSRole(
+  const { Credentials } = await assumeAWSRole<{
+    Credentials: {
+      AccessKeyId: string
+      SecretAccessKey: string
+      SessionToken: string
+    }
+  }>(
     oneBlinkAPIClient,
     `/apis/${config.project || ''}/environments/${env}/credentials/serve`,
   )

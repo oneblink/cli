@@ -38,6 +38,7 @@ describe('deploy', () => {
     variables: {},
     routes: [],
     network: undefined,
+    scheduledFunctions: [],
   }
 
   afterEach(() => {
@@ -204,36 +205,28 @@ describe('deploy', () => {
 
   test('upload() should log correct updates and return bundle key after upload', async () => {
     const mockUpload = jest.fn()
-    mockUpload.mockReturnValue({
-      on: () => undefined,
-      send: (fn: (error: null, result: { Key: string }) => void) =>
-        fn(null, { Key: deploymentCredentials.s3.key }),
-    })
-    jest.mock('aws-sdk', () => ({
-      S3: class {
-        upload = mockUpload
+    jest.mock('@aws-sdk/lib-storage', () => ({
+      Upload: class {
+        done = mockUpload
+        on() {
+          return undefined
+        }
       },
     }))
     const { default: deploy } = await import('../../src/api/deploy.js')
 
     await deploy.upload(UPLOAD_PATH, deploymentCredentials)
-    expect(mockUpload).toBeCalledWith(
-      expect.objectContaining({
-        Bucket: deploymentCredentials.s3.bucket,
-        Key: deploymentCredentials.s3.key,
-      }),
-    )
+    expect(mockUpload).toBeCalledTimes(1)
   })
 
   test('upload() should log correct updates and reject if upload returns an error', async () => {
-    jest.mock('aws-sdk', () => ({
-      S3: class {
-        upload() {
-          return {
-            on: () => undefined,
-            send: (fn: (error: Error) => void) =>
-              fn(new Error('test upload error')),
-          }
+    jest.mock('@aws-sdk/lib-storage', () => ({
+      Upload: class {
+        async done() {
+          throw new Error('test upload error')
+        }
+        on() {
+          return undefined
         }
       },
     }))
@@ -246,12 +239,19 @@ describe('deploy', () => {
   test('deploy() should log correct updates', async () => {
     const mockPostRequest = jest.fn(async () => ({
       credentials: {},
+      scheduledFunctions: [],
     }))
     const oneBlinkAPIClient = new OneBlinkAPIClient(TENANTS.ONEBLINK)
     oneBlinkAPIClient.postRequest =
       mockPostRequest as OneBlinkAPIClient['postRequest']
     const { default: deploy } = await import('../../src/api/deploy.js')
-    await deploy.deploy(oneBlinkAPIClient, apiDeploymentPayload, ENV)
+    await deploy.deploy(
+      TENANTS.ONEBLINK,
+      oneBlinkAPIClient,
+      apiDeploymentPayload,
+      ENV,
+      console,
+    )
     expect(mockPostRequest).toHaveBeenCalledWith(
       `/apis/${apiDeploymentPayload.scope}/environments/${ENV}/deployments`,
       apiDeploymentPayload,
@@ -264,7 +264,13 @@ describe('deploy', () => {
       throw new Error('test error')
     }
     const { default: deploy } = await import('../../src/api/deploy.js')
-    const promise = deploy.deploy(oneBlinkAPIClient, apiDeploymentPayload, ENV)
+    const promise = deploy.deploy(
+      TENANTS.ONEBLINK,
+      oneBlinkAPIClient,
+      apiDeploymentPayload,
+      ENV,
+      console,
+    )
     expect(promise).rejects.toThrow('test error')
   })
 })

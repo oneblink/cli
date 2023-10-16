@@ -29,7 +29,7 @@ describe('logout', () => {
       default: async () => undefined,
     }))
     const mockUpdate = jest.fn(async () => ({}))
-    jest.mock('@blinkmobile/blinkmrc', () => ({
+    jest.unstable_mockModule('../../../src/blinkmrc.js', () => ({
       userConfig: () => ({
         load: async () => ({
           accessToken: JWT,

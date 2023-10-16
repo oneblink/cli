@@ -1,9 +1,7 @@
 import userConfig from './user-config.js'
 
-export default function getJWT(): Promise<string | void> {
+export default async function getJWT(): Promise<string | undefined> {
   // Returning accessToken if id_token is not set to be backward compatible
-  return userConfig
-    .getStore()
-    .load()
-    .then((config) => config.id_token || config.accessToken)
+  const config = await userConfig.getStore().load()
+  return config.id_token || config.accessToken
 }
