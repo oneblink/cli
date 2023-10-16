@@ -7,6 +7,7 @@ import displayRoutes from '../../api/routes/display.js'
 import scope from '../../api/scope.js'
 import variables from '../../api/variables.js'
 import network from '../../api/network.js'
+import displayScheduledFunctions from '../scheduledFunctions/display.js'
 
 export default async function (
   tenant: Tenant,
@@ -20,6 +21,7 @@ export default async function (
     () => scope.display(logger, flags.cwd, flags.env),
     () => displayCors(logger, flags.cwd),
     () => displayRoutes(logger, flags.cwd),
+    () => displayScheduledFunctions(logger, flags.cwd),
     () => variables.display(logger, flags.cwd, flags.env),
     () => network.displayNetwork(logger, flags.cwd, flags.env),
   ]

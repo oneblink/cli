@@ -6,13 +6,16 @@ const config = {
   testEnvironment: 'node',
   moduleDirectories: ['src', 'node_modules'],
   roots: ['.', 'src'],
-  globals: {
-    'ts-jest': {
-      useESM: true,
-      isolatedModules: true,
-    },
+  transform: {
+    '^.+\\.tsx?$': [
+      'ts-jest',
+      {
+        useESM: true,
+        isolatedModules: true,
+        tsconfig: './test/tsconfig.json',
+      },
+    ],
   },
-  transform: {},
   extensionsToTreatAsEsm: ['.ts'],
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1',

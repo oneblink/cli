@@ -72,7 +72,7 @@ ${chalk.blue('deploy')} ${chalk.grey(
 
 ${chalk.blue('teardown')} ${chalk.grey(
     '............',
-  )} Teardown an enviroment for the project
+  )} Teardown an environment for the project
   ${chalk.blue('--force')} ${chalk.grey(
     '...........',
   )} Force teardown without confirmation

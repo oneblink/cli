@@ -19,10 +19,6 @@ export const meowOptions: Parameters<typeof meow>[0] = {
       type: 'boolean',
       default: false,
     },
-    skip: {
-      type: 'boolean',
-      default: true,
-    },
     bucket: {
       type: 'string',
     },
@@ -49,7 +45,7 @@ const command: CLICommand = async (tenant, inputs, oneBlinkAPIClient) => {
       return
     }
 
-    return command(inputs.slice(1), flags, oneBlinkAPIClient)
+    return command(tenant, inputs.slice(1), flags, oneBlinkAPIClient)
   } catch (err) {
     console.error('Command not found!')
   }
@@ -62,6 +58,9 @@ async function getCLICommand(input: string) {
     }
     case 'deploy': {
       return (await import('./deploy.js')).default
+    }
+    case 'teardown': {
+      return (await import('./teardown.js')).default
     }
   }
 }

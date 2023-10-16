@@ -1,14 +1,15 @@
 import pkg from '../../package.js'
-import blinkmrc from '@blinkmobile/blinkmrc'
+import * as blinkmrc from '../../blinkmrc.js'
 
-export type UserConfigStore = {
-  load: () => Promise<any>
-  update: (config: any) => Promise<any>
-}
+let userConfigStore: blinkmrc.Config<{
+  // Setting accessToken as well as id_token to be backward compatible
+  accessToken?: string
+  id_token?: string
+  access_token?: string
+  refresh_token?: string
+}>
 
-let userConfigStore: any
-
-function getStore(): UserConfigStore {
+function getStore() {
   if (!userConfigStore) {
     userConfigStore = blinkmrc.userConfig({ name: pkg.name })
   }

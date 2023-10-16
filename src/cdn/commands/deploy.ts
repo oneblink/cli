@@ -1,59 +1,84 @@
 import path from 'path'
 
 import ora from 'ora'
-import awsS3 from '@blinkmobile/aws-s3'
+import {
+  GetObjectCommandInput,
+  PutObjectCommandInput,
+  S3Client,
+} from '@aws-sdk/client-s3'
+import { S3SyncClient, TransferMonitor, TransferStatus } from 's3-sync-client'
+import mime from 'mime-types'
 
 import confirm from '../utils/confirm.js'
-import bucketParams from '../s3-bucket-params.js'
 import provisionEnvironment from '../provision-environment.js'
 import getAwsCredentials from '../aws-credentials.js'
-import s3Factory from '../s3-bucket-factory.js'
 import read from '../read.js'
 import OneBlinkAPIClient from '../../oneblink-api-client.js'
+import { SyncLocalWithBucketOptions } from 's3-sync-client/dist/commands/SyncCommand.js'
 
 export default async function (
+  tenant: Tenant,
   input: Array<string>,
   flags: any,
   oneBlinkAPIClient: OneBlinkAPIClient,
 ): Promise<void> {
-  return confirm(flags.force, flags.env).then((confirmation) => {
-    if (!confirmation) {
-      return
-    }
-    return read(flags.cwd).then((cfg) => {
-      return Promise.all([
-        bucketParams.read(flags.cwd, cfg.region),
-        getAwsCredentials(cfg, flags.env, oneBlinkAPIClient),
-      ])
-        .then((results) => s3Factory(...results))
-        .then((s3) => {
-          const spinner = ora({ spinner: 'dots', text: 'Uploading to CDN' })
-          const uploadParams = {
-            s3,
-            skip: flags.skip,
-            prune: flags.prune,
-            // Allow deployment of files in a sub directory to the current working directory
-            cwd: path.join(flags.cwd, input[0] || '.'),
-            bucketPathPrefix: flags.env,
-          }
+  const confirmation = await confirm(flags.force, flags.env)
+  if (!confirmation) {
+    return
+  }
 
-          spinner.start()
-          const task = awsS3.upload(uploadParams)
-          task.on('skipped', (fileName: string) => {
-            spinner.warn(`skipped: ${fileName}`)
-          })
-          task.on('uploaded', (fileName: string) => {
-            spinner.succeed(`uploaded: ${fileName}`)
-          })
-          task.on('deleted', (fileName: string) => {
-            spinner.warn(`deleted: ${fileName}`)
-          })
-          return task.promise.catch((err: Error) => {
-            spinner.fail('Deployment failed!')
-            return Promise.reject(err)
-          })
-        })
-        .then(() => provisionEnvironment(cfg, flags.env, oneBlinkAPIClient))
+  const cfg = await read(flags.cwd)
+  const awsCredentials = await getAwsCredentials(
+    cfg,
+    flags.env,
+    oneBlinkAPIClient,
+  )
+
+  const spinner = ora({ spinner: 'dots', text: 'Uploading to CDN' })
+  spinner.start()
+
+  let progress = 0
+
+  try {
+    const s3Client = new S3Client({
+      region: tenant.region,
+      credentials: {
+        accessKeyId: awsCredentials.AccessKeyId,
+        secretAccessKey: awsCredentials.SecretAccessKey,
+        sessionToken: awsCredentials.SessionToken,
+      },
     })
-  })
+
+    const { sync } = new S3SyncClient({ client: s3Client })
+
+    const monitor = new TransferMonitor()
+    monitor.on('progress', (transferStatus: TransferStatus) => {
+      progress = Math.floor(
+        (transferStatus.size.current / transferStatus.size.total) * 100,
+      )
+      spinner.text = `Uploading to CDN: ${progress}%`
+    })
+
+    // Allow deployment of files in a sub directory to the current working directory
+    const cwd = path.join(flags.cwd, input[0] || '.')
+    const options: SyncLocalWithBucketOptions = {
+      del: flags.prune,
+      monitor,
+      commandInput: (input) => {
+        const putObjectCommandInput: Partial<PutObjectCommandInput> = {
+          ContentType:
+            (input.Key && mime.lookup(input.Key)) || 'application/octet-stream',
+        }
+        // "commandInput" is typed incorrectly to return GetObjectCommandInput
+        return putObjectCommandInput as unknown as GetObjectCommandInput
+      },
+    }
+    await sync(cwd, `s3://${cfg.scope}/${flags.env}`, options)
+    spinner.succeed('Upload(s) complete!')
+  } catch (error) {
+    spinner.fail(`Upload(s) failed: ${progress}%`)
+    throw error
+  }
+
+  await provisionEnvironment(cfg, flags.env, oneBlinkAPIClient)
 }

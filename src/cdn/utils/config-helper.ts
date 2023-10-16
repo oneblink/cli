@@ -1,28 +1,26 @@
-import configLoader from '@blinkmobile/blinkmrc'
+import * as configLoader from '../../blinkmrc.js'
 
-import pkg from '../../package.js'
-
-function projectConfig(cwd: string): any {
-  return configLoader.projectConfig({
-    name: pkg.name,
-    cwd: cwd,
+function projectConfig<T extends object>(cwd: string) {
+  return configLoader.projectConfig<T>({
+    cwd,
   })
 }
 
-function read(cwd: string): Promise<any> {
-  return projectConfig(cwd)
-    .load()
-    .catch(() =>
-      Promise.reject(
-        new Error(
-          'Scope has not been set yet, see --help for information on how to set scope.',
-        ),
-      ),
+async function read<T extends object>(cwd: string): Promise<T> {
+  try {
+    return await projectConfig<T>(cwd).load()
+  } catch (e) {
+    throw new Error(
+      'Scope has not been set yet, see --help for information on how to set scope.',
     )
+  }
 }
 
-function write(cwd: string, updater: (arg0: any) => any): Promise<any> {
-  return projectConfig(cwd).update(updater)
+async function write<T extends object>(
+  cwd: string,
+  updater: (arg0: T) => T,
+): Promise<T> {
+  return await projectConfig<T>(cwd).update(updater)
 }
 
 export default { read, write }

@@ -72,12 +72,6 @@ Remove the files from your local folder, then deploy using `--prune`:
 oneblink cdn deploy <path-to-files> --env <environment> --cwd <path-to-project> --prune
 ```
 
-### .blinkmignore
-
-Skip ignored files and directories during upload.
-
-See [.blinkmignore](https://github.com/oneblink/aws-s3.js#blinkmignore)
-
 ## Single-page Applications
 
 [SPA (Single-page application)](https://developer.mozilla.org/en-US/docs/Glossary/SPA) require that all URL paths return the `index.html` file and a 200 HTTP status response code. This is not the default configuration for a CDN Hosting environment. However, it simple to turn on. In your `.blinkmrc.json` file, simply add an `isSinglePageApplication` with a value of `true` under the `cdn` property.

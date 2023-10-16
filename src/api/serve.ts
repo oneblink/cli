@@ -108,6 +108,7 @@ async function startServer(
         }
       }
 
+      // eslint-disable-next-line @microsoft/sdl/no-insecure-url
       const url = new URL(req.originalUrl, 'http://domain')
       const request: OneBlinkAPIHostingRequest<undefined> = {
         body,

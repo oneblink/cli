@@ -1,5 +1,5 @@
 import { describe, expect, test, jest } from '@jest/globals'
-import values from '../../../src/api/values'
+import values from '../../../src/api/values.js'
 
 describe('read', () => {
   const CWD = 'current working directory'
@@ -10,7 +10,7 @@ describe('read', () => {
   })
 
   test('Should return the defaults if cors is true', async () => {
-    jest.mock('@blinkmobile/blinkmrc', () => ({
+    jest.unstable_mockModule('../../../src/blinkmrc.js', () => ({
       projectConfig: () => ({
         load: async () => ({
           server: {
@@ -20,7 +20,7 @@ describe('read', () => {
         update: async () => ({}),
       }),
     }))
-    const { default: read } = await import('../../../src/api/cors/read')
+    const { default: read } = await import('../../../src/api/cors/read.js')
 
     const cors = await read(CWD)
     expect(cors).toEqual({
@@ -33,7 +33,7 @@ describe('read', () => {
   })
 
   test('Should return false for uninitialized config file', async () => {
-    jest.mock('@blinkmobile/blinkmrc', () => ({
+    jest.unstable_mockModule('../../../src/blinkmrc.js', () => ({
       projectConfig: () => ({
         load: async () => ({
           test: 123,
@@ -41,14 +41,14 @@ describe('read', () => {
         update: async () => ({}),
       }),
     }))
-    const { default: read } = await import('../../../src/api/cors/read')
+    const { default: read } = await import('../../../src/api/cors/read.js')
 
     const cors = await read(CWD)
     expect(cors).toBe(false)
   })
 
   test('Should return the currently set cors merged with defaults', async () => {
-    jest.mock('@blinkmobile/blinkmrc', () => ({
+    jest.unstable_mockModule('../../../src/blinkmrc.js', () => ({
       projectConfig: () => ({
         load: async () => ({
           server: {
@@ -61,7 +61,7 @@ describe('read', () => {
         update: async () => ({}),
       }),
     }))
-    const { default: read } = await import('../../../src/api/cors/read')
+    const { default: read } = await import('../../../src/api/cors/read.js')
 
     const cors = await read(CWD)
     expect(cors).toEqual({
@@ -74,7 +74,7 @@ describe('read', () => {
   })
 
   test('Should return cors as false when config throws an error', async () => {
-    jest.mock('@blinkmobile/blinkmrc', () => ({
+    jest.unstable_mockModule('../../../src/blinkmrc.js', () => ({
       projectConfig: () => ({
         load: async () => {
           throw new Error('test')
@@ -82,7 +82,7 @@ describe('read', () => {
         update: async () => ({}),
       }),
     }))
-    const { default: read } = await import('../../../src/api/cors/read')
+    const { default: read } = await import('../../../src/api/cors/read.js')
 
     const cors = await read(CWD)
     expect(cors).toBe(false)
