@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "@microsoft/eslint-plugin-sdl": "^0.2.0",
-    "@oneblink/release-cli": "^2.0.3",
+    "@oneblink/release-cli": "^2.1.0",
     "@oneblink/types": "github:oneblink/types",
     "@rollup/plugin-commonjs": "^25.0.2",
     "@rollup/plugin-node-resolve": "^15.1.0",
