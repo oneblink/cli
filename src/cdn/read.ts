@@ -4,10 +4,12 @@ import configHelper from './utils/config-helper.js'
 export default async function read(cwd: string): Promise<{
   scope: string
   isSinglePageApplication?: boolean
+  disableSecurityResponseHeaders?: boolean
 }> {
   const cfg = await configHelper.read<{
     cdn?: {
       scope?: unknown
+      disableSecurityResponseHeaders?: unknown
       isSinglePageApplication?: unknown
       objectParams?: unknown
     }
@@ -34,6 +36,11 @@ export default async function read(cwd: string): Promise<{
       'isSinglePageApplication' in cdn &&
       typeof cdn.isSinglePageApplication === 'boolean'
         ? cdn.isSinglePageApplication
+        : undefined,
+    disableSecurityResponseHeaders:
+      'disableSecurityResponseHeaders' in cdn &&
+      typeof cdn.disableSecurityResponseHeaders === 'boolean'
+        ? cdn.disableSecurityResponseHeaders
         : undefined,
   }
 }
