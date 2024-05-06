@@ -112,7 +112,7 @@
     "fixpack": "fixpack",
     "jest": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --silent",
     "prepare": "npm run build",
-    "pretest": "npm run eslint && npm run fixpack",
+    "pretest": "npm run eslint && npm run fixpack && npm run typescript",
     "release": "oneblink-release --no-name",
     "test": "npm run jest",
     "types": "npm i -D github:oneblink/types",

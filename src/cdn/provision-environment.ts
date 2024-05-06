@@ -17,11 +17,13 @@ async function provisionEnvironment(
       {
         isSinglePageApplication?: boolean
         disableSecurityResponseHeaders?: boolean
+        isWafEnabled?: boolean
       },
       { brandedUrl: string }
     >(`/webApps/${cfg.scope}/environments/${env}/deployments`, {
       isSinglePageApplication: cfg.isSinglePageApplication,
       disableSecurityResponseHeaders: cfg.disableSecurityResponseHeaders,
+      isWafEnabled: cfg.isWafEnabled,
     })
     spinner.succeed(
       'Deployment complete - Origin: ' + chalk.bold(body.brandedUrl),
