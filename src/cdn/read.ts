@@ -1,16 +1,21 @@
 import chalk from 'chalk'
 import configHelper from './utils/config-helper.js'
 
-export default async function read(cwd: string): Promise<{
+export default async function read(
+  cwd: string,
+  env: string,
+): Promise<{
   scope: string
   isSinglePageApplication?: boolean
   disableSecurityResponseHeaders?: boolean
+  isWafEnabled?: boolean
 }> {
   const cfg = await configHelper.read<{
     cdn?: {
       scope?: unknown
       disableSecurityResponseHeaders?: unknown
       isSinglePageApplication?: unknown
+      waf?: Record<string, unknown>
       objectParams?: unknown
     }
   }>(cwd)
@@ -29,6 +34,12 @@ export default async function read(cwd: string): Promise<{
       )}`,
     )
   }
+  let isWafEnabled
+  if (cdn.waf) {
+    if (env in cdn.waf && typeof cdn.waf[env] === 'boolean') {
+      isWafEnabled = cdn.waf[env] as boolean
+    }
+  }
 
   return {
     scope: cdn.scope,
@@ -42,5 +53,6 @@ export default async function read(cwd: string): Promise<{
       typeof cdn.disableSecurityResponseHeaders === 'boolean'
         ? cdn.disableSecurityResponseHeaders
         : undefined,
+    isWafEnabled,
   }
 }
