@@ -3,7 +3,7 @@ import configHelper from './utils/config-helper.js'
 
 export default async function read(
   cwd: string,
-  env: string,
+  env?: string,
 ): Promise<{
   scope: string
   isSinglePageApplication?: boolean
@@ -35,9 +35,12 @@ export default async function read(
     )
   }
   let isWafEnabled
-  if (cdn.waf) {
-    if (env in cdn.waf && typeof cdn.waf[env] === 'boolean') {
-      isWafEnabled = cdn.waf[env] as boolean
+  // only read env specific props if provided
+  if (env) {
+    if (cdn.waf) {
+      if (env in cdn.waf && typeof cdn.waf[env] === 'boolean') {
+        isWafEnabled = cdn.waf[env] as boolean
+      }
     }
   }
 
