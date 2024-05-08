@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `waf` property for CDN hosting configuration
+
 ## [3.3.1] - 2023-12-12
 
 ### Fixed

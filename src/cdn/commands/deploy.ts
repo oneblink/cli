@@ -27,7 +27,7 @@ export default async function (
     return
   }
 
-  const cfg = await read(flags.cwd)
+  const cfg = await read(flags.cwd, flags.env)
   const awsCredentials = await getAwsCredentials(
     cfg,
     flags.env,

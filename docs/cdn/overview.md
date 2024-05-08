@@ -113,3 +113,22 @@ These headers can be disabled by setting the `disableSecurityResponseHeaders` pr
   }
 }
 ```
+
+## Web Application Firewall (WAF) protection
+
+You can enable or disable WAF protection by setting the `waf` property for the applicable environment in your  `.blinkmrc.json` file, like so:
+
+### Example
+
+```json
+{
+  "cdn": {
+    "scope": "customer-project.cdn.oneblink.io",
+    "waf": {
+      "prod": true,
+      "test": true
+    },
+  }
+}
+```
+
