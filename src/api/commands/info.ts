@@ -8,6 +8,7 @@ import scope from '../../api/scope.js'
 import variables from '../../api/variables.js'
 import network from '../../api/network.js'
 import displayScheduledFunctions from '../scheduledFunctions/display.js'
+import waf from '../waf.js'
 
 export default async function (
   tenant: Tenant,
@@ -24,6 +25,7 @@ export default async function (
     () => displayScheduledFunctions(logger, flags.cwd),
     () => variables.display(logger, flags.cwd, flags.env),
     () => network.displayNetwork(logger, flags.cwd, flags.env),
+    () => waf.displayWaf(logger, flags.cwd, flags.env),
   ]
   // Catch all errors and let all tasks run before
   // transforming into a single error
