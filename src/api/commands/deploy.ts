@@ -22,6 +22,7 @@ import copyRecursive from '../utils/copy-recursive.js'
 import values from '../values.js'
 import variables from '../variables.js'
 import readScheduledFunctions from '../scheduledFunctions/read.js'
+import waf from '../waf.js'
 
 export default async function (
   tenant: Tenant,
@@ -95,14 +96,21 @@ async function copy(
     // Copy configuration file required by handler
     const configPath = path.join(target, 'bm-server.json')
 
-    const [cors, routes, networkConfig, envVars, scheduledFunctions] =
-      await Promise.all([
-        readCors(cwd),
-        readRoutes(cwd),
-        network.readNetwork(cwd, env),
-        variables.read(cwd, env),
-        readScheduledFunctions(cwd),
-      ])
+    const [
+      cors,
+      routes,
+      networkConfig,
+      envVars,
+      scheduledFunctions,
+      isWafEnabled,
+    ] = await Promise.all([
+      readCors(cwd),
+      readRoutes(cwd),
+      network.readNetwork(cwd, env),
+      variables.read(cwd, env),
+      readScheduledFunctions(cwd),
+      waf.readWaf(cwd, env),
+    ])
 
     const apiDeploymentPayload: APITypes.APIDeploymentPayload = {
       s3: deploymentCredentials.s3,
@@ -139,6 +147,7 @@ async function copy(
           handler,
         }
       }),
+      isWafEnabled,
     }
 
     await writeJsonFile(configPath, apiDeploymentPayload)

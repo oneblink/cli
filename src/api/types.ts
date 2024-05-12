@@ -27,6 +27,9 @@ export type BlinkMRCServer = {
   }
   scheduledFunctions?: Array<ScheduledFunctionConfiguration>
   memorySize?: number
+  waf?: {
+    [environment: string]: APITypes.APIEnvironment['isWafEnabled']
+  }
 }
 
 export type CLIFlags = {

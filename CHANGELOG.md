@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `waf` property for API hosting configuration
+
 ## [3.4.0] - 2024-05-10
 
 ### Added
