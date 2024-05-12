@@ -18,6 +18,7 @@ export default async function (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   options: CLIOptions,
 ): Promise<void> {
+  console.log('LOCALL!!!!')
   const tasks = [
     () => scope.display(logger, flags.cwd, flags.env),
     () => displayCors(logger, flags.cwd),

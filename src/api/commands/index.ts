@@ -20,6 +20,9 @@ async function getCLICommand(input: string) {
     case 'teardown': {
       return (await import('./teardown.js')).default
     }
+    case 'ci': {
+      return (await import('./ci.js')).default
+    }
   }
 }
 
