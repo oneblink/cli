@@ -9,9 +9,6 @@ async function displayWaf(
   environment: string,
 ): Promise<void> {
   const wafConfiguration = await readWaf(cwd, environment)
-  if (!wafConfiguration) {
-    return
-  }
 
   const table = new Table()
   table.push(
@@ -39,14 +36,13 @@ async function readWaf(
 ): Promise<boolean | undefined> {
   const config = await projectMeta.read(cwd)
   if (
-    !config.server ||
-    !config.server.waf ||
-    !config.server.waf[environment] ||
-    typeof config.server.waf[environment] !== 'boolean'
+    config.server &&
+    config.server.waf &&
+    config.server.waf[environment] &&
+    typeof config.server.waf[environment] === 'boolean'
   ) {
-    return
+    return config.server.waf[environment]
   }
-  return config.server.waf[environment]
 }
 
 export default {
