@@ -38,7 +38,6 @@ async function readWaf(
   if (
     config.server &&
     config.server.waf &&
-    config.server.waf[environment] &&
     typeof config.server.waf[environment] === 'boolean'
   ) {
     return config.server.waf[environment]
