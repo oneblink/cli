@@ -1,8 +1,12 @@
+import pkg from './package.js'
+
 const environment = (
   process.env.ONEBLINK_CLI_ENVIRONMENT || 'prod'
 ).toLowerCase()
 
 const subdomainSuffix = environment === 'prod' ? '' : `.${environment}`
+
+const USER_AGENT = `Node.js ${pkg.name} / ${pkg.version}`
 
 function getOneBlinkLoginClientId() {
   switch (environment) {
@@ -60,4 +64,4 @@ const TENANTS: {
   },
 }
 
-export { TENANTS }
+export { TENANTS, USER_AGENT }

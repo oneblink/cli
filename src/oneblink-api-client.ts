@@ -3,11 +3,9 @@ import querystring from 'querystring'
 import fetch from 'node-fetch'
 import jwt from 'jsonwebtoken'
 
-import pkg from './package.js'
+import { USER_AGENT } from './config.js'
 import verifyJWT from './identity/utils/verify-jwt.js'
 import getJWT from './identity/utils/get-jwt.js'
-
-const userAgent = `Node.js ${pkg.name} / ${pkg.version}`
 
 async function getBearerToken(): Promise<string> {
   let key
@@ -53,7 +51,7 @@ export default class OneBlinkAPIClient {
         Authorization: `Bearer ${accessToken}`,
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        'User-Agent': userAgent,
+        'User-Agent': USER_AGENT,
       },
     })
 
@@ -85,7 +83,7 @@ export default class OneBlinkAPIClient {
         Authorization: `Bearer ${accessToken}`,
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        'User-Agent': userAgent,
+        'User-Agent': USER_AGENT,
       },
       body: JSON.stringify(body),
     })
@@ -109,7 +107,7 @@ export default class OneBlinkAPIClient {
         Authorization: `Bearer ${accessToken}`,
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        'User-Agent': userAgent,
+        'User-Agent': USER_AGENT,
       },
     })
     if (!response.ok) {

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- default `node-fetch` `User-Agent` in requests AWS Cognito
+
 ## [3.5.1] - 2024-06-21
 
 ## [3.5.0] - 2024-05-20

@@ -138,6 +138,7 @@ describe('', () => {
     jest.unstable_mockModule('node-fetch', () => ({
       default: async () => ({
         ok: false,
+        headers: new Map([['Content-Type', 'application/json']]),
         json: async () => ({
           error: 'error code',
           error_description: 'test error message',

@@ -8,6 +8,7 @@ import base64url from 'base64url'
 
 import constants from '../constants.js'
 import LoginProviderBase from './login-provider-base.js'
+import { USER_AGENT } from '../../config.js'
 
 export default class BrowserLoginProvider extends LoginProviderBase {
   async login(storeJwt: boolean | undefined): Promise<string> {
@@ -58,18 +59,34 @@ export default class BrowserLoginProvider extends LoginProviderBase {
     const response = await fetch(tokenUrl.href, {
       method: 'POST',
       body: params,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'User-Agent': USER_AGENT,
+      },
     })
+
+    if (!response.ok) {
+      const contentType = response.headers.get('Content-Type')
+      if (contentType?.includes('json')) {
+        const body = (await response.json()) as { error_description?: string }
+        throw new Error(
+          body.error_description ||
+            'Unknown error, please try again and contact support if the problem persists',
+        )
+      } else {
+        const text = await response.text()
+        throw new Error(
+          `Unknown error, please try again and contact support if the problem persists.
+          
+${text}`.trim(),
+        )
+      }
+    }
 
     const body = (await response.json()) as {
       id_token: string
       access_token: string
       refresh_token: string
-    }
-    if (!response.ok) {
-      throw new Error(
-        (body as { error_description?: string }).error_description ||
-          'Unknown error, please try again and contact support if the problem persists',
-      )
     }
 
     if (storeJwt) {
