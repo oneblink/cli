@@ -1,7 +1,7 @@
 {
   "name": "@oneblink/cli",
   "description": "primary entry point for our CLI tools",
-  "version": "3.5.1",
+  "version": "3.5.2-beta.1",
   "author": "OneBlink <developers@oneblink> (https://github.com/oneblink)",
   "bin": {
     "oneblink": "dist/bin/oneblink.js",
@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "@microsoft/eslint-plugin-sdl": "^0.2.0",
-    "@oneblink/release-cli": "^2.1.0",
+    "@oneblink/release-cli": "^3.2.2",
     "@oneblink/types": "github:oneblink/types",
     "@rollup/plugin-commonjs": "^25.0.2",
     "@rollup/plugin-node-resolve": "^15.1.0",
@@ -61,6 +61,7 @@
     "@types/jest": "^29.5.2",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/mime-types": "^2.1.1",
+    "@types/minimist": "^1.2.5",
     "@types/morgan": "^1.9.4",
     "@types/object-merge": "^2.5.0",
     "@types/temp": "^0.9.1",
@@ -113,7 +114,7 @@
     "jest": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --silent",
     "prepare": "npm run build",
     "pretest": "npm run eslint && npm run fixpack && npm run typescript",
-    "release": "oneblink-release --no-name",
+    "release": "oneblink-release repository --no-name",
     "test": "npm run jest",
     "types": "npm i -D github:oneblink/types",
     "typescript": "tsc --noEmit"
