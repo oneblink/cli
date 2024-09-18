@@ -57,6 +57,8 @@
 
 - [Suggestions](./suggestions.md)
 
+- [Using Developer Keys](./developer-keys.md)
+
 - [Viewing Logs and Viewing Metrics](./viewing-logs-and-metrics.md)
 
 ## Examples
