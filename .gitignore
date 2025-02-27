@@ -30,3 +30,4 @@ node_modules
 my-serverless
 local-scripts
 dist
+tsconfig.tsbuildinfo

@@ -46,7 +46,7 @@ const command: CLICommand = async (tenant, inputs, oneBlinkAPIClient) => {
     }
 
     return command(tenant, inputs.slice(1), flags, oneBlinkAPIClient)
-  } catch (err) {
+  } catch {
     console.error('Command not found!')
   }
 }

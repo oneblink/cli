@@ -72,11 +72,11 @@ ${chalk.bold(`${tenant.label} CLI`)}
 
   ${chalk.blue('login')} ${chalk.grey('.............')} Start the login process
   ${chalk.blue('api')} ${chalk.grey('...............')} Use the ${
-      tenant.label
-    } API Hosting service
+    tenant.label
+  } API Hosting service
   ${chalk.blue('cdn')} ${chalk.grey('...............')} Use the ${
-      tenant.label
-    } CDN Hosting service
+    tenant.label
+  } CDN Hosting service
   ${chalk.blue('logout')} ${chalk.grey('............')} Start the logout process
 
 Need more help? Use the ${chalk.blue('--help')} flag on any sub-command:

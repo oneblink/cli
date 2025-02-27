@@ -59,15 +59,14 @@ function confirm(
 Please check configuration before continuing
 `),
   )
-  const promptQuestions = [
-    {
-      type: 'confirm',
-      name: 'confirmation',
-      message: `Are you sure you want to deploy to environment "${env}": [Y]`,
-    },
-  ]
   return inquirer
-    .prompt(promptQuestions)
+    .prompt([
+      {
+        type: 'confirm',
+        name: 'confirmation',
+        message: `Are you sure you want to deploy to environment "${env}": [Y]`,
+      },
+    ])
     .then((results) => results.confirmation)
 }
 
@@ -121,7 +120,7 @@ async function pruneDevDependencies(target: string): Promise<void> {
     })
 
     spinner.succeed('Removed developer dependencies!')
-  } catch (error) {
+  } catch {
     // Ignore errors when attempting to remove dev dependencies
     spinner.fail('Removing developer dependencies failed...')
   }

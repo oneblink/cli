@@ -24,7 +24,11 @@ export default async function validateScheduledFunction(
     errors.push('"label" must be a string')
   }
 
-  if (typeof config.timeout != null && typeof config.timeout !== 'number') {
+  if (
+    config.timeout !== null &&
+    config.timeout !== undefined &&
+    typeof config.timeout !== 'number'
+  ) {
     errors.push('"timeout" must be a number')
   }
 
