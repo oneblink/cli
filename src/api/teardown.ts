@@ -12,17 +12,16 @@ function confirm(
   if (force) {
     return Promise.resolve(true)
   }
-  const promptQuestions = [
-    {
-      type: 'confirm',
-      name: 'confirmation',
-      message: chalk.yellow(
-        `Are you sure you want to teardown environment "${env}": [Y]`,
-      ),
-    },
-  ]
   return inquirer
-    .prompt(promptQuestions)
+    .prompt([
+      {
+        type: 'confirm',
+        name: 'confirmation',
+        message: chalk.yellow(
+          `Are you sure you want to teardown environment "${env}": [Y]`,
+        ),
+      },
+    ])
     .then((results) => results.confirmation)
 }
 

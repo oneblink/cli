@@ -38,15 +38,13 @@ export default class BrowserLoginProvider extends LoginProviderBase {
       'A browser has been opened to allow you to login. Once logged in, you will be granted a verification code.',
     )
 
-    const questions = [
+    const results = await inquirer.prompt([
       {
         type: 'input',
         name: 'code',
         message: 'Please enter the code: ',
       },
-    ]
-
-    const results = await inquirer.prompt(questions)
+    ])
 
     const params = new URLSearchParams()
     params.append('code', results.code)

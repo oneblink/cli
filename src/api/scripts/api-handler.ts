@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 /**
 This module exports a "handler" function,
 that wraps a customer function.
@@ -51,7 +49,7 @@ function normaliseLambdaRequest<T>(
   if (typeof body === 'string') {
     try {
       body = JSON.parse(body)
-    } catch (e) {
+    } catch {
       // Do nothing...
     }
   }
@@ -228,15 +226,20 @@ async function handler(
 
     const response = await handlers.executeHandler(handler, request)
     return finish(response.statusCode, response.payload, response.headers)
-  } catch (error: any) {
+  } catch (error) {
     if (
       error &&
-      error.isBoom &&
+      typeof error === 'object' &&
+      'isBoom' in error &&
+      'output' in error &&
       error.output &&
+      typeof error.output === 'object' &&
+      'payload' in error.output &&
       error.output.payload &&
-      error.output.statusCode
+      'statusCode' in error.output &&
+      typeof error.output.statusCode === 'number'
     ) {
-      if (error.data) {
+      if ('data' in error && error.data) {
         console.error(error, JSON.stringify(error.data))
       } else {
         console.error(error)
@@ -244,7 +247,9 @@ async function handler(
       return finish(
         error.output.statusCode,
         error.output.payload,
-        error.output.headers,
+        'headers' in error.output
+          ? (error.output.headers as Headers)
+          : undefined,
       )
     }
 
@@ -258,5 +263,3 @@ async function handler(
 }
 
 export { handler, normaliseLambdaRequest }
-
-/* eslint-enable no-console */

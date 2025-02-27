@@ -8,7 +8,7 @@ async function confirm(force: boolean, env: string): Promise<boolean> {
   if (force) {
     return true
   }
-  const promptQuestions = [
+  const results = await inquirer.prompt([
     {
       type: 'confirm',
       name: 'confirmation',
@@ -16,8 +16,7 @@ async function confirm(force: boolean, env: string): Promise<boolean> {
         `Are you sure you want to teardown environment "${env}": [Y]`,
       ),
     },
-  ]
-  const results = await inquirer.prompt(promptQuestions)
+  ])
   return results.confirmation
 }
 
