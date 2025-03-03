@@ -8,8 +8,8 @@ jobs:
     name: Github Release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: docker://antonyurchenko/git-release:v5
+      - uses: actions/checkout@v4
+      - uses: docker://antonyurchenko/git-release:v6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DRAFT_RELEASE: 'false'
@@ -20,13 +20,13 @@ jobs:
     name: NPM Publish
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '18'
       - run: npm install --global npm@8
       - run: npm ci
-      - uses: JS-DevTools/npm-publish@v1
+      - uses: JS-DevTools/npm-publish@v3
         with:
           token: ${{ secrets.NPM_TOKEN }}
           access: 'public'
