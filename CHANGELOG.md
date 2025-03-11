@@ -7,6 +7,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.5.7] - 2025-03-11
+
+### Dependencies
+
+- update [@aws-sdk/client-s3](https://www.npmjs.com/package/@aws-sdk/client-s3) to [3.400.0](https://github.com/aws/aws-sdk-js-v3/releases/tag/v3.400.0) (from [3.379.1](https://github.com/aws/aws-sdk-js-v3/releases/tag/v3.379.1))
+
+- update [@aws-sdk/lib-storage](https://www.npmjs.com/package/@aws-sdk/lib-storage) to [3.400.0](https://github.com/aws/aws-sdk-js-v3/releases/tag/v3.400.0) (from [3.379.1](https://github.com/aws/aws-sdk-js-v3/releases/tag/v3.379.1))
+
+- update [archiver](https://www.npmjs.com/package/archiver) to [7.0.1](https://github.com/archiverjs/node-archiver/releases/tag/7.0.1) (from [5.3.1](https://github.com/archiverjs/node-archiver/releases/tag/5.3.1))
+
+- update [chalk](https://www.npmjs.com/package/chalk) to [5.4.1](https://github.com/chalk/chalk/releases/tag/v5.4.1) (from [5.3.0](https://github.com/chalk/chalk/releases/tag/v5.3.0))
+
+- update [cli-table3](https://www.npmjs.com/package/cli-table3) to [0.6.5](https://github.com/cli-table/cli-table3/releases/tag/v0.6.5) (from [0.6.3](https://github.com/cli-table/cli-table3/releases/tag/v0.6.3))
+
+- update [execa](https://www.npmjs.com/package/execa) to [9.5.2](https://github.com/sindresorhus/execa/releases/tag/v9.5.2) (from [7.1.1](https://github.com/sindresorhus/execa/releases/tag/v7.1.1))
+
+- update [express](https://www.npmjs.com/package/express) to [4.21.2](https://github.com/expressjs/express/releases/tag/4.21.2) (from [4.18.2](https://github.com/expressjs/express/releases/tag/4.18.2))
+
+- update [glob](https://www.npmjs.com/package/glob) to 10.4.5 (from 10.3.1)
+
+- update [inquirer](https://www.npmjs.com/package/inquirer) to 12.4.2 (from 9.2.7)
+
+- update [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) to [9.0.2](https://github.com/auth0/node-jsonwebtoken/blob/master/CHANGELOG.md) (from [9.0.1](https://github.com/auth0/node-jsonwebtoken/blob/master/CHANGELOG.md))
+
+- update [log-symbols](https://www.npmjs.com/package/log-symbols) to [7.0.0](https://github.com/sindresorhus/log-symbols/releases/tag/v7.0.0) (from [5.1.0](https://github.com/sindresorhus/log-symbols/releases/tag/v5.1.0))
+
+- update [meow](https://www.npmjs.com/package/meow) to [13.2.0](https://github.com/sindresorhus/meow/releases/tag/v13.2.0) (from [12.0.1](https://github.com/sindresorhus/meow/releases/tag/v12.0.1))
+
+- update [node-fetch](https://www.npmjs.com/package/node-fetch) to [3.3.2](https://github.com/node-fetch/node-fetch/releases/tag/v3.3.2) (from [3.3.1](https://github.com/node-fetch/node-fetch/releases/tag/v3.3.1))
+
+- update [open](https://www.npmjs.com/package/open) to [10.1.0](https://github.com/sindresorhus/open/releases/tag/v10.1.0) (from [9.1.0](https://github.com/sindresorhus/open/releases/tag/v9.1.0))
+
+- update [ora](https://www.npmjs.com/package/ora) to [8.2.0](https://github.com/sindresorhus/ora/releases/tag/v8.2.0) (from [6.3.1](https://github.com/sindresorhus/ora/releases/tag/v6.3.1))
+
+- update [update-notifier](https://www.npmjs.com/package/update-notifier) to [7.3.1](https://github.com/sindresorhus/update-notifier/releases/tag/v7.3.1) (from [6.0.2](https://github.com/sindresorhus/update-notifier/releases/tag/v6.0.2))
+
+- update [write-json-file](https://www.npmjs.com/package/write-json-file) to [6.0.0](https://github.com/sindresorhus/write-json-file/releases/tag/v6.0.0) (from [5.0.0](https://github.com/sindresorhus/write-json-file/releases/tag/v5.0.0))
+
 ## [3.5.6] - 2025-01-29
 
 ## [3.5.5] - 2024-12-09
