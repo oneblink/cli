@@ -19,6 +19,17 @@ function getOneBlinkLoginClientId() {
   }
 }
 
+function getOneBlinkUSLoginClientId() {
+  switch (environment) {
+    case 'test': {
+      return '1h0762m6b89hi71gln76vs3doc'
+    }
+    default: {
+      return 'UNKNOWN'
+    }
+  }
+}
+
 function getCivicPlusLoginClientId() {
   switch (environment) {
     case 'test': {
@@ -33,6 +44,7 @@ function getCivicPlusLoginClientId() {
 const TENANTS: {
   ONEBLINK: Tenant
   CIVICPLUS: Tenant
+  ONEBLINK_US: Tenant
 } = {
   ONEBLINK: {
     id: 'ONEBLINK',
@@ -61,6 +73,20 @@ const TENANTS: {
     loginUrl: `https://login${subdomainSuffix}.transform.civicplus.com`,
     loginClientId: getCivicPlusLoginClientId(),
     loginCallbackUrl: `https://console${subdomainSuffix}.transform.civicplus.com/cli-tools-callback`,
+  },
+  ONEBLINK_US: {
+    id: 'ONEBLINK_US',
+    command: 'oneblink-us',
+    label: 'OneBlink-US',
+    productLongName: 'OneBlink LcS',
+    productShortName: 'OneBlink LcS',
+    consoleOrigin: `https://console${subdomainSuffix}.us.oneblink.io`,
+    origin: `https://auth-api${subdomainSuffix}.us.oneblink.io`,
+    apiHostingBucket: `oneblink-us-api-hosting-deployments-${environment}`,
+    region: 'us-east-1',
+    loginUrl: `https://login${subdomainSuffix}.us.oneblink.io`,
+    loginClientId: getOneBlinkUSLoginClientId(),
+    loginCallbackUrl: `https://console${subdomainSuffix}.us.oneblink.io/cli-tools-callback`,
   },
 }
 

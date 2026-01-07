@@ -15,10 +15,16 @@ npm install -g @oneblink/cli
 
 This CLI is the entry point for all OneBlink Productivity tenants. The tenant used by the CLI is determined by the entry point command. The available tenants are:
 
-- [OneBlink Console](https://console.oneblink.io)
+- [OneBlink Console (AU)](https://console.oneblink.io)
 
   ```sh
   oneblink --help
+  ```
+
+- [OneBlink Console (US)](https://console.us.oneblink.io)
+
+  ```sh
+  oneblink-us --help
   ```
 
 - [CivicOptimize Productivity](https://console.transform.civicplus.com)

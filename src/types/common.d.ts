@@ -1,5 +1,5 @@
 declare type Tenant = {
-  id: 'ONEBLINK' | 'CIVICPLUS'
+  id: 'ONEBLINK' | 'CIVICPLUS' | 'ONEBLINK_US'
   command: string
   label: string
   productShortName: string
