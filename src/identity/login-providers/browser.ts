@@ -1,7 +1,6 @@
 import { URLSearchParams, URL } from 'url'
 
 import crypto from 'crypto'
-import fetch from 'node-fetch'
 import inquirer from 'inquirer'
 import open from 'open'
 import base64url from 'base64url'

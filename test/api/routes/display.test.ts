@@ -1,4 +1,4 @@
-import { describe, expect, test, jest } from '@jest/globals'
+import { afterEach, describe, expect, test, vi } from 'vitest'
 
 describe('display', () => {
   const CWD = 'current working directory'
@@ -18,15 +18,15 @@ describe('display', () => {
   ]
 
   afterEach(() => {
-    jest.resetModules()
-    jest.clearAllMocks()
+    vi.resetModules()
+    vi.clearAllMocks()
   })
 
   test('Should call read() with correct input and log', async () => {
-    const spy = jest.spyOn(console, 'log')
-    const mockRead = jest.fn(async () => ROUTES)
-    jest.unstable_mockModule('api/routes/read', () => ({ default: mockRead }))
-    jest.unstable_mockModule('api/routes/validate', () => ({
+    const spy = vi.spyOn(console, 'log')
+    const mockRead = vi.fn(async () => ROUTES)
+    vi.doMock('../../../src/api/routes/read', () => ({ default: mockRead }))
+    vi.doMock('../../../src/api/routes/validate', () => ({
       default: async () => [],
     }))
     const { default: display } = await import(
@@ -38,11 +38,11 @@ describe('display', () => {
   })
 
   test('Should log the routes and reject if no routes and scheduled functions are found', async () => {
-    const spy = jest.spyOn(console, 'log')
-    jest.unstable_mockModule('api/scheduledFunctions/read', () => ({
+    const spy = vi.spyOn(console, 'log')
+    vi.doMock('../../../src/api/scheduledFunctions/read', () => ({
       default: async () => [],
     }))
-    jest.unstable_mockModule('api/routes/read', () => ({
+    vi.doMock('../../../src/api/routes/read', () => ({
       default: async () => [],
     }))
 
@@ -57,11 +57,11 @@ describe('display', () => {
   })
 
   test('Should call validate() for each route returned from read()', async () => {
-    const mockValidate = jest.fn(async () => [])
-    jest.unstable_mockModule('api/routes/read', () => ({
+    const mockValidate = vi.fn(async () => [])
+    vi.doMock('../../../src/api/routes/read', () => ({
       default: async () => ROUTES,
     }))
-    jest.unstable_mockModule('api/routes/validate', () => ({
+    vi.doMock('../../../src/api/routes/validate', () => ({
       default: mockValidate,
     }))
     const { default: display } = await import(
@@ -72,11 +72,11 @@ describe('display', () => {
   })
 
   test('Should log the table and reject if errors are return from validate()', async () => {
-    const spy = jest.spyOn(console, 'log')
-    jest.unstable_mockModule('api/routes/read', () => ({
+    const spy = vi.spyOn(console, 'log')
+    vi.doMock('../../../src/api/routes/read', () => ({
       default: async () => ROUTES,
     }))
-    jest.unstable_mockModule('api/routes/validate', () => ({
+    vi.doMock('../../../src/api/routes/validate', () => ({
       default: async () => ['error1', 'error2'],
     }))
 

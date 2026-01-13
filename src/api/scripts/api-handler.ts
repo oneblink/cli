@@ -14,7 +14,6 @@ type APIGatewayResult = {
 }
 
 import process from 'process'
-import { createRequire } from 'module'
 import path from 'path'
 import handlers from '../handlers.js'
 import wrapper from '../wrapper.js'
@@ -22,7 +21,6 @@ import { URLSearchParams, fileURLToPath, URL } from 'url'
 import { OneBlinkAPIHostingRequest } from '../../../index.js'
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
-const require = createRequire(import.meta.url)
 
 function generateURLSearchParams(event: LambdaEvent): URLSearchParams {
   if (event.version === '2.0') {
@@ -99,7 +97,7 @@ async function handler(
   const internalHeaders: Headers = {
     'Content-Type': 'application/json',
   }
-  const config = require(path.join(__dirname, 'bm-server.json'))
+  const config = await import(path.join(__dirname, 'bm-server.json'))
 
   const finish = (
     statusCode: number,

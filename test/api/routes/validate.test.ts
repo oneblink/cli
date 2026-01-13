@@ -1,4 +1,4 @@
-import { describe, expect, test, jest } from '@jest/globals'
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 
 describe('validate', () => {
   const CWD = 'current working directory'
@@ -6,12 +6,12 @@ describe('validate', () => {
   const MODULE = 'module path'
 
   beforeEach(() => {
-    jest.unstable_mockModule('path', () => ({
+    vi.doMock('path', () => ({
       default: {
         resolve: () => PATH_RESOLVE,
       },
     }))
-    jest.unstable_mockModule('fs', () => ({
+    vi.doMock('fs', () => ({
       default: {
         stat: (path: string, cb: () => void) => {
           cb()
@@ -21,14 +21,13 @@ describe('validate', () => {
   })
 
   afterEach(() => {
-    jest.resetModules()
-    jest.clearAllMocks()
+    vi.resetModules()
+    vi.clearAllMocks()
   })
 
   test('Should contain error if route does not start with "/"', async () => {
-    const { default: validate } = await import(
-      '../../../src/api/routes/validate'
-    )
+    const { default: validate } =
+      await import('../../../src/api/routes/validate')
 
     const errors = await validate(CWD, {
       route: 'test',
@@ -38,9 +37,8 @@ describe('validate', () => {
   })
 
   test('Should contain error if timeout is invalid', async () => {
-    const { default: validate } = await import(
-      '../../../src/api/routes/validate'
-    )
+    const { default: validate } =
+      await import('../../../src/api/routes/validate')
     const tests = [
       {
         args: { route: '/test', module: 'test', timeout: 0 },
@@ -62,16 +60,15 @@ describe('validate', () => {
 
   test('Should contain error message if module can not be found', async () => {
     const errorMessage = 'This is an error'
-    jest.unstable_mockModule('fs', () => ({
+    vi.doMock('fs', () => ({
       default: {
         stat: (path: string, cb: (error: Error | undefined) => void) => {
           cb(new Error(errorMessage))
         },
       },
     }))
-    const { default: validate } = await import(
-      '../../../src/api/routes/validate'
-    )
+    const { default: validate } =
+      await import('../../../src/api/routes/validate')
     const result = await validate(CWD, {
       route: '/test',
       module: 'test',
@@ -80,7 +77,7 @@ describe('validate', () => {
   })
 
   test('Should contain different error message if module can not be found with ENOENT code', async () => {
-    jest.unstable_mockModule('fs', () => ({
+    vi.doMock('fs', () => ({
       default: {
         stat: (path: string, cb: (error: Error | undefined) => void) => {
           const error = new Error('This is an error')
@@ -90,9 +87,8 @@ describe('validate', () => {
         },
       },
     }))
-    const { default: validate } = await import(
-      '../../../src/api/routes/validate'
-    )
+    const { default: validate } =
+      await import('../../../src/api/routes/validate')
     const errors = await validate(CWD, {
       route: '/test',
       module: MODULE,
@@ -101,25 +97,24 @@ describe('validate', () => {
   })
 
   test('Input for for fs.stat() should be the result of path.resolve()', async () => {
-    const mockResolve = jest.fn()
+    const mockResolve = vi.fn()
     mockResolve.mockReturnValue(PATH_RESOLVE)
-    jest.unstable_mockModule('path', () => ({
+    vi.doMock('path', () => ({
       default: {
         resolve: mockResolve,
       },
     }))
-    const mockStat = jest.fn((path: string, cb: () => void) => {
+    const mockStat = vi.fn((path: string, cb: () => void) => {
       cb()
     })
-    jest.unstable_mockModule('fs', () => ({
+    vi.doMock('fs', () => ({
       default: {
         stat: mockStat,
       },
     }))
 
-    const { default: validate } = await import(
-      '../../../src/api/routes/validate'
-    )
+    const { default: validate } =
+      await import('../../../src/api/routes/validate')
 
     await validate(CWD, {
       route: '/test',

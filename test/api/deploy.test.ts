@@ -1,4 +1,4 @@
-import { describe, expect, test, jest } from '@jest/globals'
+import { afterEach, describe, expect, test, vi } from 'vitest'
 import fs from 'fs'
 import path from 'path'
 import url from 'url'
@@ -42,14 +42,14 @@ describe('deploy', () => {
   }
 
   afterEach(() => {
-    jest.resetModules()
-    jest.clearAllMocks()
+    vi.resetModules()
+    vi.clearAllMocks()
   })
 
   test('confirm() should not prompt or log if force is true', async () => {
-    const spy = jest.spyOn(console, 'log')
-    const mockPrompt = jest.fn()
-    jest.unstable_mockModule('inquirer', () => ({
+    const spy = vi.spyOn(console, 'log')
+    const mockPrompt = vi.fn()
+    vi.doMock('inquirer', () => ({
       default: {
         prompt: mockPrompt,
       },
@@ -61,11 +61,11 @@ describe('deploy', () => {
   })
 
   test('confirm() should prompt and log if force is false', async () => {
-    const spy = jest.spyOn(console, 'log')
-    const mockPrompt = jest.fn(async () => ({
+    const spy = vi.spyOn(console, 'log')
+    const mockPrompt = vi.fn(async () => ({
       confirmation: true,
     }))
-    jest.unstable_mockModule('inquirer', () => ({
+    vi.doMock('inquirer', () => ({
       default: {
         prompt: mockPrompt,
       },
@@ -77,7 +77,7 @@ describe('deploy', () => {
   })
 
   test('authenticate() should call oneblinkIdentity functions and stop updates', async () => {
-    const mockPostRequest = jest.fn(async () => ({
+    const mockPostRequest = vi.fn(async () => ({
       credentials: {},
     }))
     const oneBlinkAPIClient = new OneBlinkAPIClient(TENANTS.ONEBLINK)
@@ -92,7 +92,7 @@ describe('deploy', () => {
 
   test('authenticate() should call log correct updates if oneblinkIdentity functions throw errors', async () => {
     const oneBlinkAPIClient = new OneBlinkAPIClient(TENANTS.ONEBLINK)
-    jest.unstable_mockModule('api/assume-aws-roles', () => ({
+    vi.doMock('../../src/api/assume-aws-roles', () => ({
       default: {
         assumeAWSRoleToDeploy: async () => {
           throw new Error('test error')
@@ -110,7 +110,7 @@ describe('deploy', () => {
     const { default: deploy } = await import('../../src/api/deploy.js')
     const zipFilePath = await deploy.zip(ZIP_PATH)
     if (typeof zipFilePath !== 'string') {
-      fail('"zipFilePath" must be string')
+      throw new Error('"zipFilePath" must be string')
     }
     expect(path.isAbsolute(zipFilePath)).toBeTruthy()
     expect(path.extname(zipFilePath)).toBe('.zip')
@@ -146,15 +146,17 @@ describe('deploy', () => {
   })
 
   test('zip() should log correct updates and reject if an temp emits an error', async () => {
-    jest.mock('archiver', () => ({
-      create: () => ({
-        on: () => undefined,
-        pipe: () => undefined,
-        glob: () => undefined,
-        finalize: () => undefined,
-      }),
+    vi.doMock('archiver', () => ({
+      default: {
+        create: () => ({
+          on: () => undefined,
+          pipe: () => undefined,
+          glob: () => undefined,
+          finalize: () => undefined,
+        }),
+      },
     }))
-    const mockCreateWriteStream = jest.fn()
+    const mockCreateWriteStream = vi.fn()
     mockCreateWriteStream.mockImplementation(() => {
       return {
         on: (str: string, fn: (error: Error) => void) => {
@@ -164,10 +166,12 @@ describe('deploy', () => {
         },
       }
     })
-    jest.mock('temp', () => ({
-      track: () => undefined,
-      mkdir: (directory: string, cb: (error?: Error) => void) => cb(),
-      createWriteStream: mockCreateWriteStream,
+    vi.doMock('temp', () => ({
+      default: {
+        track: () => undefined,
+        mkdir: (directory: string, cb: (error?: Error) => void) => cb(),
+        createWriteStream: mockCreateWriteStream,
+      },
     }))
     const { default: deploy } = await import('../../src/api/deploy.js')
 
@@ -177,24 +181,28 @@ describe('deploy', () => {
   })
 
   test('zip() should log correct updates and reject if an archiver emits an error', async () => {
-    jest.mock('archiver', () => ({
-      create: () => ({
-        on: (str: string, fn: (error: Error) => void) => {
-          if (str === 'error') {
-            fn(new Error('test archiver error'))
-          }
-        },
-        pipe: () => undefined,
-        glob: () => undefined,
-        finalize: () => undefined,
-      }),
+    vi.doMock('archiver', () => ({
+      default: {
+        create: () => ({
+          on: (str: string, fn: (error: Error) => void) => {
+            if (str === 'error') {
+              fn(new Error('test archiver error'))
+            }
+          },
+          pipe: () => undefined,
+          glob: () => undefined,
+          finalize: () => undefined,
+        }),
+      },
     }))
-    jest.mock('temp', () => ({
-      track: () => undefined,
-      mkdir: (directory: string, cb: (error?: Error) => void) => cb(),
-      createWriteStream: () => ({
-        on: () => undefined,
-      }),
+    vi.doMock('temp', () => ({
+      default: {
+        track: () => undefined,
+        mkdir: (directory: string, cb: (error?: Error) => void) => cb(),
+        createWriteStream: () => ({
+          on: () => undefined,
+        }),
+      },
     }))
 
     const { default: deploy } = await import('../../src/api/deploy.js')
@@ -204,8 +212,8 @@ describe('deploy', () => {
   })
 
   test('upload() should log correct updates and return bundle key after upload', async () => {
-    const mockUpload = jest.fn()
-    jest.mock('@aws-sdk/lib-storage', () => ({
+    const mockUpload = vi.fn()
+    vi.doMock('@aws-sdk/lib-storage', () => ({
       Upload: class {
         done = mockUpload
         on() {
@@ -220,7 +228,7 @@ describe('deploy', () => {
   })
 
   test('upload() should log correct updates and reject if upload returns an error', async () => {
-    jest.mock('@aws-sdk/lib-storage', () => ({
+    vi.doMock('@aws-sdk/lib-storage', () => ({
       Upload: class {
         async done() {
           throw new Error('test upload error')
@@ -237,7 +245,7 @@ describe('deploy', () => {
   })
 
   test('deploy() should log correct updates', async () => {
-    const mockPostRequest = jest.fn(async () => ({
+    const mockPostRequest = vi.fn(async () => ({
       credentials: {},
       scheduledFunctions: [],
     }))

@@ -1,29 +1,28 @@
-import { describe, expect, test, jest } from '@jest/globals'
+import { afterEach, describe, expect, test, vi } from 'vitest'
 import { ScheduledFunctionConfiguration } from '../../../src/api/types.js'
 
 describe('read', () => {
   const CWD = 'current working directory'
 
   afterEach(() => {
-    jest.resetModules()
-    jest.clearAllMocks()
+    vi.resetModules()
+    vi.clearAllMocks()
   })
 
   test('Should use configuration scheduled functions if available', async () => {
     const CONFIGURATION_SCHEDULED_FUNCTIONS: ScheduledFunctionConfiguration[] =
       []
-    const mockScopeRead = jest.fn(async () => ({
+    const mockScopeRead = vi.fn(async () => ({
       scheduledFunctions: CONFIGURATION_SCHEDULED_FUNCTIONS,
     }))
-    jest.unstable_mockModule('api/scope', () => ({
+    vi.doMock('../../../src/api/scope', () => ({
       default: {
         read: mockScopeRead,
       },
     }))
 
-    const { default: read } = await import(
-      '../../../src/api/scheduledFunctions/read.js'
-    )
+    const { default: read } =
+      await import('../../../src/api/scheduledFunctions/read.js')
 
     const scheduledFunctions = await read(CWD)
     expect(scheduledFunctions).toEqual(CONFIGURATION_SCHEDULED_FUNCTIONS)
@@ -31,21 +30,20 @@ describe('read', () => {
   })
 
   test('Should not reject and should always return an array if no scheduled functions are found', async () => {
-    jest.unstable_mockModule('api/scope', () => ({
+    vi.doMock('../../../src/api/scope', () => ({
       default: {
         read: async () => ({}),
       },
     }))
-    const { default: read } = await import(
-      '../../../src/api/scheduledFunctions/read.js'
-    )
+    const { default: read } =
+      await import('../../../src/api/scheduledFunctions/read.js')
 
     const scheduledFunctions = await read(CWD)
     expect(scheduledFunctions).toEqual([])
   })
 
   test('Timeouts should be set via priority default, project, scheduledFunction', async () => {
-    jest.unstable_mockModule('api/scope', () => ({
+    vi.doMock('../../../src/api/scope', () => ({
       default: {
         read: async () => ({
           timeout: 20,
@@ -61,9 +59,8 @@ describe('read', () => {
         }),
       },
     }))
-    const { default: read } = await import(
-      '../../../src/api/scheduledFunctions/read.js'
-    )
+    const { default: read } =
+      await import('../../../src/api/scheduledFunctions/read.js')
 
     const scheduledFunctions = await read(CWD)
     expect(scheduledFunctions).toEqual([

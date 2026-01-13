@@ -1,4 +1,4 @@
-import { describe, expect, test } from '@jest/globals'
+import { describe, expect, test } from 'vitest'
 
 import getAwsCredentials from '../../src/cdn/aws-credentials.js'
 import type OneBlinkAPIClient from '../../src/oneblink-api-client.js'

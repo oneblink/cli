@@ -1,4 +1,4 @@
-import { describe, expect, test, jest } from '@jest/globals'
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 
 describe('validate', () => {
   const CWD = 'current working directory'
@@ -6,21 +6,21 @@ describe('validate', () => {
   const MODULE = 'module path'
 
   beforeEach(() => {
-    jest.unstable_mockModule('path', () => ({
+    vi.doMock('path', () => ({
       default: {
         resolve: () => PATH_RESOLVE,
       },
     }))
-    jest.unstable_mockModule('fs/promises', () => ({
+    vi.doMock('fs/promises', () => ({
       default: {
-        stat: async (path: string) => undefined,
+        stat: async () => undefined,
       },
     }))
   })
 
   afterEach(() => {
-    jest.resetModules()
-    jest.clearAllMocks()
+    vi.resetModules()
+    vi.clearAllMocks()
   })
 
   test('Should contain error if name does not consist of lowercase letters and dashes', async () => {
@@ -101,9 +101,9 @@ describe('validate', () => {
 
   test('Should contain error message if module can not be found', async () => {
     const errorMessage = 'This is an error'
-    jest.unstable_mockModule('fs/promises', () => ({
+    vi.doMock('fs/promises', () => ({
       default: {
-        stat: async (path: string) => {
+        stat: async () => {
           throw new Error(errorMessage)
         },
       },
@@ -139,9 +139,9 @@ describe('validate', () => {
   })
 
   test('Should contain different error message if module can not be found with ENOENT code', async () => {
-    jest.unstable_mockModule('fs/promises', () => ({
+    vi.doMock('fs/promises', () => ({
       default: {
-        stat: async (path: string) => {
+        stat: async () => {
           const error = new Error('This is an error')
           // @ts-expect-error we are adding the property, you don't get a say typescript
           error.code = 'ENOENT'
@@ -164,15 +164,15 @@ describe('validate', () => {
   })
 
   test('Input for for fs.stat() should be the result of path.resolve()', async () => {
-    const mockResolve = jest.fn()
+    const mockResolve = vi.fn()
     mockResolve.mockReturnValue(PATH_RESOLVE)
-    jest.unstable_mockModule('path', () => ({
+    vi.doMock('path', () => ({
       default: {
         resolve: mockResolve,
       },
     }))
-    const mockStat = jest.fn(async (path: string) => undefined)
-    jest.unstable_mockModule('fs/promises', () => ({
+    const mockStat = vi.fn(async () => undefined)
+    vi.doMock('fs/promises', () => ({
       default: {
         stat: mockStat,
       },

@@ -1,4 +1,4 @@
-import { expect, test } from '@jest/globals'
+import { expect, test } from 'vitest'
 import path from 'path'
 import url from 'url'
 import listDirectoryRoutes from '../../src/api/listDirectoryRoutes.js'

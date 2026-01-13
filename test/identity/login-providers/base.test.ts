@@ -1,9 +1,9 @@
-import { expect, test, jest } from '@jest/globals'
+import { expect, test, vi } from 'vitest'
 
 import { TENANTS } from '../../../src/config.js'
 
 test('storeJWT() should store jwt', async () => {
-  jest.unstable_mockModule('../../../src/blinkmrc.js', () => ({
+  vi.doMock('../../../src/blinkmrc.js', () => ({
     userConfig: () => ({
       load: async () => ({}),
       update: async () => ({}),

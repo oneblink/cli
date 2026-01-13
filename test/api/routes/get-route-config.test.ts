@@ -1,4 +1,4 @@
-import { describe, expect, test, jest } from '@jest/globals'
+import { afterEach, describe, expect, test, vi } from 'vitest'
 
 describe('get-route-config', () => {
   const CWD = 'current working directory'
@@ -18,31 +18,29 @@ describe('get-route-config', () => {
   ]
 
   afterEach(() => {
-    jest.resetModules()
-    jest.clearAllMocks()
+    vi.resetModules()
+    vi.clearAllMocks()
   })
 
   test('should return route config', async () => {
-    jest.unstable_mockModule('api/routes/read', () => ({
+    vi.doMock('../../../src/api/routes/read', () => ({
       default: async () => ROUTES,
     }))
 
-    const { default: getRouteConfig } = await import(
-      '../../../src/api/routes/get-route-config'
-    )
+    const { default: getRouteConfig } =
+      await import('../../../src/api/routes/get-route-config')
 
     const routeConfig = await getRouteConfig(CWD, '/api/books/:id')
     expect(routeConfig).toEqual(ROUTES[1])
   })
 
   test('should reject if a project does not contain route', async () => {
-    jest.unstable_mockModule('api/routes/read', () => ({
+    vi.doMock('../../../src/api/routes/read', () => ({
       default: async () => ROUTES,
     }))
 
-    const { default: getRouteConfig } = await import(
-      '../../../src/api/routes/get-route-config'
-    )
+    const { default: getRouteConfig } =
+      await import('../../../src/api/routes/get-route-config')
 
     const promise = getRouteConfig(CWD, '/route')
     await expect(promise).rejects.toThrow(

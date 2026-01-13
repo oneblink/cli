@@ -1,4 +1,4 @@
-import { describe, expect, test, jest } from '@jest/globals'
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 
 import { URL } from 'url'
 
@@ -11,20 +11,19 @@ describe('', () => {
   const VERIFIER_CHALLENGE = 'verifier challenge'
 
   const importBrowserLoginProvider = async () => {
-    const { default: BrowserLoginProvider } = await import(
-      '../../../src/identity/login-providers/browser.js'
-    )
+    const { default: BrowserLoginProvider } =
+      await import('../../../src/identity/login-providers/browser.js')
     return new BrowserLoginProvider(TENANTS.ONEBLINK)
   }
 
   afterEach(() => {
-    jest.resetModules()
-    jest.clearAllMocks()
+    vi.resetModules()
+    vi.clearAllMocks()
   })
 
   beforeEach(() => {
-    jest.unstable_mockModule('open', () => ({ default: () => undefined }))
-    jest.unstable_mockModule('inquirer', () => ({
+    vi.doMock('open', () => ({ default: () => undefined }))
+    vi.doMock('inquirer', () => ({
       default: {
         prompt: async () => ({
           code: CODE,
@@ -34,25 +33,27 @@ describe('', () => {
   })
 
   test('login() should work', async () => {
-    jest.mock('base64url', () => ({
-      encode: () => VERIFIER_CHALLENGE,
+    vi.doMock('base64url', () => ({
+      default: {
+        encode: () => VERIFIER_CHALLENGE,
+      },
     }))
-    const mockOpen = jest.fn()
-    jest.unstable_mockModule('open', () => ({ default: mockOpen }))
-    const mockPrompt = jest.fn(async () => ({
+    const mockOpen = vi.fn()
+    vi.doMock('open', () => ({ default: mockOpen }))
+    const mockPrompt = vi.fn(async () => ({
       code: CODE,
     }))
-    jest.unstable_mockModule('inquirer', () => ({
+    vi.doMock('inquirer', () => ({
       default: {
         prompt: mockPrompt,
       },
     }))
-    const mockNodeFetch = jest.fn(async () => ({
+    const mockNodeFetch = vi.fn(async () => ({
       ok: true,
       json: async () => ({ id_token: JWT }),
     }))
-    jest.unstable_mockModule('node-fetch', () => ({ default: mockNodeFetch }))
-    const spy = jest.spyOn(console, 'log')
+    global.fetch = mockNodeFetch as unknown as typeof global.fetch
+    const spy = vi.spyOn(console, 'log')
 
     const browserLoginProvider = await importBrowserLoginProvider()
 
@@ -121,11 +122,9 @@ describe('', () => {
   })
 
   test('login() should should reject if request returns an error', async () => {
-    jest.unstable_mockModule('node-fetch', () => ({
-      default: async () => {
-        throw new Error('Test error message')
-      },
-    }))
+    global.fetch = async () => {
+      throw new Error('Test error message')
+    }
 
     const browserLoginProvider = await importBrowserLoginProvider()
 
@@ -135,16 +134,14 @@ describe('', () => {
   })
 
   test('login() should should reject if request returns an error', async () => {
-    jest.unstable_mockModule('node-fetch', () => ({
-      default: async () => ({
-        ok: false,
-        headers: new Map([['Content-Type', 'application/json']]),
-        json: async () => ({
-          error: 'error code',
-          error_description: 'test error message',
-        }),
+    global.fetch = (async () => ({
+      ok: false,
+      headers: new Map([['Content-Type', 'application/json']]),
+      json: async () => ({
+        error: 'error code',
+        error_description: 'test error message',
       }),
-    }))
+    })) as unknown as typeof global.fetch
 
     const browserLoginProvider = await importBrowserLoginProvider()
 

@@ -1,5 +1,3 @@
-import fetch from 'node-fetch'
-
 import userConfig from '../utils/user-config.js'
 import { USER_AGENT } from '../../config.js'
 

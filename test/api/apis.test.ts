@@ -1,4 +1,4 @@
-import { describe, expect, test, jest } from '@jest/globals'
+import { afterEach, describe, expect, test, vi } from 'vitest'
 import path from 'path'
 import url from 'url'
 import { RouteConfiguration } from '../../src/api/types.js'
@@ -42,8 +42,8 @@ describe('apis', () => {
   ]
 
   afterEach(() => {
-    jest.resetModules()
-    jest.clearAllMocks()
+    vi.resetModules()
+    vi.clearAllMocks()
   })
 
   test('getRouteConfig() should find correct route and return route params', async () => {
@@ -74,16 +74,16 @@ describe('apis', () => {
   })
 
   test('getRouteConfig() should pass correct arguments to readRoutes()', async () => {
-    const mockRead = jest.fn()
+    const mockRead = vi.fn()
     mockRead.mockImplementation(async () => ROUTES)
-    jest.unstable_mockModule('api/routes/read', () => ({ default: mockRead }))
+    vi.doMock('../../src/api/routes/read', () => ({ default: mockRead }))
     const { default: apis } = await import('../../src/api/apis.js')
     await apis.getRouteConfig(EXAMPLE_DIR, ROUTES[0].route)
     expect(mockRead).toBeCalledWith(EXAMPLE_DIR)
   })
 
   test('getRouteConfig() should reject if readRoutes() throws an error', async () => {
-    jest.unstable_mockModule('api/routes/read', () => ({
+    vi.doMock('../../src/api/routes/read', () => ({
       default: async () => {
         throw new Error('test error')
       },
@@ -94,8 +94,8 @@ describe('apis', () => {
   })
 
   test('getHandlerConfig() should pass correct arguments to getHandler() and return correct result', async () => {
-    const mockGetHandler = jest.fn(async () => async () => undefined)
-    jest.unstable_mockModule('api/handlers', () => ({
+    const mockGetHandler = vi.fn(async () => async () => undefined)
+    vi.doMock('../../src/api/handlers', () => ({
       default: {
         getHandler: mockGetHandler,
       },
@@ -108,7 +108,7 @@ describe('apis', () => {
   })
 
   test('getHandlerConfig() should reject if getHandler() throws an error', async () => {
-    jest.unstable_mockModule('api/handlers', () => ({
+    vi.doMock('../../src/api/handlers', () => ({
       default: {
         getHandler: async () => {
           throw new Error('test error')

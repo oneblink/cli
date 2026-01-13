@@ -1,4 +1,4 @@
-import { describe, expect, test } from '@jest/globals'
+import { describe, expect, test } from 'vitest'
 import path from 'path'
 import url from 'url'
 
@@ -143,9 +143,11 @@ describe('handlers', () => {
     for (const { method, module } of tests) {
       try {
         await lib.getHandler(module, method)
-      } catch (error: any) {
-        expect(error.message.includes('Cannot find module')).toBe(true)
-        expect(error.message.includes(module)).toBe(true)
+      } catch (error) {
+        expect((error as Error).message.includes('Cannot find module')).toBe(
+          true,
+        )
+        expect((error as Error).message.includes(module)).toBe(true)
       }
     }
   })

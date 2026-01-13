@@ -1,10 +1,10 @@
-import { describe, expect, test, jest } from '@jest/globals'
+import { describe, expect, test, vi, afterEach, beforeEach } from 'vitest'
 import { APITypes } from '@oneblink/types'
 
 describe('cors display', () => {
   afterEach(() => {
-    jest.resetModules()
-    jest.clearAllMocks()
+    vi.resetModules()
+    vi.clearAllMocks()
   })
 
   const CWD = 'current working directory'
@@ -16,53 +16,57 @@ describe('cors display', () => {
   }
 
   beforeEach(() => {
-    jest.unstable_mockModule('api/cors/read', () => ({
+    vi.doMock('../../../src/api/cors/read', () => ({
       default: () => Promise.resolve(CORS),
     }))
-    jest.unstable_mockModule('api/cors/validate', () => ({
+    vi.doMock('../../../src/api/cors/validate', () => ({
       default: () => Promise.resolve(CORS),
     }))
   })
 
   test('Should call read() with correct input', async () => {
     expect.assertions(1)
-    jest.unstable_mockModule('api/cors/read', () => ({
+    vi.doMock('../../../src/api/cors/read', () => ({
       default: async (cwd: string) => {
         expect(cwd).toBe(CWD)
         return CORS
       },
     }))
 
-    const { default: display } = await import('../../../src/api/cors/display.js')
+    const { default: display } = await import(
+      '../../../src/api/cors/display.js'
+    )
     return display(console, CWD)
   })
 
   test('Should not log or validate if read() does not return cors', async () => {
     expect.assertions(1)
-    jest.unstable_mockModule('api/cors/read', () => {
+    vi.doMock('../../../src/api/cors/read', () => {
       return {
         default: async () => {
           return
         },
       }
     })
-    jest.unstable_mockModule('api/cors/validate', () => {
+    vi.doMock('../../../src/api/cors/validate', () => {
       return {
         default: async () => {
-          fail('Should not validate')
+          throw new Error('Should not validate')
         },
       }
     })
-    const spy = jest.spyOn(console, 'log')
+    const spy = vi.spyOn(console, 'log')
 
-    const { default: display } = await import('../../../src/api/cors/display.js')
+    const { default: display } = await import(
+      '../../../src/api/cors/display.js'
+    )
     await display(console, CWD)
 
     expect(spy).not.toHaveBeenCalled()
   })
 
   test('Should call validate() with correct input', async () => {
-    jest.unstable_mockModule('api/cors/validate', () => {
+    vi.doMock('../../../src/api/cors/validate', () => {
       return {
         default: async (cors: APITypes.APIEnvironmentCorsConfiguration) => {
           expect(cors).toEqual(CORS)
@@ -71,12 +75,14 @@ describe('cors display', () => {
       }
     })
 
-    const { default: display } = await import('../../../src/api/cors/display.js')
+    const { default: display } = await import(
+      '../../../src/api/cors/display.js'
+    )
     return display(console, CWD)
   })
 
   test('Should not log the cors and reject if no routes are found', async () => {
-    jest.unstable_mockModule('api/cors/validate', () => {
+    vi.doMock('../../../src/api/cors/validate', () => {
       return {
         default: async () => {
           throw new Error('test error message')
@@ -84,9 +90,11 @@ describe('cors display', () => {
       }
     })
 
-    const spy = jest.spyOn(console, 'log')
+    const spy = vi.spyOn(console, 'log')
 
-    const { default: display } = await import('../../../src/api/cors/display.js')
+    const { default: display } = await import(
+      '../../../src/api/cors/display.js'
+    )
     const promise = display(console, CWD)
 
     await expect(promise).rejects.toHaveProperty(
@@ -98,9 +106,11 @@ describe('cors display', () => {
   })
 
   test('Should log the cors', async () => {
-    const spy = jest.spyOn(console, 'log')
+    const spy = vi.spyOn(console, 'log')
 
-    const { default: display } = await import('../../../src/api/cors/display.js')
+    const { default: display } = await import(
+      '../../../src/api/cors/display.js'
+    )
     await display(console, CWD)
 
     expect(spy).toHaveBeenCalled()
