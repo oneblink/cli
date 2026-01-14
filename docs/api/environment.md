@@ -2,12 +2,12 @@
 
 ## Execution Environment
 
-- Code executes within a Linux environment with [Node.js 18](https://nodejs.org/dist/latest-v18.x/docs/api/)
+- Code executes within a Linux environment with [Node.js 22](https://nodejs.org/dist/latest-v22.x/docs/api/)
 
   - If you use features not available in this version of Node.js, transpile before deployment. NPM packages using native binaries can be installed using docker:
 
   ```
-  docker run -it --rm -v ${PWD}:/app -w /app node:18 npm install
+  docker run -it --rm -v ${PWD}:/app -w /app node:22 npm install
   ```
 
 * The environment your code executes in is arbitrarily destroyed between requests

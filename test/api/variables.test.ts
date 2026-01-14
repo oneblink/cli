@@ -1,4 +1,4 @@
-import { describe, expect, test, jest } from '@jest/globals'
+import { afterEach, describe, expect, test, vi } from 'vitest'
 
 describe('variables', () => {
   const CWD = 'current working directory'
@@ -16,12 +16,12 @@ describe('variables', () => {
   }
 
   afterEach(() => {
-    jest.resetModules()
-    jest.clearAllMocks()
+    vi.resetModules()
+    vi.clearAllMocks()
   })
 
   test('read() should handle an uninitialized config file', async () => {
-    jest.unstable_mockModule('api/utils/project-meta', () => ({
+    vi.doMock('../../src/api/utils/project-meta', () => ({
       default: {
         read: async () => undefined,
       },
@@ -33,7 +33,7 @@ describe('variables', () => {
 
   test('read() should return the correct values for the scoped variables', async () => {
     const referencedValue = 'referenced value'
-    jest.unstable_mockModule('api/utils/project-meta', () => ({
+    vi.doMock('../../src/api/utils/project-meta', () => ({
       default: {
         read: async () => blinkmrc,
       },
@@ -64,7 +64,7 @@ describe('variables', () => {
   })
 
   test('read() should reject if there is a variable with an unsupported type value', async () => {
-    jest.unstable_mockModule('api/utils/project-meta', () => ({
+    vi.doMock('../../src/api/utils/project-meta', () => ({
       default: {
         read: async () => ({
           server: {
@@ -84,7 +84,7 @@ describe('variables', () => {
   })
 
   test('read() should reject if there is a scoped variable with an unsupported type value', async () => {
-    jest.unstable_mockModule('api/utils/project-meta', () => ({
+    vi.doMock('../../src/api/utils/project-meta', () => ({
       default: {
         read: async () => ({
           server: {
@@ -106,24 +106,24 @@ describe('variables', () => {
   })
 
   test('display() should not log anything if there are no variables to display', async () => {
-    jest.unstable_mockModule('api/utils/project-meta', () => ({
+    vi.doMock('../../src/api/utils/project-meta', () => ({
       default: {
         read: async () => undefined,
       },
     }))
-    const spy = jest.spyOn(console, 'log')
+    const spy = vi.spyOn(console, 'log')
     const { default: variables } = await import('../../src/api/variables.js')
     await variables.display(console, CWD, 'dev')
     expect(spy).not.toHaveBeenCalled()
   })
 
   test('display() should log once', async () => {
-    jest.unstable_mockModule('api/utils/project-meta', () => ({
+    vi.doMock('../../src/api/utils/project-meta', () => ({
       default: {
         read: async () => blinkmrc,
       },
     }))
-    const spy = jest.spyOn(console, 'log')
+    const spy = vi.spyOn(console, 'log')
     const { default: variables } = await import('../../src/api/variables.js')
     await variables.display(console, CWD, 'dev')
     expect(spy).toHaveBeenCalledTimes(1)

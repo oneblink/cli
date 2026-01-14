@@ -1,4 +1,4 @@
-import { describe, expect, test, jest } from '@jest/globals'
+import { afterEach, describe, expect, test, vi } from 'vitest'
 
 import { TENANTS } from '../../../src/config.js'
 
@@ -6,20 +6,17 @@ describe('login', () => {
   const JWT = 'valid jwt'
 
   afterEach(() => {
-    jest.resetModules()
-    jest.clearAllMocks()
+    vi.resetModules()
+    vi.clearAllMocks()
   })
 
   test('login() should create a BrowserLoginProvider if no options are passed', async () => {
-    const mockBrowserLogin = jest.fn(async () => JWT)
-    jest.unstable_mockModule(
-      '../../../src/identity/login-providers/browser',
-      () => ({
-        default: class {
-          login = mockBrowserLogin
-        },
-      }),
-    )
+    const mockBrowserLogin = vi.fn(async () => JWT)
+    vi.doMock('../../../src/identity/login-providers/browser', () => ({
+      default: class {
+        login = mockBrowserLogin
+      },
+    }))
 
     const { default: login } = await import(
       '../../../src/identity/common/login.js'

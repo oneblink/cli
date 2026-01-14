@@ -1,4 +1,4 @@
-import { describe, expect, test, jest } from '@jest/globals'
+import { afterEach, describe, expect, test, vi } from 'vitest'
 import url from 'url'
 import path from 'path'
 import { LambdaEvent } from '../../../src/api/types.js'
@@ -46,8 +46,8 @@ describe('api-handler', () => {
   }
 
   afterEach(() => {
-    jest.resetModules()
-    jest.clearAllMocks()
+    vi.resetModules()
+    vi.clearAllMocks()
   })
 
   test('normaliseLambdaRequest()', async () => {
@@ -172,7 +172,7 @@ describe('api-handler', () => {
   })
 
   test('handler() should return 200 for options requests with CORS and valid origin', async () => {
-    jest.mock(CONFIG_PATH, () => ({
+    vi.doMock(CONFIG_PATH, () => ({
       cors: CORS,
       routes: [
         {
@@ -209,7 +209,8 @@ describe('api-handler', () => {
   })
 
   test('handler() should return 200 for requests with CORS and invalid origin', async () => {
-    jest.mock(CONFIG_PATH, () => ({
+    console.log('CONFIG_PATH', CONFIG_PATH)
+    vi.doMock(CONFIG_PATH, () => ({
       cors: Object.assign({}, CORS, { origins: ['invalid'] }),
       routes: [
         {
@@ -238,17 +239,13 @@ describe('api-handler', () => {
   })
 
   test('handler() should return 500 status code if current working directory cannot be changed', async () => {
-    jest.unstable_mockModule('process', () => ({
-      default: {
-        cwd: () => '',
-        chdir: () => {
-          throw new Error('could not change cwd')
-        },
-      },
-    }))
+    vi.spyOn(process, 'cwd').mockImplementation(() => '')
+    vi.spyOn(process, 'chdir').mockImplementation(() => {
+      throw new Error('could not change cwd')
+    })
 
     const { default: handlers } = await import('../../../src/api/handlers.js')
-    const spy = jest.spyOn(handlers, 'getHandler')
+    const spy = vi.spyOn(handlers, 'getHandler')
     const lib = await import('../../../src/api/scripts/api-handler.js')
     const result = await lib.handler(
       {

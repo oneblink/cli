@@ -1,6 +1,5 @@
 import querystring from 'querystring'
 
-import fetch from 'node-fetch'
 import jwt from 'jsonwebtoken'
 
 import { USER_AGENT } from './config.js'

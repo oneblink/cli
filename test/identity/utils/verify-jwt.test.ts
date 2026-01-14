@@ -1,4 +1,4 @@
-import { describe, expect, test, jest } from '@jest/globals'
+import { afterEach, describe, expect, test, vi } from 'vitest'
 
 describe('verify-jwt', () => {
   const JWT = 'a valid jwt'
@@ -7,13 +7,13 @@ describe('verify-jwt', () => {
   }
 
   afterEach(() => {
-    jest.resetModules()
-    jest.clearAllMocks()
+    vi.resetModules()
+    vi.clearAllMocks()
   })
 
   test('verifyJWT() should return a jwt and call decode', async () => {
-    const mockDecode = jest.fn().mockReturnValue(DECODED)
-    jest.unstable_mockModule('jsonwebtoken', () => ({
+    const mockDecode = vi.fn().mockReturnValue(DECODED)
+    vi.doMock('jsonwebtoken', () => ({
       default: {
         decode: mockDecode,
       },
@@ -39,7 +39,7 @@ describe('verify-jwt', () => {
   })
 
   test('verifyJWT() should reject if decode() does not return an object with an exp property', async () => {
-    jest.unstable_mockModule('jsonwebtoken', () => ({
+    vi.doMock('jsonwebtoken', () => ({
       default: {
         decode: () => null,
       },
@@ -54,7 +54,7 @@ describe('verify-jwt', () => {
   })
 
   test('verifyJWT() should reject if jwt is expired', async () => {
-    jest.unstable_mockModule('jsonwebtoken', () => ({
+    vi.doMock('jsonwebtoken', () => ({
       default: {
         decode: () => ({
           exp: Date.now() / 1000 - 10, // 10 seconds before test is run (expired)

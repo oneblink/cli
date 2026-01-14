@@ -1,4 +1,4 @@
-import { describe, expect, test, jest } from '@jest/globals'
+import { afterEach, describe, expect, test, vi } from 'vitest'
 
 describe('read', () => {
   const CWD = 'current working directory'
@@ -6,22 +6,22 @@ describe('read', () => {
   const PROJECT_ROUTES = [{ route: 'project routes' }]
 
   afterEach(() => {
-    jest.resetModules()
-    jest.clearAllMocks()
+    vi.resetModules()
+    vi.clearAllMocks()
   })
 
   test('Should use configuration routes if available', async () => {
-    const mockScopeRead = jest.fn(async () => ({
+    const mockScopeRead = vi.fn(async () => ({
       routes: CONFIGURATION_ROUTES,
     }))
-    jest.unstable_mockModule('api/scope', () => ({
+    vi.doMock('../../../src/api/scope', () => ({
       default: {
         read: mockScopeRead,
       },
     }))
 
-    const mockListRoutes = jest.fn(async () => PROJECT_ROUTES)
-    jest.unstable_mockModule('api/listDirectoryRoutes', () => ({
+    const mockListRoutes = vi.fn(async () => PROJECT_ROUTES)
+    vi.doMock('../../../src/api/listDirectoryRoutes', () => ({
       default: mockListRoutes,
     }))
     const { default: read } = await import('../../../src/api/routes/read')
@@ -33,13 +33,13 @@ describe('read', () => {
   })
 
   test('Should use project routes if configuration routes are unavailable', async () => {
-    jest.unstable_mockModule('api/scope', () => ({
+    vi.doMock('../../../src/api/scope', () => ({
       default: {
         read: async () => ({}),
       },
     }))
-    const mockListRoutes = jest.fn(async () => PROJECT_ROUTES)
-    jest.unstable_mockModule('api/listDirectoryRoutes', () => ({
+    const mockListRoutes = vi.fn(async () => PROJECT_ROUTES)
+    vi.doMock('../../../src/api/listDirectoryRoutes', () => ({
       default: mockListRoutes,
     }))
     const { default: read } = await import('../../../src/api/routes/read')
@@ -50,14 +50,14 @@ describe('read', () => {
   })
 
   test('Should not reject and should always return an array if no routes are found', async () => {
-    jest.unstable_mockModule('api/scope', () => ({
+    vi.doMock('../../../src/api/scope', () => ({
       default: {
         read: async () => ({
           routes: [],
         }),
       },
     }))
-    jest.unstable_mockModule('api/listDirectoryRoutes', () => ({
+    vi.doMock('../../../src/api/listDirectoryRoutes', () => ({
       default: async () => [],
     }))
     const { default: read } = await import('../../../src/api/routes/read')
@@ -67,7 +67,7 @@ describe('read', () => {
   })
 
   test('Timeouts should be set via priority default, project, route', async () => {
-    jest.unstable_mockModule('api/scope', () => ({
+    vi.doMock('../../../src/api/scope', () => ({
       default: {
         read: async () => ({
           timeout: 20,

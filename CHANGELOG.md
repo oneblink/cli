@@ -11,6 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - OneBlink US tenant
 
+### Changed
+
+- **[BREAKING]** API Hosting runtime version from Node.js 18 to [Node.js 22](https://nodejs.org/en/blog/announcements/v22-release-announce)
+- Require minimum [Node.js 22](https://nodejs.org/en/blog/announcements/v22-release-announce)
+
+### Removed
+
+- **[BREAKING]** support for Node.js 18.
+
 ## [3.5.9] - 2025-08-11
 
 ## [3.5.8] - 2025-07-10

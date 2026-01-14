@@ -1,4 +1,4 @@
-import { describe, expect, test } from '@jest/globals'
+import { describe, expect, test } from 'vitest'
 
 import provision from '../../src/cdn/provision-environment.js'
 import OneBlinkAPIClient from '../../src/oneblink-api-client.js'

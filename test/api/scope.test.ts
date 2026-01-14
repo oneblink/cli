@@ -1,4 +1,4 @@
-import { describe, expect, test, jest } from '@jest/globals'
+import { afterEach, describe, expect, test, vi } from 'vitest'
 import { BlinkMRC } from '../../src/api/types.js'
 
 describe('scope', () => {
@@ -11,14 +11,14 @@ describe('scope', () => {
   }
 
   afterEach(() => {
-    jest.resetModules()
-    jest.clearAllMocks()
+    vi.resetModules()
+    vi.clearAllMocks()
   })
 
   test('read() should call projectMeta.read() with correct input', async () => {
-    const mockRead = jest.fn()
+    const mockRead = vi.fn()
     mockRead.mockImplementation(async () => CFG)
-    jest.unstable_mockModule('api/utils/project-meta', () => ({
+    vi.doMock('../../src/api/utils/project-meta', () => ({
       default: {
         read: mockRead,
       },
@@ -30,7 +30,7 @@ describe('scope', () => {
   })
 
   test('read() should handle an uninitialized config file', async () => {
-    jest.unstable_mockModule('api/utils/project-meta', () => ({
+    vi.doMock('../../src/api/utils/project-meta', () => ({
       default: {
         read: async () => null,
       },
@@ -42,7 +42,7 @@ describe('scope', () => {
   })
 
   test('read() should return the currently set scope', async () => {
-    jest.unstable_mockModule('api/utils/project-meta', () => ({
+    vi.doMock('../../src/api/utils/project-meta', () => ({
       default: {
         read: async () => CFG,
       },
@@ -54,7 +54,7 @@ describe('scope', () => {
   })
 
   test('read() should reject if projectMeta.read() throws an error', async () => {
-    jest.unstable_mockModule('api/utils/project-meta', () => ({
+    vi.doMock('../../src/api/utils/project-meta', () => ({
       default: {
         read: async () => {
           throw new Error('error message')
@@ -68,9 +68,9 @@ describe('scope', () => {
   })
 
   test('display() should call projectMeta.read() with correct input', async () => {
-    const mockRead = jest.fn()
+    const mockRead = vi.fn()
     mockRead.mockImplementation(async () => CFG)
-    jest.unstable_mockModule('api/utils/project-meta', () => ({
+    vi.doMock('../../src/api/utils/project-meta', () => ({
       default: {
         read: mockRead,
       },
@@ -82,7 +82,7 @@ describe('scope', () => {
   })
 
   test('display() should reject with nice error message if projectMeta.read() throws an error', async () => {
-    jest.unstable_mockModule('api/utils/project-meta', () => ({
+    vi.doMock('../../src/api/utils/project-meta', () => ({
       default: {
         read: async () => {
           throw new Error('test error message')
@@ -98,7 +98,7 @@ describe('scope', () => {
   })
 
   test('display() should reject with nice error message if scope has not been set', async () => {
-    jest.unstable_mockModule('api/utils/project-meta', () => ({
+    vi.doMock('../../src/api/utils/project-meta', () => ({
       default: {
         read: async () => null,
       },
@@ -112,19 +112,19 @@ describe('scope', () => {
   })
 
   test('display() should log the currently set scope', async () => {
-    jest.unstable_mockModule('api/utils/project-meta', () => ({
+    vi.doMock('../../src/api/utils/project-meta', () => ({
       default: {
         read: async () => CFG,
       },
     }))
-    const spy = jest.spyOn(console, 'log')
+    const spy = vi.spyOn(console, 'log')
     const { default: scope } = await import('../../src/api/scope.js')
     await scope.display(console, CWD, 'dev')
     expect(spy).toHaveBeenCalledTimes(1)
   })
 
   test('write() should reject if project is not set on the meta object', async () => {
-    jest.unstable_mockModule('api/utils/project-meta', () => ({
+    vi.doMock('../../src/api/utils/project-meta', () => ({
       default: {
         write: async () => undefined,
       },
@@ -148,11 +148,11 @@ describe('scope', () => {
       project: 'new project',
       tenant: 'oneblink',
     }
-    const mockWrite = jest.fn(
+    const mockWrite = vi.fn(
       async (cwd: string, updater: (config: BlinkMRC) => BlinkMRC) =>
         updater(originalConfig),
     )
-    jest.unstable_mockModule('api/utils/project-meta', () => ({
+    vi.doMock('../../src/api/utils/project-meta', () => ({
       default: {
         write: mockWrite,
       },

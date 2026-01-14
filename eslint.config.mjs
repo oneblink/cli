@@ -7,10 +7,10 @@ import js from '@eslint/js'
 import { FlatCompat } from '@eslint/eslintrc'
 import pluginMicrosoftSdl from '@microsoft/eslint-plugin-sdl'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const _filename = fileURLToPath(import.meta.url)
+const _dirname = path.dirname(_filename)
 const compat = new FlatCompat({
-  baseDirectory: __dirname,
+  baseDirectory: _dirname,
   recommendedConfig: js.configs.recommended,
   allConfig: js.configs.all,
 })
@@ -45,11 +45,10 @@ export default [
       ecmaVersion: 2020,
       sourceType: 'commonjs',
 
-      parserOptions: { project: './tsconfig.json' },
+      parserOptions: { project: './tsconfig.eslint.json' },
     },
 
     rules: {
-      'no-console': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
     },
   },

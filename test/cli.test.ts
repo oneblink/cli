@@ -1,4 +1,4 @@
-import { expect, test } from '@jest/globals'
+import { expect, test } from 'vitest'
 import { execa } from 'execa'
 
 import { TENANTS } from '../src/config.js'

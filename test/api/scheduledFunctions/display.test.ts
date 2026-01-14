@@ -1,4 +1,4 @@
-import { describe, expect, test, jest } from '@jest/globals'
+import { afterEach, describe, expect, test, vi } from 'vitest'
 
 describe('display', () => {
   const CWD = 'current working directory'
@@ -21,68 +21,64 @@ describe('display', () => {
   ]
 
   afterEach(() => {
-    jest.resetModules()
-    jest.clearAllMocks()
+    vi.resetModules()
+    vi.clearAllMocks()
   })
 
   test('Should call read() with correct input and log', async () => {
-    const spy = jest.spyOn(console, 'log')
-    const mockRead = jest.fn(async () => SCHEDULEDFUNCTIONS)
-    jest.unstable_mockModule('api/scheduledFunctions/read', () => ({
+    const spy = vi.spyOn(console, 'log')
+    const mockRead = vi.fn(async () => SCHEDULEDFUNCTIONS)
+    vi.doMock('../../../src/api/scheduledFunctions/read', () => ({
       default: mockRead,
     }))
-    jest.unstable_mockModule('api/scheduledFunctions/validate', () => ({
+    vi.doMock('../../../src/api/scheduledFunctions/validate', () => ({
       default: async () => [],
     }))
-    const { default: display } = await import(
-      '../../../src/api/scheduledFunctions/display.js'
-    )
+    const { default: display } =
+      await import('../../../src/api/scheduledFunctions/display.js')
     await display(console, CWD)
     expect(mockRead).toBeCalledWith(CWD)
     expect(spy).toBeCalled()
   })
 
   test('Should not log the scheduledFunctions and not reject if no scheduledFunctions are found', async () => {
-    const spy = jest.spyOn(console, 'log')
-    jest.unstable_mockModule('api/scheduledFunctions/read', () => ({
+    const spy = vi.spyOn(console, 'log')
+    vi.doMock('../../../src/api/scheduledFunctions/read', () => ({
       default: async () => [],
     }))
 
-    const { default: display } = await import(
-      '../../../src/api/scheduledFunctions/display.js'
-    )
+    const { default: display } =
+      await import('../../../src/api/scheduledFunctions/display.js')
     const promise = display(console, CWD)
     await expect(promise).resolves.toBeUndefined()
     expect(spy).not.toHaveBeenCalled()
   })
 
   test('Should call validate() for each scheduledFunctions returned from read()', async () => {
-    const mockValidate = jest.fn(async () => [])
-    jest.unstable_mockModule('api/scheduledFunctions/read', () => ({
+    const mockValidate = vi.fn(async () => [])
+    vi.doMock('../../../src/api/scheduledFunctions/read', () => ({
       default: async () => SCHEDULEDFUNCTIONS,
     }))
-    jest.unstable_mockModule('api/scheduledFunctions/validate', () => ({
+    vi.doMock('../../../src/api/scheduledFunctions/validate', () => ({
       default: mockValidate,
     }))
-    const { default: display } = await import(
-      '../../../src/api/scheduledFunctions/display.js'
-    )
+    const { default: display } =
+      await import('../../../src/api/scheduledFunctions/display.js')
     await display(console, CWD)
     expect(mockValidate).toBeCalledTimes(SCHEDULEDFUNCTIONS.length)
   })
 
   test('Should log the table and reject if errors are return from validate()', async () => {
-    const spy = jest.spyOn(console, 'log')
-    jest.unstable_mockModule('api/scheduledFunctions/read', () => ({
+    const spy = vi.spyOn(console, 'log')
+    vi.doMock('../../../src/api/scheduledFunctions/read', () => ({
       default: async () => SCHEDULEDFUNCTIONS,
     }))
-    jest.unstable_mockModule('api/scheduledFunctions/validate', () => ({
+    vi.doMock('../../../src/api/scheduledFunctions/validate', () => ({
       default: async () => ['error1', 'error2'],
     }))
 
-    const { default: display } = await import(
-      '../../../src/api/scheduledFunctions/display.js'
-    )
+    const { default: display } =
+      await import('../../../src/api/scheduledFunctions/display.js')
     const promise = display(console, CWD)
     await expect(promise).rejects.toThrow(
       '3 of 3 scheduled functions configurations are invalid.',

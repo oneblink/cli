@@ -1,4 +1,4 @@
-import { expect, test } from '@jest/globals'
+import { expect, test } from 'vitest'
 import BmResponse from '../../src/api/bm-response.js'
 
 test('constructor() should set correct defaults', () => {

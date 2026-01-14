@@ -1,4 +1,4 @@
-/* eslint-disable @microsoft/sdl/no-insecure-url */
+import { describe, expect, test } from 'vitest'
 import validate from '../../../src/api/cors/validate.js'
 
 describe('validate', () => {
@@ -52,10 +52,10 @@ describe('validate', () => {
   test('Should reject if headers is defined but not as an array', async () => {
     expect.assertions(4)
     const configs = [
-      { origins: ['http://test'], headers: 'test' },
-      { origins: ['http://test'], headers: 123 },
-      { origins: ['http://test'], headers: true },
-      { origins: ['http://test'], headers: {} },
+      { origins: ['https://test'], headers: 'test' },
+      { origins: ['https://test'], headers: 123 },
+      { origins: ['https://test'], headers: true },
+      { origins: ['https://test'], headers: {} },
     ]
     for (const config of configs) {
       // @ts-expect-error we are internationally passing invalid values here
@@ -69,10 +69,10 @@ describe('validate', () => {
   test('Should reject if exposed headers is defined but not as an array', async () => {
     expect.assertions(4)
     const configs = [
-      { origins: ['http://test'], exposedHeaders: 'test' },
-      { origins: ['http://test'], exposedHeaders: 123 },
-      { origins: ['http://test'], exposedHeaders: true },
-      { origins: ['http://test'], exposedHeaders: {} },
+      { origins: ['https://test'], exposedHeaders: 'test' },
+      { origins: ['https://test'], exposedHeaders: 123 },
+      { origins: ['https://test'], exposedHeaders: true },
+      { origins: ['https://test'], exposedHeaders: {} },
     ]
     for (const config of configs) {
       // @ts-expect-error we are internationally passing invalid values here
@@ -87,10 +87,10 @@ describe('validate', () => {
   test('Should reject if max age is not a number', async () => {
     expect.assertions(4)
     const configs = [
-      { origins: ['http://test'], maxAge: 'test' },
-      { origins: ['http://test'], maxAge: true },
-      { origins: ['http://test'], maxAge: [] },
-      { origins: ['http://test'], maxAge: {} },
+      { origins: ['https://test'], maxAge: 'test' },
+      { origins: ['https://test'], maxAge: true },
+      { origins: ['https://test'], maxAge: [] },
+      { origins: ['https://test'], maxAge: {} },
     ]
     for (const config of configs) {
       // @ts-expect-error we are internationally passing invalid values here
@@ -104,10 +104,10 @@ describe('validate', () => {
   test('Should reject if credentials is not a boolean', async () => {
     expect.assertions(4)
     const configs = [
-      { origins: ['http://test'], maxAge: 1, credentials: 'test' },
-      { origins: ['http://test'], maxAge: 1, credentials: 123 },
-      { origins: ['http://test'], maxAge: 1, credentials: [] },
-      { origins: ['http://test'], maxAge: 1, credentials: {} },
+      { origins: ['https://test'], maxAge: 1, credentials: 'test' },
+      { origins: ['https://test'], maxAge: 1, credentials: 123 },
+      { origins: ['https://test'], maxAge: 1, credentials: [] },
+      { origins: ['https://test'], maxAge: 1, credentials: {} },
     ]
     for (const config of configs) {
       // @ts-expect-error we are internationally passing invalid values here
@@ -120,7 +120,7 @@ describe('validate', () => {
 
   test('Should resolve input if all cors is valid', async () => {
     const cors = {
-      origins: ['http://test'],
+      origins: ['https://test'],
       headers: ['test'],
       exposedHeaders: ['test'],
       maxAge: 1,
