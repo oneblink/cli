@@ -13,8 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **[BREAKING]** API Hosting runtime version from Node.js 18 to [Node.js 22](https://nodejs.org/en/blog/announcements/v22-release-announce)
-- Require minimum [Node.js 22](https://nodejs.org/en/blog/announcements/v22-release-announce)
+- **[BREAKING]** API Hosting runtime version from Node.js 18 to [Node.js 24](https://nodejs.org/en/blog/release/v24.11.0)
+- Require minimum [Node.js 24](https://nodejs.org/en/blog/release/v24.11.0)
 
 ### Removed
 

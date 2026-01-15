@@ -28,7 +28,7 @@ const METHODS: Array<string> = [
 const DEFAULT_TIMEOUT_SECONDS = 15
 
 export default {
-  AWS_LAMBDA_RUNTIME: 'nodejs22.x',
+  AWS_LAMBDA_RUNTIME: 'nodejs24.x',
   DEFAULT_CORS: {
     CREDENTIALS,
     EXPOSED_HEADERS,

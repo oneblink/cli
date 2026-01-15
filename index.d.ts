@@ -6,7 +6,7 @@ export type OneBlinkAPIHostingRequest<T = void> = {
   url: {
     host: string
     hostname: string
-    params: { [id: string]: string }
+    params: Record<string, string | undefined>
     pathname: string
     protocol: 'http:' | 'https:'
     query: Record<string, string | string[]>
