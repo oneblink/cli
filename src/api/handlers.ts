@@ -1,6 +1,5 @@
+import { URLPattern } from 'url'
 import type { RouteConfiguration } from './types.js'
-
-import uniloc from 'uniloc'
 
 import BmResponse from './bm-response.js'
 import {
@@ -49,24 +48,19 @@ function findRouteConfig(
   route: string,
   routeConfigs: RouteConfiguration[],
 ): RouteConfiguration {
-  const unilocRoutes = routeConfigs.reduce<Record<string, string>>(
-    (memo, r) => {
-      memo[r.route] = `GET ${r.route.replace(/{/g, ':').replace(/}/g, '')}`
-      return memo
-    },
-    {},
-  )
-  const unilocRouter = uniloc(unilocRoutes)
-  const unilocRoute = unilocRouter.lookup(route, 'GET')
+  const routeConfig = routeConfigs.find((routeConfig) => {
+    const urlPattern = new URLPattern({
+      pathname: routeConfig.route.replace(/\{([^}]+)\}/g, ':$1'),
+    })
+    const result = urlPattern.exec(route)
+    routeConfig.params = result?.pathname.groups
+    return result
+  })
 
-  const routeConfig = routeConfigs.find(
-    (routeConfig) => routeConfig.route === unilocRoute.name,
-  )
   if (!routeConfig) {
     throw new Error(`Route has not been implemented: ${route}`)
   }
 
-  routeConfig.params = unilocRoute.options
   return routeConfig
 }
 

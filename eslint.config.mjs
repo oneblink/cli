@@ -17,13 +17,7 @@ const compat = new FlatCompat({
 
 export default [
   {
-    ignores: [
-      '**/node_modules',
-      '**/examples',
-      '**/docs',
-      '**/dist',
-      '**/my-serverless',
-    ],
+    ignores: ['./node_modules/**', './examples/**', './docs/**', './dist/**'],
   },
   ...pluginMicrosoftSdl.configs.recommended,
   ...compat.extends(
@@ -42,8 +36,7 @@ export default [
       },
 
       parser: tsParser,
-      ecmaVersion: 2020,
-      sourceType: 'commonjs',
+      ecmaVersion: 2024,
 
       parserOptions: { project: './tsconfig.eslint.json' },
     },

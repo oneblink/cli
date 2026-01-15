@@ -45,9 +45,7 @@ export type CLIOptions = {
 
 export type HandlerConfiguration<In = void, Out = void> = {
   handler: OneBlinkAPIHostingHandler<In, Out> | void
-  params: {
-    [id: string]: string
-  }
+  params: Record<string, string | undefined>
 }
 
 export type Headers = OneBlinkAPIHostingRequest['headers']
@@ -84,7 +82,7 @@ export type Protocol = OneBlinkAPIHostingRequest['url']['protocol']
 
 export type RouteConfiguration = APITypes.APIEnvironmentRoute & {
   timeout?: number
-  params?: { [id: string]: string }
+  params?: Record<string, string | undefined>
 }
 
 export type ScheduledFunctionConfiguration = Omit<
