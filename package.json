@@ -5,7 +5,8 @@
   "author": "OneBlink <developers@oneblink> (https://github.com/oneblink)",
   "bin": {
     "oneblink": "dist/bin/oneblink.js",
-    "civicplus": "dist/bin/civicplus.js"
+    "civicplus": "dist/bin/civicplus.js",
+    "oneblink-us": "dist/bin/oneblink-us.js"
   },
   "bugs": {
     "url": "https://github.com/oneblink/cli/issues"
