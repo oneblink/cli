@@ -37,8 +37,6 @@ export default async function (
   const spinner = ora({ spinner: 'dots', text: 'Uploading to CDN' })
   spinner.start()
 
-  let progress = 0
-
   try {
     const s3Client = new S3Client({
       region: tenant.region,
@@ -68,7 +66,7 @@ export default async function (
     await sync(cwd, `s3://${cfg.scope}/${flags.env}`, options)
     spinner.succeed('Upload(s) complete!')
   } catch (error) {
-    spinner.fail(`Upload(s) failed: ${progress}%`)
+    spinner.fail(`Upload(s) failed`)
     throw error
   }
 
