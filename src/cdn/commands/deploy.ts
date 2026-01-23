@@ -6,7 +6,7 @@ import {
   PutObjectCommandInput,
   S3Client,
 } from '@aws-sdk/client-s3'
-import { S3SyncClient, TransferMonitor, TransferStatus } from 's3-sync-client'
+import { S3SyncClient } from 's3-sync-client'
 import mime from 'mime-types'
 
 import confirm from '../utils/confirm.js'
@@ -37,8 +37,6 @@ export default async function (
   const spinner = ora({ spinner: 'dots', text: 'Uploading to CDN' })
   spinner.start()
 
-  let progress = 0
-
   try {
     const s3Client = new S3Client({
       region: tenant.region,
@@ -51,19 +49,10 @@ export default async function (
 
     const { sync } = new S3SyncClient({ client: s3Client })
 
-    const monitor = new TransferMonitor()
-    monitor.on('progress', (transferStatus: TransferStatus) => {
-      progress = Math.floor(
-        (transferStatus.size.current / transferStatus.size.total) * 100,
-      )
-      spinner.text = `Uploading to CDN: ${progress}%`
-    })
-
     // Allow deployment of files in a sub directory to the current working directory
     const cwd = path.join(flags.cwd, input[0] || '.')
     const options: SyncLocalWithBucketOptions = {
       del: flags.prune,
-      monitor,
       commandInput: (input) => {
         const putObjectCommandInput: Partial<PutObjectCommandInput> = {
           ContentType:
@@ -73,10 +62,11 @@ export default async function (
         return putObjectCommandInput as unknown as GetObjectCommandInput
       },
     }
+
     await sync(cwd, `s3://${cfg.scope}/${flags.env}`, options)
     spinner.succeed('Upload(s) complete!')
   } catch (error) {
-    spinner.fail(`Upload(s) failed: ${progress}%`)
+    spinner.fail(`Upload(s) failed`)
     throw error
   }
 
