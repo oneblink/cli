@@ -17,11 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Require minimum [Node.js 24](https://nodejs.org/en/blog/release/v24.11.0)
 
 ### Removed
-- transfer monitor from s3 sync
-
-### Removed
 
 - **[BREAKING]** support for Node.js 18.
+- transfer monitor from s3 sync
 
 ## [3.5.9] - 2025-08-11
 
