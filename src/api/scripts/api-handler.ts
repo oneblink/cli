@@ -5,20 +5,20 @@ We bundle this module and its dependencies to "dist".
 To bundle: `npm run build`
 */
 
+import process from 'process'
+import path from 'path'
+import { URLSearchParams, fileURLToPath, URL } from 'url'
+
+import handlers from '../handlers.js'
+import wrapper from '../wrapper.js'
 import type { Headers, LambdaEvent } from '../types.js'
+import type { OneBlinkAPIHostingRequest } from '../../../index.js'
 
 type APIGatewayResult = {
   statusCode: number
   headers: Headers
   body?: string
 }
-
-import process from 'process'
-import path from 'path'
-import handlers from '../handlers.js'
-import wrapper from '../wrapper.js'
-import { URLSearchParams, fileURLToPath, URL } from 'url'
-import { OneBlinkAPIHostingRequest } from '../../../index.js'
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
 
@@ -97,7 +97,12 @@ async function handler(
   const internalHeaders: Headers = {
     'Content-Type': 'application/json',
   }
-  const config = await import(path.join(__dirname, 'bm-server.json'))
+  const { default: config } = await import(
+    path.join(__dirname, 'bm-server.json'),
+    {
+      with: { type: 'json' },
+    }
+  )
 
   const finish = (
     statusCode: number,

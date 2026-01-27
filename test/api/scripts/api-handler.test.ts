@@ -173,13 +173,15 @@ describe('api-handler', () => {
 
   test('handler() should return 200 for options requests with CORS and valid origin', async () => {
     vi.doMock(CONFIG_PATH, () => ({
-      cors: CORS,
-      routes: [
-        {
-          module: './project/test-response.js',
-          route: '/response',
-        },
-      ],
+      default: {
+        cors: CORS,
+        routes: [
+          {
+            module: './project/test-response.js',
+            route: '/response',
+          },
+        ],
+      },
     }))
     const event = Object.assign({}, EVENT, {
       headers: {
@@ -209,15 +211,16 @@ describe('api-handler', () => {
   })
 
   test('handler() should return 200 for requests with CORS and invalid origin', async () => {
-    console.log('CONFIG_PATH', CONFIG_PATH)
     vi.doMock(CONFIG_PATH, () => ({
-      cors: Object.assign({}, CORS, { origins: ['invalid'] }),
-      routes: [
-        {
-          module: './project/test-response.js',
-          route: '/response',
-        },
-      ],
+      default: {
+        cors: Object.assign({}, CORS, { origins: ['invalid'] }),
+        routes: [
+          {
+            module: './project/test-response.js',
+            route: '/response',
+          },
+        ],
+      },
     }))
     const event = Object.assign({}, EVENT, {
       headers: {
