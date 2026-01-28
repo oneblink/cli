@@ -72,19 +72,4 @@ describe('read', () => {
       origins: ['test'],
     })
   })
-
-  test('Should return cors as false when config throws an error', async () => {
-    vi.doMock('../../../src/blinkmrc.js', () => ({
-      projectConfig: () => ({
-        load: async () => {
-          throw new Error('test')
-        },
-        update: async () => ({}),
-      }),
-    }))
-    const { default: read } = await import('../../../src/api/cors/read.js')
-
-    const cors = await read(CWD)
-    expect(cors).toBe(false)
-  })
 })

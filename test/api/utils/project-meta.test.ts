@@ -34,22 +34,8 @@ describe('project-meta', () => {
     projectMeta.projectConfig(CWD)
     expect(mockProjectConfig).toBeCalledWith({
       cwd: CWD,
+      ENOENTResult: {},
     })
-  })
-
-  test('read() should return empty object if load() rejects', async () => {
-    vi.doMock('../../../src/blinkmrc.js', () => ({
-      projectConfig: () => ({
-        load: async () => {
-          throw new Error()
-        },
-      }),
-    }))
-    const { default: projectMeta } =
-      await import('../../../src/api/utils/project-meta.js')
-
-    const meta = await projectMeta.read(CWD)
-    expect(meta).toEqual({})
   })
 
   test('write() should call the updater function passed', async () => {
