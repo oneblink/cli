@@ -5,15 +5,12 @@ import * as configLoader from '../../blinkmrc.js'
 function projectConfig(cwd: string) {
   return configLoader.projectConfig<BlinkMRC>({
     cwd,
+    ENOENTResult: {},
   })
 }
 
 async function read(cwd: string): Promise<BlinkMRC> {
-  try {
-    return await projectConfig(cwd).load()
-  } catch {
-    return {}
-  }
+  return await projectConfig(cwd).load()
 }
 
 async function write(

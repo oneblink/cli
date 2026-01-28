@@ -15,13 +15,13 @@ async function load<T>({
   ENOENTResult,
 }: {
   filePath: string
-  ENOENTResult?: T
+  ENOENTResult: T | undefined
 }): Promise<T> {
   let data: never
   try {
     data = await loadJsonFile(filePath)
   } catch (err) {
-    if (typeof err === 'object' && err && 'code' in err) {
+    if (err instanceof Error && 'code' in err) {
       switch (err.code) {
         case 'JSONError': {
           throw new Error(`${filePath} is not valid JSON`)
@@ -44,20 +44,21 @@ async function load<T>({
 function generateConfig<T extends object>(configOptions: {
   dir: string
   filename: string
+  ENOENTResult: T | undefined
 }): Config<T> {
   const filename = configOptions.filename
   const filePath = path.join(configOptions.dir, filename)
 
   const config: Config<T> = {
     async load() {
-      return load<T>({ filePath })
+      return load<T>({ filePath, ENOENTResult: configOptions.ENOENTResult })
     },
-    async update<T extends object>(updater: (obj: T) => T): Promise<T> {
+    async update(updater: (obj: T) => T): Promise<T> {
       const data = await load<T>({
         filePath,
-        ENOENTResult: {} as T,
+        ENOENTResult: configOptions.ENOENTResult,
       })
-      const updatedData = updater(data as T)
+      const updatedData = updater(data)
       await writeJsonFile(filePath, updatedData, {
         indent: 2,
         mode: 0o666,
@@ -70,20 +71,25 @@ function generateConfig<T extends object>(configOptions: {
 
 export function projectConfig<T extends object>({
   cwd,
+  ENOENTResult,
 }: {
   cwd: string
+  ENOENTResult: T | undefined
 }): Config<T> {
   return generateConfig<T>({
     dir: cwd,
     // dotfile, like .eslintrc.json or .travis.yml
     filename: `.blinkmrc.json`,
+    ENOENTResult,
   })
 }
 
 export function userConfig<T extends object>({
   name,
+  ENOENTResult,
 }: {
   name: string
+  ENOENTResult: T
 }): Config<T> {
   const p = os.platform()
 
@@ -97,6 +103,7 @@ export function userConfig<T extends object>({
   const cfg = generateConfig<T>({
     dir: dirs.userConfig(),
     filename: name,
+    ENOENTResult,
   })
 
   return cfg
