@@ -1,7 +1,7 @@
 import * as configLoader from '../../blinkmrc.js'
 
 function projectConfig<T extends object>(cwd: string) {
-  return configLoader.projectConfig<T>({ cwd })
+  return configLoader.projectConfig<T>({ cwd, ENOENTResult: undefined })
 }
 
 async function read<T extends object>(cwd: string): Promise<T> {
