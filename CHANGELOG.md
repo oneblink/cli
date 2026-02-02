@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.0] - 2026-02-02
+
 ### Added
 
 - OneBlink US tenant
@@ -20,6 +22,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **[BREAKING]** support for Node.js 18.
 - transfer monitor from s3 sync
+
+### Dependencies
+
+- update @aws-sdk/client-s3 to [3.966.0](https://github.com/aws/aws-sdk-js-v3/releases/tag/v3.966.0) (from [3.400.0](https://github.com/aws/aws-sdk-js-v3/releases/tag/v3.400.0))
+
+- update @aws-sdk/lib-storage to [3.966.0](https://github.com/aws/aws-sdk-js-v3/releases/tag/v3.966.0) (from [3.400.0](https://github.com/aws/aws-sdk-js-v3/releases/tag/v3.400.0))
+
+- update chalk to [5.6.2](https://github.com/chalk/chalk/releases/tag/v5.6.2) (from [5.4.1](https://github.com/chalk/chalk/releases/tag/v5.4.1))
+
+- update execa to [9.6.1](https://github.com/sindresorhus/execa/releases/tag/v9.6.1) (from [9.5.2](https://github.com/sindresorhus/execa/releases/tag/v9.5.2))
+
+- update glob to 13.0.0 (from 10.4.5)
+
+- update inquirer to 13.2.0 (from 12.4.2)
+
+- update jsonwebtoken to [9.0.3](https://github.com/auth0/node-jsonwebtoken/blob/master/CHANGELOG.md) (from [9.0.2](https://github.com/auth0/node-jsonwebtoken/blob/master/CHANGELOG.md))
+
+- update log-symbols to [7.0.1](https://github.com/sindresorhus/log-symbols/releases/tag/v7.0.1) (from [7.0.0](https://github.com/sindresorhus/log-symbols/releases/tag/v7.0.0))
+
+- update meow to [14.0.0](https://github.com/sindresorhus/meow/releases/tag/v14.0.0) (from [13.2.0](https://github.com/sindresorhus/meow/releases/tag/v13.2.0))
+
+- update mime-types to [3.0.2](https://github.com/jshttp/mime-types/releases/tag/v3.0.2) (from [2.1.35](https://github.com/jshttp/mime-types/releases/tag/2.1.35))
+
+- update morgan to [1.10.1](https://github.com/expressjs/morgan/releases/tag/1.10.1) (from [1.10.0](https://github.com/expressjs/morgan/releases/tag/1.10.0))
+
+- no longer depend upon node-fetch
+
+- update open to [11.0.0](https://github.com/sindresorhus/open/releases/tag/v11.0.0) (from [10.1.0](https://github.com/sindresorhus/open/releases/tag/v10.1.0))
+
+- update ora to [9.0.0](https://github.com/sindresorhus/ora/releases/tag/v9.0.0) (from [8.2.0](https://github.com/sindresorhus/ora/releases/tag/v8.2.0))
+
+- no longer depend upon uniloc
+
+- update write-json-file to [7.0.0](https://github.com/sindresorhus/write-json-file/releases/tag/v7.0.0) (from [6.0.0](https://github.com/sindresorhus/write-json-file/releases/tag/v6.0.0))
 
 ## [3.5.9] - 2025-08-11
 
