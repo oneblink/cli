@@ -25,7 +25,7 @@ function getOneBlinkUSLoginClientId() {
       return '1h0762m6b89hi71gln76vs3doc'
     }
     default: {
-      return 'UNKNOWN'
+      return '4498jshv7varkka8bv7ho8eg0t'
     }
   }
 }
