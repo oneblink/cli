@@ -5,8 +5,8 @@ on:
       - 'v*' # Triggers on any tag starting with v (e.g. v1.0.0, v1.0.0-beta.1)
 
 permissions:
-  id-token: write # Required for OIDC
-  contents: read
+  id-token: write # Required for OIDC (NPM Trusted Publishing)
+  contents: write # Required for pushing docs and creating github releases
 
 jobs:
   # ------------------------------------------------------------------
