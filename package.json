@@ -111,7 +111,7 @@
     "eslint": "eslint --fix --cache .",
     "fixpack": "fixpack",
     "prepare": "npm run build",
-    "pretest": "npm run eslint && npm run fixpack && npm run typescript",
+    "pretest": "npm run eslint && npm run fixpack && npm run typescript && npm i -g .",
     "release": "oneblink-release repository --no-name",
     "test": "vitest run",
     "types": "npm i -D github:oneblink/types",
