@@ -2,11 +2,63 @@ name: Release
 on:
   push:
     tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+'
+      - 'v*' # Triggers on any tag starting with v (e.g. v1.0.0, v1.0.0-beta.1)
+
+permissions:
+  id-token: write # Required for OIDC (NPM Trusted Publishing)
+  contents: write # Required for pushing docs and creating github releases
+
 jobs:
-  release:
+  # ------------------------------------------------------------------
+  # ALPHA RELEASE JOB
+  # Runs only if the tag contains '-alpha'
+  # ------------------------------------------------------------------
+  publish-alpha:
+    name: NPM Publish (alpha)
+    runs-on: ubuntu-latest
+    if: contains(github.ref, '-alpha')
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - run: npm install --global npm@11
+      - run: npm ci
+      - run: npm test
+      - uses: JS-DevTools/npm-publish@v4
+        with:
+          access: 'public'
+          tag: 'alpha'
+
+  # ------------------------------------------------------------------
+  # BETA RELEASE JOB
+  # Runs only if the tag contains '-beta'
+  # ------------------------------------------------------------------
+  publish-beta:
+    name: NPM Publish (beta)
+    runs-on: ubuntu-latest
+    if: contains(github.ref, '-beta')
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - run: npm install --global npm@11
+      - run: npm ci
+      - run: npm test
+      - uses: JS-DevTools/npm-publish@v4
+        with:
+          access: 'public'
+          tag: 'beta'
+
+  # ------------------------------------------------------------------
+  # PRODUCTION JOBS
+  # Run only if the tag does NOT contain a hyphen (e.g. v1.0.0)
+  # ------------------------------------------------------------------
+  release-production:
     name: Github Release
     runs-on: ubuntu-latest
+    if: ${{ !contains(github.ref, '-') }}
     steps:
       - uses: actions/checkout@v6
       - uses: docker://antonyurchenko/git-release:v6
@@ -16,9 +68,10 @@ jobs:
           PRE_RELEASE: 'false'
           CHANGELOG_FILE: 'CHANGELOG.md'
           ALLOW_EMPTY_CHANGELOG: 'false'
-  publish:
-    name: NPM Publish
+  docs-production:
+    name: Documentation
     runs-on: ubuntu-latest
+    if: ${{ !contains(github.ref, '-') }}
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
@@ -26,7 +79,25 @@ jobs:
           node-version: '24'
       - run: npm install --global npm@11
       - run: npm ci
+      - run: npm run docs
+      - uses: devops-infra/action-commit-push@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          commit_prefix: '[DOCS] '
+          commit_message: ${{ github.ref_name }}
+          target_branch: 'master'
+  publish-production:
+    name: NPM Publish (latest)
+    runs-on: ubuntu-latest
+    if: ${{ !contains(github.ref, '-') }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - run: npm install --global npm@11
+      - run: npm ci
+      - run: npm test
       - uses: JS-DevTools/npm-publish@v4
         with:
-          token: ${{ secrets.NPM_TOKEN }}
           access: 'public'
