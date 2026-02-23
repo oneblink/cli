@@ -7,9 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.2] - 2026-02-23
+
 ### Fixed
 
 - github action permissions to allow docs and github release jobs
+
+### Dependencies
+
+- update @aws-sdk/client-s3 to [3.981.0](https://github.com/aws/aws-sdk-js-v3/releases/tag/v3.981.0) (from [3.966.0](https://github.com/aws/aws-sdk-js-v3/releases/tag/v3.966.0))
 
 ## [4.0.1] - 2026-02-03
 
