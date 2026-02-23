@@ -68,24 +68,6 @@ jobs:
           PRE_RELEASE: 'false'
           CHANGELOG_FILE: 'CHANGELOG.md'
           ALLOW_EMPTY_CHANGELOG: 'false'
-  docs-production:
-    name: Documentation
-    runs-on: ubuntu-latest
-    if: ${{ !contains(github.ref, '-') }}
-    steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
-        with:
-          node-version: '24'
-      - run: npm install --global npm@11
-      - run: npm ci
-      - run: npm run docs
-      - uses: devops-infra/action-commit-push@v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          commit_prefix: '[DOCS] '
-          commit_message: ${{ github.ref_name }}
-          target_branch: 'master'
   publish-production:
     name: NPM Publish (latest)
     runs-on: ubuntu-latest
