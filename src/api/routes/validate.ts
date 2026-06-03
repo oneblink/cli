@@ -1,12 +1,9 @@
 import type { RouteConfiguration } from '../types.js'
 
-import util from 'util'
 import path from 'path'
-import fs from 'fs'
+import fs from 'fs/promises'
 
-const statAsync = util.promisify(fs.stat)
-
-function validateRoute(
+export default async function validateRoute(
   cwd: string,
   routeConfig: RouteConfiguration,
 ): Promise<Array<string>> {
@@ -24,14 +21,14 @@ function validateRoute(
   }
 
   // Ensure module property is a relative path from cwd and exists
-  return statAsync(path.resolve(cwd, routeConfig.module))
-    .catch((err) => {
-      if (err.code === 'ENOENT') {
-        err.message = `Could not find module: ${routeConfig.module}`
-      }
-      errors.push(err.message)
-    })
-    .then(() => errors)
+  try {
+    await fs.stat(path.resolve(cwd, routeConfig.module))
+  } catch (error) {
+    const err = error as Error
+    if ('code' in err && err.code === 'ENOENT') {
+      err.message = `Could not find module: ${routeConfig.module}`
+    }
+    errors.push(err.message)
+  }
+  return errors
 }
-
-export default validateRoute

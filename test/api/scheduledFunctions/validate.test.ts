@@ -1,4 +1,7 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
+import path from 'path'
+import fs from 'fs/promises'
+import validate from '../../../src/api/scheduledFunctions/validate.js'
 
 describe('validate', () => {
   const CWD = 'current working directory'
@@ -6,28 +9,17 @@ describe('validate', () => {
   const MODULE = 'module path'
 
   beforeEach(() => {
-    vi.doMock('path', () => ({
-      default: {
-        resolve: () => PATH_RESOLVE,
-      },
-    }))
-    vi.doMock('fs/promises', () => ({
-      default: {
-        stat: async () => undefined,
-      },
-    }))
+    vi.spyOn(path, 'resolve').mockReturnValue(PATH_RESOLVE as `${string}`)
+    vi.spyOn(fs, 'stat').mockResolvedValue({} as Awaited<
+      ReturnType<typeof fs.stat>
+    >)
   })
 
   afterEach(() => {
-    vi.resetModules()
-    vi.clearAllMocks()
+    vi.restoreAllMocks()
   })
 
   test('Should contain error if name does not consist of lowercase letters and dashes', async () => {
-    const { default: validate } = await import(
-      '../../../src/api/scheduledFunctions/validate.js'
-    )
-
     const errors = await validate(CWD, {
       name: 'TEST',
       label: 'test',
@@ -42,9 +34,6 @@ describe('validate', () => {
   })
 
   test('Should contain error if timeout is invalid', async () => {
-    const { default: validate } = await import(
-      '../../../src/api/scheduledFunctions/validate.js'
-    )
     const tests = [
       {
         args: {
@@ -101,16 +90,8 @@ describe('validate', () => {
 
   test('Should contain error message if module can not be found', async () => {
     const errorMessage = 'This is an error'
-    vi.doMock('fs/promises', () => ({
-      default: {
-        stat: async () => {
-          throw new Error(errorMessage)
-        },
-      },
-    }))
-    const { default: validate } = await import(
-      '../../../src/api/scheduledFunctions/validate.js'
-    )
+    vi.mocked(fs.stat).mockRejectedValue(new Error(errorMessage))
+
     const result = await validate(CWD, {
       name: 'test',
       label: 'test',
@@ -123,9 +104,6 @@ describe('validate', () => {
   })
 
   test('Should contain error message if retryOnFail not a boolean', async () => {
-    const { default: validate } = await import(
-      '../../../src/api/scheduledFunctions/validate.js'
-    )
     const result = await validate(CWD, {
       name: 'test',
       label: 'test',
@@ -139,19 +117,10 @@ describe('validate', () => {
   })
 
   test('Should contain different error message if module can not be found with ENOENT code', async () => {
-    vi.doMock('fs/promises', () => ({
-      default: {
-        stat: async () => {
-          const error = new Error('This is an error')
-          // @ts-expect-error we are adding the property, you don't get a say typescript
-          error.code = 'ENOENT'
-          throw error
-        },
-      },
-    }))
-    const { default: validate } = await import(
-      '../../../src/api/scheduledFunctions/validate.js'
-    )
+    const error = new Error('This is an error') as NodeJS.ErrnoException
+    error.code = 'ENOENT'
+    vi.mocked(fs.stat).mockRejectedValue(error)
+
     const errors = await validate(CWD, {
       name: 'test',
       label: 'test',
@@ -164,23 +133,8 @@ describe('validate', () => {
   })
 
   test('Input for for fs.stat() should be the result of path.resolve()', async () => {
-    const mockResolve = vi.fn()
-    mockResolve.mockReturnValue(PATH_RESOLVE)
-    vi.doMock('path', () => ({
-      default: {
-        resolve: mockResolve,
-      },
-    }))
-    const mockStat = vi.fn(async () => undefined)
-    vi.doMock('fs/promises', () => ({
-      default: {
-        stat: mockStat,
-      },
-    }))
-
-    const { default: validate } = await import(
-      '../../../src/api/scheduledFunctions/validate.js'
-    )
+    const mockResolve = vi.mocked(path.resolve)
+    const mockStat = vi.mocked(fs.stat)
 
     await validate(CWD, {
       name: 'test',
