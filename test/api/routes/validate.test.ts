@@ -1,4 +1,7 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
+import path from 'path'
+import fs from 'fs/promises'
+import validate from '../../../src/api/routes/validate.js'
 
 describe('validate', () => {
   const CWD = 'current working directory'
@@ -6,29 +9,17 @@ describe('validate', () => {
   const MODULE = 'module path'
 
   beforeEach(() => {
-    vi.doMock('path', () => ({
-      default: {
-        resolve: () => PATH_RESOLVE,
-      },
-    }))
-    vi.doMock('fs', () => ({
-      default: {
-        stat: (path: string, cb: () => void) => {
-          cb()
-        },
-      },
-    }))
+    vi.spyOn(path, 'resolve').mockReturnValue(PATH_RESOLVE as `${string}`)
+    vi.spyOn(fs, 'stat').mockResolvedValue({} as Awaited<
+      ReturnType<typeof fs.stat>
+    >)
   })
 
   afterEach(() => {
-    vi.resetModules()
-    vi.clearAllMocks()
+    vi.restoreAllMocks()
   })
 
   test('Should contain error if route does not start with "/"', async () => {
-    const { default: validate } =
-      await import('../../../src/api/routes/validate')
-
     const errors = await validate(CWD, {
       route: 'test',
       module: 'test',
@@ -37,8 +28,6 @@ describe('validate', () => {
   })
 
   test('Should contain error if timeout is invalid', async () => {
-    const { default: validate } =
-      await import('../../../src/api/routes/validate')
     const tests = [
       {
         args: { route: '/test', module: 'test', timeout: 0 },
@@ -60,15 +49,8 @@ describe('validate', () => {
 
   test('Should contain error message if module can not be found', async () => {
     const errorMessage = 'This is an error'
-    vi.doMock('fs', () => ({
-      default: {
-        stat: (path: string, cb: (error: Error | undefined) => void) => {
-          cb(new Error(errorMessage))
-        },
-      },
-    }))
-    const { default: validate } =
-      await import('../../../src/api/routes/validate')
+    vi.mocked(fs.stat).mockRejectedValue(new Error(errorMessage))
+
     const result = await validate(CWD, {
       route: '/test',
       module: 'test',
@@ -77,18 +59,10 @@ describe('validate', () => {
   })
 
   test('Should contain different error message if module can not be found with ENOENT code', async () => {
-    vi.doMock('fs', () => ({
-      default: {
-        stat: (path: string, cb: (error: Error | undefined) => void) => {
-          const error = new Error('This is an error')
-          // @ts-expect-error we are adding the property, you don't get a say typescript
-          error.code = 'ENOENT'
-          cb(error)
-        },
-      },
-    }))
-    const { default: validate } =
-      await import('../../../src/api/routes/validate')
+    const error = new Error('This is an error') as NodeJS.ErrnoException
+    error.code = 'ENOENT'
+    vi.mocked(fs.stat).mockRejectedValue(error)
+
     const errors = await validate(CWD, {
       route: '/test',
       module: MODULE,
@@ -97,24 +71,8 @@ describe('validate', () => {
   })
 
   test('Input for for fs.stat() should be the result of path.resolve()', async () => {
-    const mockResolve = vi.fn()
-    mockResolve.mockReturnValue(PATH_RESOLVE)
-    vi.doMock('path', () => ({
-      default: {
-        resolve: mockResolve,
-      },
-    }))
-    const mockStat = vi.fn((path: string, cb: () => void) => {
-      cb()
-    })
-    vi.doMock('fs', () => ({
-      default: {
-        stat: mockStat,
-      },
-    }))
-
-    const { default: validate } =
-      await import('../../../src/api/routes/validate')
+    const mockResolve = vi.mocked(path.resolve)
+    const mockStat = vi.mocked(fs.stat)
 
     await validate(CWD, {
       route: '/test',

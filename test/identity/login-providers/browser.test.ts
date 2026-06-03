@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
+import { afterEach, describe, expect, test, vi } from 'vitest'
 
 import { URL } from 'url'
 
@@ -10,43 +10,52 @@ describe('', () => {
   const CODE = 'abc123'
   const VERIFIER_CHALLENGE = 'verifier challenge'
 
-  const importBrowserLoginProvider = async () => {
-    const { default: BrowserLoginProvider } =
-      await import('../../../src/identity/login-providers/browser.js')
-    return new BrowserLoginProvider(TENANTS.ONEBLINK)
-  }
-
   afterEach(() => {
+    vi.restoreAllMocks()
     vi.resetModules()
-    vi.clearAllMocks()
   })
 
-  beforeEach(() => {
-    vi.doMock('open', () => ({ default: () => undefined }))
-    vi.doMock('inquirer', () => ({
-      default: {
-        prompt: async () => ({
-          code: CODE,
-        }),
-      },
-    }))
-  })
+  async function importBrowserLoginProvider(options?: {
+    mockOpen?: ReturnType<typeof vi.fn>
+    mockPrompt?: ReturnType<typeof vi.fn>
+    encode?: () => string
+  }) {
+    vi.resetModules()
 
-  test('login() should work', async () => {
-    vi.doMock('base64url', () => ({
-      default: {
-        encode: () => VERIFIER_CHALLENGE,
-      },
-    }))
-    const mockOpen = vi.fn()
+    const mockOpen = options?.mockOpen ?? vi.fn()
+    const mockPrompt =
+      options?.mockPrompt ??
+      vi.fn(async () => ({
+        code: CODE,
+      }))
+    const encode = options?.encode ?? (() => VERIFIER_CHALLENGE)
+
     vi.doMock('open', () => ({ default: mockOpen }))
-    const mockPrompt = vi.fn(async () => ({
-      code: CODE,
-    }))
     vi.doMock('inquirer', () => ({
       default: {
         prompt: mockPrompt,
       },
+    }))
+    vi.doMock('base64url', () => ({
+      default: {
+        encode,
+      },
+    }))
+
+    const { default: BrowserLoginProvider } =
+      await import('../../../src/identity/login-providers/browser.js')
+
+    return {
+      browserLoginProvider: new BrowserLoginProvider(TENANTS.ONEBLINK),
+      mockOpen,
+      mockPrompt,
+    }
+  }
+
+  test('login() should work', async () => {
+    const mockOpen = vi.fn()
+    const mockPrompt = vi.fn(async () => ({
+      code: CODE,
     }))
     const mockNodeFetch = vi.fn(async () => ({
       ok: true,
@@ -55,15 +64,19 @@ describe('', () => {
     global.fetch = mockNodeFetch as unknown as typeof global.fetch
     const spy = vi.spyOn(console, 'log')
 
-    const browserLoginProvider = await importBrowserLoginProvider()
+    const { browserLoginProvider, mockOpen: openSpy, mockPrompt: promptSpy } =
+      await importBrowserLoginProvider({
+        mockOpen,
+        mockPrompt,
+      })
 
     const jwt = await browserLoginProvider.login(false)
     // should return valid jwt
     expect(jwt).toBe(JWT)
 
     // should call opn with correct data in url
-    expect(mockOpen).toBeCalled()
-    const openUrl = mockOpen.mock.calls[0][0]
+    expect(openSpy).toBeCalled()
+    const openUrl = openSpy.mock.calls[0][0]
 
     const authorizeUrl = new URL('/oauth2/authorize', TENANTS.ONEBLINK.loginUrl)
     authorizeUrl.searchParams.append('response_type', 'code')
@@ -79,7 +92,7 @@ describe('', () => {
     authorizeUrl.searchParams.append('code_challenge', VERIFIER_CHALLENGE)
     authorizeUrl.searchParams.append('code_challenge_method', 'S256')
     expect(openUrl).toBe(authorizeUrl.href)
-    const openOptions = mockOpen.mock.calls[0][1]
+    const openOptions = openSpy.mock.calls[0][1]
     expect(openOptions).toEqual({
       wait: false,
     })
@@ -112,7 +125,7 @@ describe('', () => {
     )
 
     // should prompt with the correct question
-    expect(mockPrompt).toBeCalledWith([
+    expect(promptSpy).toBeCalledWith([
       {
         type: 'input',
         name: 'code',
@@ -126,7 +139,7 @@ describe('', () => {
       throw new Error('Test error message')
     }
 
-    const browserLoginProvider = await importBrowserLoginProvider()
+    const { browserLoginProvider } = await importBrowserLoginProvider()
 
     const promise = browserLoginProvider.login(false)
 
@@ -143,7 +156,7 @@ describe('', () => {
       }),
     })) as unknown as typeof global.fetch
 
-    const browserLoginProvider = await importBrowserLoginProvider()
+    const { browserLoginProvider } = await importBrowserLoginProvider()
 
     const promise = browserLoginProvider.login(false)
 
