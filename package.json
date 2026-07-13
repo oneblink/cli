@@ -96,7 +96,7 @@
   ],
   "homepage": "https://oneblink.github.io/cli",
   "keywords": [],
-  "license": "BSD-3-Clause",
+  "license": "Apache-2.0",
   "publishConfig": {
     "access": "public"
   },
