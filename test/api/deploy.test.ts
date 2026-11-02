@@ -147,13 +147,19 @@ describe('deploy', () => {
 
   test('zip() should log correct updates and reject if an temp emits an error', async () => {
     vi.doMock('archiver', () => ({
-      default: {
-        create: () => ({
-          on: () => undefined,
-          pipe: () => undefined,
-          glob: () => undefined,
-          finalize: () => undefined,
-        }),
+      ZipArchive: class {
+        on() {
+          return undefined
+        }
+        pipe() {
+          return undefined
+        }
+        glob() {
+          return undefined
+        }
+        finalize() {
+          return undefined
+        }
       },
     }))
     const mockCreateWriteStream = vi.fn()
@@ -182,17 +188,21 @@ describe('deploy', () => {
 
   test('zip() should log correct updates and reject if an archiver emits an error', async () => {
     vi.doMock('archiver', () => ({
-      default: {
-        create: () => ({
-          on: (str: string, fn: (error: Error) => void) => {
-            if (str === 'error') {
-              fn(new Error('test archiver error'))
-            }
-          },
-          pipe: () => undefined,
-          glob: () => undefined,
-          finalize: () => undefined,
-        }),
+      ZipArchive: class {
+        on(str: string, fn: (error: Error) => void) {
+          if (str === 'error') {
+            fn(new Error('test archiver error'))
+          }
+        }
+        pipe() {
+          return undefined
+        }
+        glob() {
+          return undefined
+        }
+        finalize() {
+          return undefined
+        }
       },
     }))
     vi.doMock('temp', () => ({

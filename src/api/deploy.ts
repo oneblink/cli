@@ -4,7 +4,7 @@ import path from 'path'
 import type { APITypes } from '@oneblink/types'
 import { Upload } from '@aws-sdk/lib-storage'
 import { S3Client } from '@aws-sdk/client-s3'
-import archiver from 'archiver'
+import { ZipArchive } from 'archiver'
 import chalk from 'chalk'
 import { execa } from 'execa'
 import inquirer from 'inquirer'
@@ -176,7 +176,7 @@ async function upload(
 async function zip(target: string): Promise<fs.PathLike> {
   const spinner = ora('Compressing project...').start()
   try {
-    const archive = archiver.create(EXT, {})
+    const archive = new ZipArchive({})
     const output = temp.createWriteStream({ suffix: `.${EXT}` })
     archive.pipe(output)
     archive.glob('**/*', {
