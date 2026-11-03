@@ -1,7 +1,7 @@
 {
   "name": "@oneblink/cli",
   "description": "primary entry point for our CLI tools",
-  "version": "4.1.0-beta.2",
+  "version": "4.1.0-beta.3",
   "author": "OneBlink <developers@oneblink> (https://github.com/oneblink)",
   "bin": {
     "oneblink": "dist/bin/oneblink.js",
@@ -50,7 +50,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.3",
     "@eslint/js": "^9.39.2",
-    "@oneblink/release-cli": "^4.0.0-beta.2",
+    "@oneblink/release-cli": "^5.2.3",
     "@oneblink/types": "github:oneblink/types",
     "@types/archiver": "^8.0.0",
     "@types/cors": "^2.8.19",
