@@ -69,95 +69,96 @@ async function startServer(
   app.use(express.text({ type: '*/*', limit: '6mb' }))
 
   // Handler to catch all routes
-  app.use(async function (
-    req,
-    res,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    next,
-  ): Promise<void> {
-    try {
-      const routeConfig = await apis
-        .getRouteConfig(options.cwd, req.path)
-        .catch((err) => {
-          throw Boom.boomify(err, {
-            statusCode: 404,
+  app.use(
+    async function (
+      req,
+      res,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      next,
+    ): Promise<void> {
+      try {
+        const routeConfig = await apis
+          .getRouteConfig(options.cwd, req.path)
+          .catch((err) => {
+            throw Boom.boomify(err, {
+              statusCode: 404,
+            })
           })
-        })
 
-      const handlerConfig = await apis.getHandlerConfig(
-        routeConfig,
-        req.method.toLowerCase(),
-      )
-      const handler = handlerConfig.handler
-      if (typeof handler !== 'function') {
-        throw Boom.methodNotAllowed(
-          `${req.method.toUpperCase()} method has not been implemented`,
+        const handlerConfig = await apis.getHandlerConfig(
+          routeConfig,
+          req.method.toLowerCase(),
         )
-      }
+        const handler = handlerConfig.handler
+        if (typeof handler !== 'function') {
+          throw Boom.methodNotAllowed(
+            `${req.method.toUpperCase()} method has not been implemented`,
+          )
+        }
 
-      // JSON parsing of request payload
-      let body = req.body
-      if (typeof body === 'string' && req.is('json')) {
-        try {
-          body = JSON.parse(body)
-        } catch (error) {
-          throw Boom.boomify(error as Error, {
-            statusCode: 400,
-            message: 'Could not parse request as JSON',
+        // JSON parsing of request payload
+        let body = req.body
+        if (typeof body === 'string' && req.is('json')) {
+          try {
+            body = JSON.parse(body)
+          } catch (error) {
+            throw Boom.boomify(error as Error, {
+              statusCode: 400,
+              message: 'Could not parse request as JSON',
+            })
+          }
+        }
+
+        const url = new URL(req.originalUrl, 'http://domain')
+        const request: OneBlinkAPIHostingRequest<undefined> = {
+          body,
+          // @ts-expect-error headers match
+          headers: req.headers,
+          method: req.method,
+          route: routeConfig.route,
+          url: {
+            host: `${req.hostname}:${options.port}`,
+            hostname: req.hostname,
+            params: handlerConfig.params,
+            pathname: req.path,
+            protocol: 'http:',
+            // @ts-expect-error query matches
+            query: req.query || {},
+            querystring: url.search.substring(1),
+          },
+        }
+
+        const bmResponse: OneBlinkAPIHostingResponse<unknown> =
+          await handlers.executeHandler(handler, request)
+
+        res
+          .status(bmResponse.statusCode)
+          .set(bmResponse.headers)
+          .send(bmResponse.payload)
+      } catch (error: any) {
+        let err: Boom.Boom = error
+        if (!err || !err.isBoom) {
+          err = Boom.boomify(err, {
+            statusCode: 500,
           })
         }
+
+        // Want to show customers what went wrong locally for development.
+        // Boom hides this message for 500 status codes.
+        err.output.payload.message = err.message
+
+        logger.error(err.stack)
+        if (err.data) {
+          logger.error('Boom Data:', JSON.stringify(err.data, null, 2))
+        }
+
+        res
+          .status(err.output.statusCode)
+          .set(err.output.headers)
+          .json(err.output.payload)
       }
-
-      // eslint-disable-next-line @microsoft/sdl/no-insecure-url
-      const url = new URL(req.originalUrl, 'http://domain')
-      const request: OneBlinkAPIHostingRequest<undefined> = {
-        body,
-        // @ts-expect-error headers match
-        headers: req.headers,
-        method: req.method,
-        route: routeConfig.route,
-        url: {
-          host: `${req.hostname}:${options.port}`,
-          hostname: req.hostname,
-          params: handlerConfig.params,
-          pathname: req.path,
-          protocol: 'http:',
-          // @ts-expect-error query matches
-          query: req.query || {},
-          querystring: url.search.substring(1),
-        },
-      }
-
-      const bmResponse: OneBlinkAPIHostingResponse<unknown> =
-        await handlers.executeHandler(handler, request)
-
-      res
-        .status(bmResponse.statusCode)
-        .set(bmResponse.headers)
-        .send(bmResponse.payload)
-    } catch (error: any) {
-      let err: Boom.Boom = error
-      if (!err || !err.isBoom) {
-        err = Boom.boomify(err, {
-          statusCode: 500,
-        })
-      }
-
-      // Want to show customers what went wrong locally for development.
-      // Boom hides this message for 500 status codes.
-      err.output.payload.message = err.message
-
-      logger.error(err.stack)
-      if (err.data) {
-        logger.error('Boom Data:', JSON.stringify(err.data, null, 2))
-      }
-
-      res
-        .status(err.output.statusCode)
-        .set(err.output.headers)
-        .json(err.output.payload)
-    }
-  })
+    },
+  )
 
   // Create HTTP server.
   const server = http.createServer(app)
