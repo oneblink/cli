@@ -134,6 +134,7 @@ async function upload(
   let progress = 0
 
   try {
+    // eslint-disable-next-line security/detect-non-literal-fs-filename -- zipFilePath is validated before this point
     const src = fs.createReadStream(zipFilePath)
 
     const parallelUpload = new Upload({

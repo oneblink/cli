@@ -45,6 +45,7 @@ export default async function validateScheduledFunction(
   }
   // Ensure module property is a relative path from cwd and exists
   try {
+    // eslint-disable-next-line security/detect-non-literal-fs-filename -- path is validated from config
     await fs.stat(path.resolve(cwd, config.module))
   } catch (error) {
     const err = error as Error

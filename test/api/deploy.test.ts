@@ -114,6 +114,7 @@ describe('deploy', () => {
     }
     expect(path.isAbsolute(zipFilePath)).toBeTruthy()
     expect(path.extname(zipFilePath)).toBe('.zip')
+    // eslint-disable-next-line security/detect-non-literal-fs-filename -- zipFilePath is validated in test
     expect(fs.statSync(zipFilePath).isFile()).toBeTruthy()
 
     await new Promise((resolve, reject) => {

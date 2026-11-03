@@ -9,7 +9,6 @@ describe('cors display', () => {
 
   const CWD = 'current working directory'
   const CORS: APITypes.APIEnvironmentCorsConfiguration = {
-    // eslint-disable-next-line @microsoft/sdl/no-insecure-url
     origins: ['http://test'],
     headers: ['Accept', 'Content-Type'],
     exposedHeaders: ['Accept', 'Content-Type'],

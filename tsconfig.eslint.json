@@ -1,7 +1,13 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["./src", "./test", "eslint.config.mjs", "rollup.api.config.js"],
+  "include": [
+    "./src/**/*",
+    "./test/**/*",
+    "eslint.config.mjs",
+    "rollup.api.config.js"
+  ],
   "compilerOptions": {
-    "rootDir": "./"
+    "rootDir": "./",
+    "allowJs": true
   }
 }
