@@ -112,11 +112,11 @@
     "fixpack": "fixpack",
     "prepare": "npm run build",
     "pretest": "npm run eslint && npm run fixpack && npm run typescript && npm i -g .",
-    "release": "oneblink-release repository --no-name --update-dependents --include-dev-dependencies --force-update-dependency",
+    "release": "oneblink-release repository --no-name --update-dependents --force-update-dependency",
     "test": "vitest run",
     "types": "npm i -D github:oneblink/types",
     "typescript": "tsc --noEmit",
-    "update-dependents": "oneblink-release update-dependents --include-dev-dependencies --force-update-dependency"
+    "update-dependents": "oneblink-release update-dependents --force-update-dependency"
   },
   "type": "module"
 }
