@@ -7,9 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.1.0] - 2026-11-17
+
 ### Added
 
 - `update-dependents` npm script
+
+### Dependencies
+
+- update archiver to [8.0.0](https://github.com/archiverjs/node-archiver/releases/tag/8.0.0) (from [7.0.1](https://github.com/archiverjs/node-archiver/releases/tag/7.0.1))
+
+- update glob to 14.0.3 (from 13.0.0)
 
 ## [4.0.6] - 2026-10-01
 
